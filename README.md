@@ -8,6 +8,8 @@ If you work with AI, download the library and give it to the bot as a resource. 
 
 **NOT ALL THIS INFO IS VETTED BY AN ACTUAL HUMAN**. Where I've reviewed and validated it, I wrote a timestamp at the bottom of the page - which doesn't guarantee it's correct, of course, just that I looked at it. Corrections welcome.
 
+**LOTS OF ELEMENTS ARE STILL TBD**. I'm building this as I need it, so there are a lot of pages that are TBD. It's actually more useful for Starfield and FO4 than for Skyrim because that's where I'm working right now. 
+
 ## What's Inside
 
 This library consolidates knowledge from multiple sources into a unified, searchable reference for Bethesda game modding. Whether you're creating new armor, custom races, or complex animations, you'll find the technical details you need here.
