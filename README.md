@@ -6,6 +6,8 @@ I assembled this library out of the understanding of file formats and behavior t
 
 If you work with AI, download the library and give it to the bot as a resource. That way the bot won't have to recreate all this on its own.
 
+**NOT ALL THIS INFO IS VETTED BY AN ACTUAL HUMAN**. Where I've reviewed and validated it, I wrote a timestamp at the bottom of the page - which doesn't guarantee it's correct, of course, just that I looked at it. Corrections welcome.
+
 ## What's Inside
 
 This library consolidates knowledge from multiple sources into a unified, searchable reference for Bethesda game modding. Whether you're creating new armor, custom races, or complex animations, you'll find the technical details you need here.
