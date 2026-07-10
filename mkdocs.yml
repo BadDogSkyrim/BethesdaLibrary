@@ -1,8 +1,8 @@
 site_name: Bethesda Modding Library
-site_description: Comprehensive reference for Skyrim and Fallout 4 modding with PyNifly and esplib
+site_description: Comprehensive reference for Skyrim, Fallout 4, and Starfield modding with PyNifly and esplib
 site_author: Hugh Russel
-repo_url: https://github.com/yourusername/bethesda-library
-edit_uri: edit/main/
+repo_url: https://github.com/BadDogSkyrim/BethesdaLibrary
+edit_uri: edit/main/docs/
 
 theme:
   name: material
@@ -58,19 +58,29 @@ markdown_extensions:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
+# NOTE: This nav lists only pages that currently exist. Many topics are still
+# planned (Workflows, Debugging, Reference, AI Reference, esplib, Skyrim
+# game-specific pages) — see README.md, where those are tagged [TBD]. Add nav
+# entries here as the pages are written.
 nav:
   - Home: index.md
-  
+
   - File Formats:
     - Overview: file-formats/overview.md
     - Plugins (ESP/ESM): file-formats/plugins.md
     - NIF Files: file-formats/nif-files.md
+    - NIF Animations: file-formats/nif-animations.md
     - Animations (HKX): file-formats/animations.md
     - Physics & Collision: file-formats/physics-collision.md
     - Morphs & Shape Keys: file-formats/morphs-shapekeys.md
     - Textures & Materials: file-formats/textures-materials.md
     - Archives (BSA): file-formats/archives.md
     - Scripts (PEX): file-formats/scripts.md
+
+  - Game-Specific:
+    - Fallout 4:
+      - Connect Points: game-specific/fallout4/connect-points.md
+      - Dismemberment: game-specific/fallout4/dismemberment.md
     - Starfield:
       - Overview: file-formats/starfield-overview.md
       - Meshes (NIF + .mesh): file-formats/starfield-meshes.md
@@ -80,66 +90,14 @@ nav:
       - Plugins & Archives: file-formats/starfield-plugins.md
       - Tools: file-formats/starfield-tools.md
 
-  - Game-Specific:
-    - Skyrim LE: game-specific/skyrim-le.md
-    - Skyrim SE: game-specific/skyrim-se.md
-    - Fallout 4:
-      - Overview: game-specific/fallout4/overview.md
-      - Connect Points: game-specific/fallout4/connect-points.md
-      - Workshop System: game-specific/fallout4/workshop-system.md
-      - FaceBones: game-specific/fallout4/facebones.md
-      - Material System: game-specific/fallout4/material-system.md
-  
   - Tools:
     - PyNifly:
       - Overview: tools/pynifly/overview.md
       - Installation: tools/pynifly/installation.md
-      - Importing: tools/pynifly/importing.md
-      - Exporting: tools/pynifly/exporting.md
-      - Animations: tools/pynifly/animations.md
-      - Python API: tools/pynifly/python-api.md
-      - Example Scripts: tools/pynifly/example-scripts.md
-    - esplib:
-      - Overview: tools/esplib/overview.md
-      - Schema System: tools/esplib/schema-system.md
-      - Record Definitions: tools/esplib/record-definitions.md
-      - Usage Patterns: tools/esplib/usage-patterns.md
-      - CLI Tools: tools/esplib/cli-tools.md
-    - xEdit Reference: tools/xedit-reference.md
-    - Other Tools: tools/other-tools.md
-  
-  - Workflows:
-    - Character Creation: workflows/character-creation.md
-    - Armor & Clothing: workflows/armor-clothing.md
-    - Meshes & Modeling: workflows/meshes-modeling.md
-    - Animations: workflows/animations.md
-    - Physics & Collisions: workflows/physics-collisions.md
-    - Textures & Materials: workflows/textures-materials.md
-  
-  - Debugging:
-    - CTD (Crashes): debugging/ctd-crashes.md
-    - Mesh Issues: debugging/mesh-issues.md
-    - Animation Issues: debugging/animation-issues.md
-    - Physics Issues: debugging/physics-issues.md
-    - Plugin Issues: debugging/plugin-issues.md
-  
-  - Reference:
-    - Record Types: reference/record-types.md
-    - Bone Names: reference/bone-names.md
-    - Shader Flags: reference/shader-flags.md
-    - Partition Names: reference/partition-names.md
-    - Expression Morphs: reference/expression-morphs.md
-  
-  - AI Reference:
-    - Glossary: ai-reference/glossary.md
-    - Validation Rules: ai-reference/validation-rules.md
-    - Decision Trees: ai-reference/decision-trees.md
-    - Code Templates: ai-reference/code-templates.md
-    - State Machines: ai-reference/state-machines.md
-    - File Path Conventions: ai-reference/file-path-conventions.md
-    - Default Values: ai-reference/default-values.md
+
+  - Conventions: CONVENTIONS.md
 
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/yourusername
+      link: https://github.com/BadDogSkyrim/BethesdaLibrary

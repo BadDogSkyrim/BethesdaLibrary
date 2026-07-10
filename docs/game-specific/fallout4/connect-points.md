@@ -135,5 +135,5 @@ NifSkope (2.0.0 Pre-alpha 5+) renders connect points as colored arrows in the 3D
 
 ## See Also
 
-- [NIF Files](nif-files.md) — overall NIF block structure
-- [Plugin Files](plugins.md) — OMOD, WEAP, ARMA records
+- [NIF Files](../../file-formats/nif-files.md) — overall NIF block structure
+- [Plugin Files](../../file-formats/plugins.md) — OMOD, WEAP, ARMA records

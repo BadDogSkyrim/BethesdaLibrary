@@ -266,7 +266,7 @@ For a custom skinned FO4 body to dismember:
 
 ## See also
 
-- [NIF files](nif-files.md)
-- [Physics & collision](physics-collision.md)
+- [NIF files](../../file-formats/nif-files.md)
+- [Physics & collision](../../file-formats/physics-collision.md)
 
 *Verified 2026-05-30, Bad Dog*

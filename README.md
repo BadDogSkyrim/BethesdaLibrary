@@ -25,8 +25,6 @@ Deep dives into Bethesda's binary file formats (shared across Skyrim and Fallout
 - **[Physics & Collision](docs/file-formats/physics-collision.md)** - Havok physics, HDT-SMP configs
 - **[Morphs & Shape Keys](docs/file-formats/morphs-shapekeys.md)** - TRI files, expressions, chargen
 - **[Textures & Materials](docs/file-formats/textures-materials.md)** - DDS, BGSM/BGEM
-- **[Connect Points](docs/file-formats/connect-points.md)** - FO4 runtime mesh attachment points
-- **[Dismemberment](docs/file-formats/dismemberment.md)** - FO4 limb severing (BSDismemberSkinInstance, segments)
 - **[Archives (BSA)](docs/file-formats/archives.md)** - BSA format
 - **[Scripts (PEX)](docs/file-formats/scripts.md)** - Compiled Papyrus
 
@@ -40,9 +38,11 @@ Where a game diverges from the shared formats above, it gets its own section fro
   - **[Chargen, Race & Skeleton](docs/file-formats/starfield-chargen.md)** - RACE/HDPT/MRPH/BMOD, morphs, custom races
   - **[Plugins & Archives](docs/file-formats/starfield-plugins.md)** - component records, master tiers, BA2 v2/v3
   - **[Tools](docs/file-formats/starfield-tools.md)** - the Starfield tooling directory, grouped by task
+- **Fallout 4** - per-game NIF/material specifics (overview [TBD]):
+  - **[Connect Points](docs/game-specific/fallout4/connect-points.md)** - runtime mesh attachment points
+  - **[Dismemberment](docs/game-specific/fallout4/dismemberment.md)** - limb severing (BSDismemberSkinInstance, segments)
 - **Skyrim LE** [TBD] - 32-bit, NiTriShape, classic features
 - **Skyrim SE** [TBD] - 64-bit, BSTriShape, BSDynamicTriShape
-- **Fallout 4** [TBD] - workshop system, FaceBones, BGSM material system (see Connect Points / Dismemberment above)
 
 ### 🛠️ [Tools](docs/tools/pynifly/overview.md)
 
