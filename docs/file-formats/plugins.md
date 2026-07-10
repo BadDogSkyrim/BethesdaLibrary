@@ -240,7 +240,7 @@ Common record signatures:
 - `[FO4]` `[SSE]` **KYWD** - Keyword
 - **FLST** - Form list
 
-See [Record Types Reference](../reference/record-types.md) for complete list.
+See [Record Types Reference](../reference/record-types.md) [TBD] for complete list.
 
 ## Record Flags
 
@@ -532,7 +532,7 @@ armor.set_field('FULL', 'Shiny Iron Armor')
 esp.save('MyPlugin_Modified.esp')
 ```
 
-See [esplib documentation](../tools/esplib/overview.md) for details.
+See [esplib documentation](../tools/esplib/overview.md) [TBD] for details.
 
 ## Game-Specific Differences
 
@@ -584,9 +584,9 @@ See [esplib documentation](../tools/esplib/overview.md) for details.
 
 ## See Also
 
-- [esplib Tools](../tools/esplib/overview.md) - Python library for plugin manipulation
-- [Record Types Reference](../reference/record-types.md) - Complete record type list
-- [Plugin Issues Debugging](../debugging/plugin-issues.md) - Troubleshooting guide
-- [xEdit Reference](../tools/other-tools.md#xedit) - xEdit usage
+- [esplib Tools](../tools/esplib/overview.md) [TBD] - Python library for plugin manipulation
+- [Record Types Reference](../reference/record-types.md) [TBD] - Complete record type list
+- [Plugin Issues Debugging](../debugging/plugin-issues.md) [TBD] - Troubleshooting guide
+- [xEdit Reference](../tools/other-tools.md#xedit) [TBD] - xEdit usage
 
 _Reviewed 2026-04-23, Bad Dog_

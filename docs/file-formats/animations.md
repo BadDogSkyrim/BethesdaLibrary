@@ -534,7 +534,7 @@ pynifly.import_hkx_skeleton('skeleton.hkx')
 - Supports bone animation only (no morph/shape keys)
 - Applies Havok compression on export
 
-See [PyNifly Animation Workflow](../tools/pynifly/animations.md).
+See [PyNifly Animation Workflow](../tools/pynifly/animations.md) [TBD].
 
 ### Havok Content Tools (HCT)
 
@@ -665,8 +665,8 @@ hkxpack pack skyrim_anim_unpacked.xml fo4_anim.hkx --fallout4
 
 ## See Also
 
-- [PyNifly Animations](../tools/pynifly/animations.md) - Blender animation workflow
+- [PyNifly Animations](../tools/pynifly/animations.md) [TBD] - Blender animation workflow
 - [NIF Files](nif-files.md) - NiSkinInstance and bone references
-- [Bone Names Reference](../reference/bone-names.md) - Standard bone names
-- [Animation Workflows](../workflows/animations.md) - Step-by-step guides
-- [Animation Debugging](../debugging/animation-issues.md) - Troubleshooting
+- [Bone Names Reference](../reference/bone-names.md) [TBD] - Standard bone names
+- [Animation Workflows](../workflows/animations.md) [TBD] - Step-by-step guides
+- [Animation Debugging](../debugging/animation-issues.md) [TBD] - Troubleshooting

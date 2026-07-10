@@ -266,15 +266,15 @@ print(f"Shapes: {[s.name for s in nif.shapes]}")
 - Automate collision checks
 - Generate mesh reports
 
-See [Python API](python-api.md) for details.
+See [Python API](python-api.md) [TBD] for details.
 
 ## Next Steps
 
 Now that PyNifly is installed:
 
-- **[Importing](importing.md)** - Learn import options and workflows
-- **[Exporting](exporting.md)** - Export settings and best practices
-- **[Workflows](../../workflows/meshes-modeling.md)** - Common modeling tasks
+- **[Importing](importing.md) [TBD]** - Learn import options and workflows
+- **[Exporting](exporting.md) [TBD]** - Export settings and best practices
+- **[Workflows](../../workflows/meshes-modeling.md) [TBD]** - Common modeling tasks
 
 ## Getting Help
 
@@ -295,4 +295,4 @@ Now that PyNifly is installed:
 
 ---
 
-**Installation complete?** Head to [Importing](importing.md) to start working with NIF files!
+**Installation complete?** Head to [Importing](importing.md) [TBD] to start working with NIF files!

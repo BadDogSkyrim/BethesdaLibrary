@@ -431,4 +431,4 @@ MyMod - Textures.ba2
 
 - [Plugin Files](plugins.md) - BSA load order with plugins
 - [Deployment Guide](../../DEPLOYMENT.md) - Packaging mods for release
-- [Performance Tips](../../workflows/optimization.md) - BSA compression strategies
+- [Performance Tips](../../workflows/optimization.md) [TBD] - BSA compression strategies

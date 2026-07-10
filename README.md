@@ -12,79 +12,79 @@ If you work with AI, download the library and give it to the bot as a resource. 
 
 This library consolidates knowledge from multiple sources into a unified, searchable reference for Bethesda game modding. Whether you're creating new armor, custom races, or complex animations, you'll find the technical details you need here.
 
-### 📁 [File Formats](file-formats/overview.md)
+### 📁 [File Formats](docs/file-formats/overview.md)
 
 Deep dives into Bethesda's binary file formats:
 
-- **[Plugins (ESP/ESM)](file-formats/plugins.md)** - Record structure, FormIDs, master resolution
-- **[NIF Files](file-formats/nif-files.md)** - Meshes, skinning, shaders, partitions
-- **[Animations (HKX)](file-formats/animations.md)** - Havok skeleton and animation files
-- **[Physics & Collision](file-formats/physics-collision.md)** - Havok physics, HDT-SMP configs
-- **[Morphs & Shape Keys](file-formats/morphs-shapekeys.md)** - TRI files, expressions, chargen
-- **[Textures & Materials](file-formats/textures-materials.md)** - DDS, BGSM/BGEM
-- **[Archives (BSA)](file-formats/archives.md)** - BSA format
-- **[Scripts (PEX)](file-formats/scripts.md)** - Compiled Papyrus
+- **[Plugins (ESP/ESM)](docs/file-formats/plugins.md)** - Record structure, FormIDs, master resolution
+- **[NIF Files](docs/file-formats/nif-files.md)** - Meshes, skinning, shaders, partitions
+- **[Animations (HKX)](docs/file-formats/animations.md)** - Havok skeleton and animation files
+- **[Physics & Collision](docs/file-formats/physics-collision.md)** - Havok physics, HDT-SMP configs
+- **[Morphs & Shape Keys](docs/file-formats/morphs-shapekeys.md)** - TRI files, expressions, chargen
+- **[Textures & Materials](docs/file-formats/textures-materials.md)** - DDS, BGSM/BGEM
+- **[Archives (BSA)](docs/file-formats/archives.md)** - BSA format
+- **[Scripts (PEX)](docs/file-formats/scripts.md)** - Compiled Papyrus
 
-### 🎮 [Game-Specific Information](game-specific/skyrim-le.md)
+### 🎮 [Game-Specific Information](game-specific/skyrim-le.md) [TBD]
 
 Differences between game versions:
 
-- **[Skyrim LE](game-specific/skyrim-le.md)** - 32-bit, NiTriShape, classic features
-- **[Skyrim SE](game-specific/skyrim-se.md)** - 64-bit, BSTriShape, BSDynamicTriShape
-- **[Fallout 4](game-specific/fallout4/overview.md)** - Segments, connect points, BGSM materials, workshop system
+- **[Skyrim LE](game-specific/skyrim-le.md) [TBD]** - 32-bit, NiTriShape, classic features
+- **[Skyrim SE](game-specific/skyrim-se.md) [TBD]** - 64-bit, BSTriShape, BSDynamicTriShape
+- **[Fallout 4](game-specific/fallout4/overview.md) [TBD]** - Segments, connect points, BGSM materials, workshop system
 
-### 🛠️ [Tools](tools/pynifly/overview.md)
+### 🛠️ [Tools](docs/tools/pynifly/overview.md)
 
 Working with the formats programmatically:
 
-- **[PyNifly](tools/pynifly/overview.md)** - Blender addon for NIF/HKX import/export
+- **[PyNifly](docs/tools/pynifly/overview.md)** - Blender addon for NIF/HKX import/export
   - Installation, importing, exporting, Python API, example scripts
-- **[esplib](tools/esplib/overview.md)** - Python library for ESP/ESM manipulation
+- **[esplib](tools/esplib/overview.md) [TBD]** - Python library for ESP/ESM manipulation
   - Schema system, record definitions, CLI tools
-- **[Other Tools](tools/other-tools.md)** - xEdit, Creation Kit, NifSkope (reference only)
+- **[Other Tools](tools/other-tools.md) [TBD]** - xEdit, Creation Kit, NifSkope (reference only)
 
-### 📝 [Workflows](workflows/character-creation.md)
+### 📝 [Workflows](workflows/character-creation.md) [TBD]
 
 Step-by-step guides for common modding tasks:
 
-- **[Character Creation](workflows/character-creation.md)** - Races, NPCs, head parts, FaceGen
-- **[Armor & Clothing](workflows/armor-clothing.md)** - ARMO/ARMA records, body weights, BodySlide
-- **[Meshes & Modeling](workflows/meshes-modeling.md)** - Import/export, Blender workflow
-- **[Animations](workflows/animations.md)** - HKX skeleton, creating/exporting animations
-- **[Physics & Collisions](workflows/physics-collisions.md)** - HDT-SMP, ground collision, Havok
-- **[Textures & Materials](workflows/textures-materials.md)** - Shader setup, DDS workflow
+- **[Character Creation](workflows/character-creation.md) [TBD]** - Races, NPCs, head parts, FaceGen
+- **[Armor & Clothing](workflows/armor-clothing.md) [TBD]** - ARMO/ARMA records, body weights, BodySlide
+- **[Meshes & Modeling](workflows/meshes-modeling.md) [TBD]** - Import/export, Blender workflow
+- **[Animations](workflows/animations.md) [TBD]** - HKX skeleton, creating/exporting animations
+- **[Physics & Collisions](workflows/physics-collisions.md) [TBD]** - HDT-SMP, ground collision, Havok
+- **[Textures & Materials](workflows/textures-materials.md) [TBD]** - Shader setup, DDS workflow
 
-### 🐛 [Debugging](debugging/ctd-crashes.md)
+### 🐛 [Debugging](debugging/ctd-crashes.md) [TBD]
 
 Troubleshooting common issues:
 
-- **[CTD (Crashes)](debugging/ctd-crashes.md)** - Load-time crashes, memory issues
-- **[Mesh Issues](debugging/mesh-issues.md)** - Clipping, weighting, missing parts
-- **[Animation Issues](debugging/animation-issues.md)** - Import/export failures
-- **[Physics Issues](debugging/physics-issues.md)** - HDT not working, collision problems
-- **[Plugin Issues](debugging/plugin-issues.md)** - CK errors, FormID conflicts
+- **[CTD (Crashes)](debugging/ctd-crashes.md) [TBD]** - Load-time crashes, memory issues
+- **[Mesh Issues](debugging/mesh-issues.md) [TBD]** - Clipping, weighting, missing parts
+- **[Animation Issues](debugging/animation-issues.md) [TBD]** - Import/export failures
+- **[Physics Issues](debugging/physics-issues.md) [TBD]** - HDT not working, collision problems
+- **[Plugin Issues](debugging/plugin-issues.md) [TBD]** - CK errors, FormID conflicts
 
-### 📚 [Reference](reference/record-types.md)
+### 📚 [Reference](reference/record-types.md) [TBD]
 
 Quick lookup tables:
 
-- **[Record Types](reference/record-types.md)** - ESP/ESM record signatures
-- **[Bone Names](reference/bone-names.md)** - Standard skeleton bone names
-- **[Shader Flags](reference/shader-flags.md)** - SLSF1/SLSF2 flags
-- **[Partition Names](reference/partition-names.md)** - SBP_* naming conventions
-- **[Expression Morphs](reference/expression-morphs.md)** - Standard morph names
+- **[Record Types](reference/record-types.md) [TBD]** - ESP/ESM record signatures
+- **[Bone Names](reference/bone-names.md) [TBD]** - Standard skeleton bone names
+- **[Shader Flags](reference/shader-flags.md) [TBD]** - SLSF1/SLSF2 flags
+- **[Partition Names](reference/partition-names.md) [TBD]** - SBP_* naming conventions
+- **[Expression Morphs](reference/expression-morphs.md) [TBD]** - Standard morph names
 
-### 🤖 [AI Reference](ai-reference/glossary.md)
+### 🤖 [AI Reference](ai-reference/glossary.md) [TBD]
 
 Machine-readable structured data for AI consumers:
 
-- **[Glossary](ai-reference/glossary.md)** - Precise terminology definitions
-- **[Validation Rules](ai-reference/validation-rules.md)** - Constraints and limits
-- **[Decision Trees](ai-reference/decision-trees.md)** - When to use X vs Y
-- **[Code Templates](ai-reference/code-templates.md)** - Complete working examples
-- **[State Machines](ai-reference/state-machines.md)** - Multi-step workflows
-- **[File Path Conventions](ai-reference/file-path-conventions.md)** - Standard file locations
-- **[Default Values](ai-reference/default-values.md)** - Standard defaults
+- **[Glossary](ai-reference/glossary.md) [TBD]** - Precise terminology definitions
+- **[Validation Rules](ai-reference/validation-rules.md) [TBD]** - Constraints and limits
+- **[Decision Trees](ai-reference/decision-trees.md) [TBD]** - When to use X vs Y
+- **[Code Templates](ai-reference/code-templates.md) [TBD]** - Complete working examples
+- **[State Machines](ai-reference/state-machines.md) [TBD]** - Multi-step workflows
+- **[File Path Conventions](ai-reference/file-path-conventions.md) [TBD]** - Standard file locations
+- **[Default Values](ai-reference/default-values.md) [TBD]** - Standard defaults
 
 ## Scope
 
@@ -127,4 +127,4 @@ Found an error? Have additional information? Contributions welcome!
 
 ---
 
-**Ready to dive in?** Start with [File Formats](file-formats/overview.md) or jump to [Workflows](workflows/character-creation.md) for practical guides.
+**Ready to dive in?** Start with [File Formats](docs/file-formats/overview.md) or jump to [Workflows](workflows/character-creation.md) [TBD] for practical guides.

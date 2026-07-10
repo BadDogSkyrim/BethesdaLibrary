@@ -508,7 +508,7 @@ For HDT-SMP to work, the NIF must have:
 - VirtualGround not weighted → Paint weights to NPC Root [Root]
 - FSMP MCM auto-reset causing crashes → Disable FSMP MCM
 
-See [Physics Issues Debugging](../debugging/physics-issues.md) for more troubleshooting.
+See [Physics Issues Debugging](../debugging/physics-issues.md) [TBD] for more troubleshooting.
 
 ## Tools
 
@@ -534,5 +534,5 @@ for node in nif.nodes.values():
 ## See Also
 
 - [NIF Files](nif-files.md) - bhkCollisionObject and physics block structure
-- [Mesh Workflows](../workflows/physics-collisions.md) - Setting up physics in Blender
-- [Physics Debugging](../debugging/physics-issues.md) - Troubleshooting collision issues
+- [Mesh Workflows](../workflows/physics-collisions.md) [TBD] - Setting up physics in Blender
+- [Physics Debugging](../debugging/physics-issues.md) [TBD] - Troubleshooting collision issues

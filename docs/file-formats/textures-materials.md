@@ -282,7 +282,7 @@ Determines rendering mode:
 - `SLSF2_Effect_Lighting` (0x40000000) - Effect lighting
 - `SLSF2_HD_LOD_Objects` (0x80000000) - HD LOD
 
-See [Shader Flags Reference](../reference/shader-flags.md) for detailed descriptions.
+See [Shader Flags Reference](../reference/shader-flags.md) [TBD] for detailed descriptions.
 
 #### Colors
 
@@ -593,6 +593,6 @@ nif.save('armor_updated.nif')
 ## See Also
 
 - [NIF Files](nif-files.md) - BSLightingShaderProperty, BSShaderTextureSet
-- [Shader Flags Reference](../reference/shader-flags.md) - Complete flag list and descriptions
-- [Texture Workflows](../workflows/textures-materials.md) - Creating and applying textures
-- [Mesh Issues Debugging](../debugging/mesh-issues.md) - Texture troubleshooting
+- [Shader Flags Reference](../reference/shader-flags.md) [TBD] - Complete flag list and descriptions
+- [Texture Workflows](../workflows/textures-materials.md) [TBD] - Creating and applying textures
+- [Mesh Issues Debugging](../debugging/mesh-issues.md) [TBD] - Texture troubleshooting

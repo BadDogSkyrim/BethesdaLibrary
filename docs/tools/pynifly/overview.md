@@ -240,10 +240,10 @@ PyNifly is specifically for **mesh and animation files**. Other modding tasks re
 ## Next Steps
 
 - **[Installation](installation.md)** - Set up PyNifly in Blender
-- **[Importing](importing.md)** - Bring NIFs into Blender
-- **[Exporting](exporting.md)** - Write modified meshes back to NIF
-- **[Python API](python-api.md)** - Script PyNifly operations
-- **[Example Scripts](example-scripts.md)** - Common automation tasks
+- **[Importing](importing.md) [TBD]** - Bring NIFs into Blender
+- **[Exporting](exporting.md) [TBD]** - Write modified meshes back to NIF
+- **[Python API](python-api.md) [TBD]** - Script PyNifly operations
+- **[Example Scripts](example-scripts.md) [TBD]** - Common automation tasks
 
 ## External Resources
 

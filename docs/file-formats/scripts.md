@@ -460,6 +460,6 @@ EndEvent
 ## See Also
 
 - [Plugin Files](plugins.md) - VMAD subrecords
-- [Creation Kit](../tools/other-tools.md#creation-kit) - Script editor
-- [Debugging Scripts](../debugging/plugin-issues.md#script-errors) - Troubleshooting Papyrus errors
-- [Plugin Workflows](../workflows/plugin-editing.md) - Attaching scripts to records
+- [Creation Kit](../tools/other-tools.md#creation-kit) [TBD] - Script editor
+- [Debugging Scripts](../debugging/plugin-issues.md#script-errors) [TBD] - Troubleshooting Papyrus errors
+- [Plugin Workflows](../workflows/plugin-editing.md) [TBD] - Attaching scripts to records

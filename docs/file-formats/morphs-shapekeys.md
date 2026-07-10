@@ -100,7 +100,7 @@ CombatShout      - Combat shout face
 (more...)
 ```
 
-See [Expression Morphs Reference](../reference/expression-morphs.md) for complete list.
+See [Expression Morphs Reference](../reference/expression-morphs.md) [TBD] for complete list.
 
 ### CharGen Morphs
 
@@ -455,6 +455,6 @@ tfc 1         ; Free camera
 
 - [NIF Files](nif-files.md) - BODYTRI references, BSDynamicTriShape
 - [PyNifly](../tools/pynifly/overview.md) - Blender TRI workflow
-- [Expression Morphs Reference](../reference/expression-morphs.md) - Standard morph names
-- [Character Creation Workflow](../workflows/character-creation.md) - Using TRI in races
-- [Mesh Issues Debugging](../debugging/mesh-issues.md) - TRI troubleshooting
+- [Expression Morphs Reference](../reference/expression-morphs.md) [TBD] - Standard morph names
+- [Character Creation Workflow](../workflows/character-creation.md) [TBD] - Using TRI in races
+- [Mesh Issues Debugging](../debugging/mesh-issues.md) [TBD] - TRI troubleshooting
