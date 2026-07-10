@@ -60,6 +60,16 @@ Event OnActivate(ObjectReference akActionRef)
 EndEvent
 ```
 
+### PAS (Assembly)
+
+**Extension:** `.pas`  
+**Format:** Plain-text Papyrus assembly
+
+The intermediary between source and binary. The compiler translates `.psc`
+source into `.pas` **assembly**, then assembles that into the final `.pex`
+bytecode (`.psc` → `.pas` → `.pex`). You don't normally ship or hand-edit PAS,
+but it can be emitted for low-level inspection of exactly what the compiler produced.
+
 ### PEX (Compiled)
 
 **Extension:** `.pex`  
@@ -161,9 +171,16 @@ ObjectReference "MyDoor"
 
 ## Compiling Scripts
 
-### Creation Kit Compiler
+> **The Creation Kit compiler and the command-line compiler are the same
+> program.** The CK's *Compile* action just invokes the bundled
+> `PapyrusCompiler.exe` (in `<CK Path>/Papyrus Compiler/`) behind a GUI — there is
+> no separate "CK compiler." The choice below is only *how you invoke it*: through
+> the CK, or on the command line directly (which is what you want for scripted or
+> batch builds, since it skips loading the whole CK).
 
-**Built-in compiler** (GUI).
+### Creation Kit (GUI)
+
+**Invokes the bundled `PapyrusCompiler.exe` from a GUI.**
 
 **Workflow:**
 1. Write `.psc` file
@@ -173,14 +190,14 @@ ObjectReference "MyDoor"
 5. **Compile**
 6. Output: `Data/Scripts/<scriptname>.pex`
 
-**Limitations:**
-- Slow for batch compilation
-- No command-line options
-- Requires full CK load
+**Trade-offs:**
+- Convenient for one-off compiles while editing in the CK
+- Awkward for batch/scripted builds — call `PapyrusCompiler.exe` directly for those
+- Requires a full CK load
 
-### Command-line Compiler
+### Command line (`PapyrusCompiler.exe`)
 
-**Faster batch compilation.**
+**The same compiler, invoked directly — best for batch and scripted builds (no CK load).**
 
 **Location:** `<CK Path>/Papyrus Compiler/PapyrusCompiler.exe`
 
@@ -300,8 +317,8 @@ ERROR: Cannot cast a <TypeA> to a <TypeB>
 ```
 ERROR: Stack dump: (stack dump follows)
 ```
-- **Cause:** Infinite loop or excessive recursion
-- **Fix:** Check event loops, avoid infinite RegisterForUpdate
+- **Cause:** Infinite loop or excessive recursion — Papyrus caps the call stack at **100 frames**, so deep or unbounded recursion trips this quickly
+- **Fix:** Check event loops, rewrite recursion iteratively (keep depth well under 100), avoid infinite RegisterForUpdate
 
 **Suspended stack:**
 ```
@@ -311,6 +328,14 @@ WARNING: Saving a suspended stack. <script>.<function>
 - **Usually harmless**, but can indicate slow script
 
 ## Performance Tips
+
+> `[Skyrim]` **The `OnUpdate` event and the `RegisterForUpdate` /
+> `RegisterForSingleUpdate` polling model only exist in Skyrim.** Fallout 4,
+> Fallout 76, and Starfield removed them in favor of the **timer system** —
+> `StartTimer()` / `StartTimerGameTime()` fire a one-shot `OnTimer()` /
+> `OnTimerGameTime()` event. The examples below use Skyrim's `OnUpdate`; on the
+> newer games apply the same ideas (sensible intervals, cancel when done, cache
+> references) with timers instead.
 
 **Avoid OnUpdate spam:**
 ```papyrus
@@ -402,6 +427,7 @@ EndEvent
 - `WorkshopParentScript`
 
 **Differences from Skyrim:**
+- No `OnUpdate` / `RegisterForUpdate` — uses the timer system instead (`StartTimer` → `OnTimer`)
 - Struct types (custom data structures)
 - var keyword (type inference)
 - CustomEvent system
