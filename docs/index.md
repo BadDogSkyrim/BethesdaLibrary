@@ -1,6 +1,10 @@
 # Bethesda Modding Library
 
-A comprehensive reference library for modding **Skyrim** (LE/SE) and **Fallout 4**, focusing on file formats and Python tools.
+A somewhat ideosyncratic reference library for modding **Skyrim** (LE/SE), **Fallout 4**, and **Starfield**, focusing on file formats and Python tools. If you work with AI, hand this library to the bot as a resource so it doesn't have to reconstruct all this itself.
+
+**NOT ALL THIS INFO IS VETTED BY AN ACTUAL HUMAN.** Where I've reviewed and validated a page, there's a timestamp at the bottom — which doesn't guarantee it's correct, just that I looked at it. Corrections welcome.
+
+**LOTS OF ELEMENTS ARE STILL TBD.** I'm building this as I need it, so many pages aren't written yet. It's more complete for Starfield and FO4 than for Skyrim, because that's where I'm working right now. Links tagged **[TBD]** point at pages that don't exist yet — no need to chase them.
 
 ## What's Inside
 
@@ -8,10 +12,11 @@ This library consolidates knowledge from multiple sources into a unified, search
 
 ### 📁 [File Formats](file-formats/overview.md)
 
-Deep dives into Bethesda's binary file formats:
+Deep dives into Bethesda's binary file formats (shared across Skyrim and Fallout 4):
 
 - **[Plugins (ESP/ESM)](file-formats/plugins.md)** - Record structure, FormIDs, master resolution
 - **[NIF Files](file-formats/nif-files.md)** - Meshes, skinning, shaders, partitions
+- **[NIF Animations](file-formats/nif-animations.md)** - Scene-graph object animations (doors, banners, glow)
 - **[Animations (HKX)](file-formats/animations.md)** - Havok skeleton and animation files
 - **[Physics & Collision](file-formats/physics-collision.md)** - Havok physics, HDT-SMP configs
 - **[Morphs & Shape Keys](file-formats/morphs-shapekeys.md)** - TRI files, expressions, chargen
@@ -19,23 +24,50 @@ Deep dives into Bethesda's binary file formats:
 - **[Archives (BSA)](file-formats/archives.md)** - BSA format
 - **[Scripts (PEX)](file-formats/scripts.md)** - Compiled Papyrus
 
-### 🎮 [Game-Specific Information](game-specific/skyrim-le.md) [TBD]
+### 🎮 Game-Specific Information
 
-Differences between game versions:
+Where a game diverges from the shared formats above, it gets its own section fronted by a game-overview page:
 
-- **[Skyrim LE](game-specific/skyrim-le.md) [TBD]** - 32-bit, NiTriShape, classic features
-- **[Skyrim SE](game-specific/skyrim-se.md) [TBD]** - 64-bit, BSTriShape, BSDynamicTriShape
-- **[Fallout 4](game-specific/fallout4/overview.md) [TBD]** - Segments, connect points, BGSM materials, workshop system
+- **[Starfield](file-formats/starfield-overview.md)** - Creation Engine 2: geometry-less NIF + external `.mesh`, layered `.mat`/`.cdb` materials, component-based plugins, in-house animation. The most complete area right now:
+  - **[Meshes (NIF + .mesh)](file-formats/starfield-meshes.md)** - BSGeometry, external `.mesh` binary format, skinning
+  - **[Materials & Textures](file-formats/starfield-materials.md)** - layered `.mat`/`.cdb`, shader models, DDS conventions ([worked example](file-formats/starfield-material-worked-example.md))
+  - **[Chargen, Race & Skeleton](file-formats/starfield-chargen.md)** - RACE/HDPT/MRPH/BMOD, morphs, custom races
+  - **[Plugins & Archives](file-formats/starfield-plugins.md)** - component records, master tiers, BA2 v2/v3
+  - **[Tools](file-formats/starfield-tools.md)** - the Starfield tooling directory, grouped by task
+- **Fallout 4** - per-game NIF/material specifics (overview [TBD]):
+  - **[Connect Points](game-specific/fallout4/connect-points.md)** - runtime mesh attachment points
+  - **[Dismemberment](game-specific/fallout4/dismemberment.md)** - limb severing (BSDismemberSkinInstance, segments)
+- **Skyrim LE** [TBD] - 32-bit, NiTriShape, classic features
+- **Skyrim SE** [TBD] - 64-bit, BSTriShape, BSDynamicTriShape
 
 ### 🛠️ [Tools](tools/pynifly/overview.md)
 
 Working with the formats programmatically:
 
 - **[PyNifly](tools/pynifly/overview.md)** - Blender addon for NIF/HKX import/export
-  - Installation, importing, exporting, Python API, example scripts
+  - **[Installation](tools/pynifly/installation.md)** - setup and configuration
+  - Importing, exporting, Python API, example scripts [TBD]
 - **[esplib](tools/esplib/overview.md) [TBD]** - Python library for ESP/ESM manipulation
   - Schema system, record definitions, CLI tools
 - **[Other Tools](tools/other-tools.md) [TBD]** - xEdit, Creation Kit, NifSkope (reference only)
+
+### 🐍 Repository Scripts
+
+Python scripts that live in the [repository](https://github.com/BadDogSkyrim/BethesdaLibrary) — used while working out the plugin format. Most are Skyrim-focused investigation scripts with hardcoded data paths, so read them before running:
+
+- **[dump_hkx.py](https://github.com/BadDogSkyrim/BethesdaLibrary/blob/main/dump_hkx.py)** - dump a Havok `.hkx` packfile's structure as human-readable text (the one general-purpose tool here)
+- **[inspect_masters.py](https://github.com/BadDogSkyrim/BethesdaLibrary/blob/main/inspect_masters.py)** - dump a plugin's TES4 header and master list
+- FormID range investigation:
+  - [check_all_formid_ranges.py](https://github.com/BadDogSkyrim/BethesdaLibrary/blob/main/check_all_formid_ranges.py) - FormID ranges across masters, DLC, and ESL files
+  - [check_formids_deep.py](https://github.com/BadDogSkyrim/BethesdaLibrary/blob/main/check_formids_deep.py) - recurse records and FormIDs in Skyrim.esm
+  - [check_formids_raw.py](https://github.com/BadDogSkyrim/BethesdaLibrary/blob/main/check_formids_raw.py) - first 50 FormIDs in Skyrim.esm
+  - [check_esl_formids.py](https://github.com/BadDogSkyrim/BethesdaLibrary/blob/main/check_esl_formids.py) - ESL-relevant FormID ranges in Skyrim.esm + DLCs
+  - [check_esl_ranges.py](https://github.com/BadDogSkyrim/BethesdaLibrary/blob/main/check_esl_ranges.py) - FormID ranges in actual `.esl` files
+  - [check_dawnguard.py](https://github.com/BadDogSkyrim/BethesdaLibrary/blob/main/check_dawnguard.py) - recursive record read of Dawnguard.esm
+- Override detection:
+  - [check_overrides.py](https://github.com/BadDogSkyrim/BethesdaLibrary/blob/main/check_overrides.py) - read subrecords and detect override records
+  - [check_override_final.py](https://github.com/BadDogSkyrim/BethesdaLibrary/blob/main/check_override_final.py) - override detection with record-type filtering
+  - [simple_override_check.py](https://github.com/BadDogSkyrim/BethesdaLibrary/blob/main/simple_override_check.py) - examine overrides in a single ESP
 
 ### 📝 [Workflows](workflows/character-creation.md) [TBD]
 
@@ -86,6 +118,7 @@ Machine-readable structured data for AI consumers:
 - ✅ Skyrim LE (32-bit)
 - ✅ Skyrim SE (64-bit)
 - ✅ Fallout 4 (64-bit)
+- ✅ Starfield (Creation Engine 2) - most complete area right now
 
 **Tools Covered:**
 - ✅ PyNifly (Blender addon, Python API)
@@ -94,7 +127,7 @@ Machine-readable structured data for AI consumers:
 - ✅ Creation Kit (brief reference)
 
 **Explicitly Out of Scope:**
-- ❌ Starfield, Fallout 76, Fallout 3, Fallout New Vegas
+- ❌ Fallout 76, Fallout 3, Fallout New Vegas
 - ❌ Pascal/xEdit scripting (deprecated)
 - ❌ Detailed Creation Kit workflows
 - ❌ Executable validators or decision tree functions
@@ -110,15 +143,15 @@ This library consolidates knowledge from:
 
 ## Contributing
 
-Found an error? Have additional information? Contributions welcome!
+Found an error? Have additional information? Contributions welcome! See **[CONVENTIONS.md](CONVENTIONS.md)** for the page style and formatting conventions.
 
 ## Organization Principles
 
 - **Format vs Tool** - File format specs are tool-agnostic; tool-specific conventions are clearly marked
-- **Universal vs Game-Specific** - Common information in "File Formats"; differences in "Game-Specific"
+- **Universal vs Game-Specific** - Common information in "File Formats"; per-game divergences in "Game-Specific"
 - **Blender-Agnostic** - Game concepts explained first, then Blender implementation details
 - **Complete Examples** - No placeholders or "fill in" comments in code examples
 
 ---
 
-**Ready to dive in?** Start with [File Formats](file-formats/overview.md) or jump to [Workflows](workflows/character-creation.md) [TBD] for practical guides.
+**Ready to dive in?** Start with [File Formats](file-formats/overview.md) for the shared formats, or jump straight to [Starfield](file-formats/starfield-overview.md) for the most complete section.
