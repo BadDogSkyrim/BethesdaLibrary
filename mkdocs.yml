@@ -78,7 +78,10 @@ nav:
     - Scripts (PEX): file-formats/scripts.md
 
   - Game-Specific:
+    - Skyrim:
+      - Overview: game-specific/skyrim/overview.md
     - Fallout 4:
+      - Overview: game-specific/fallout4/overview.md
       - Connect Points: game-specific/fallout4/connect-points.md
       - Dismemberment: game-specific/fallout4/dismemberment.md
     - Starfield:

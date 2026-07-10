@@ -34,11 +34,10 @@ Where a game diverges from the shared formats above, it gets its own section fro
   - **[Chargen, Race & Skeleton](file-formats/starfield-chargen.md)** - RACE/HDPT/MRPH/BMOD, morphs, custom races
   - **[Plugins & Archives](file-formats/starfield-plugins.md)** - component records, master tiers, BA2 v2/v3
   - **[Tools](file-formats/starfield-tools.md)** - the Starfield tooling directory, grouped by task
-- **Fallout 4** - per-game NIF/material specifics (overview [TBD]):
+- **[Fallout 4](game-specific/fallout4/overview.md)** - 64-bit Creation Engine: BGSM/BGEM materials, mesh segments, connect points, BA2 archives, ESL plugins:
   - **[Connect Points](game-specific/fallout4/connect-points.md)** - runtime mesh attachment points
-  - **[Dismemberment](game-specific/fallout4/dismemberment.md)** - limb severing (BSDismemberSkinInstance, segments)
-- **Skyrim LE** [TBD] - 32-bit, NiTriShape, classic features
-- **Skyrim SE** [TBD] - 64-bit, BSTriShape, BSDynamicTriShape
+  - **[Dismemberment](game-specific/fallout4/dismemberment.md)** - limb severing (BSSubIndexTriShape segments, `.ssf`)
+- **[Skyrim](game-specific/skyrim/overview.md)** - LE (32-bit, NiTriShape) and SE (64-bit, BSTriShape); shared formats with per-edition differences
 
 ### 🛠️ [Tools](tools/pynifly/overview.md)
 
