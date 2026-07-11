@@ -89,6 +89,7 @@ nav:
       - Meshes (NIF + .mesh): file-formats/starfield-meshes.md
       - Materials & Textures: file-formats/starfield-materials.md
       - "  ↳ .mat worked example": file-formats/starfield-material-worked-example.md
+      - "  ↳ .cdb binary format": file-formats/starfield-cdb-format.md
       - Chargen, Race & Skeleton: file-formats/starfield-chargen.md
       - Plugins & Archives: file-formats/starfield-plugins.md
       - Tools: file-formats/starfield-tools.md

@@ -46,7 +46,8 @@ Because each group is a *range*, the triangles must be **physically sorted by
 segment** in the triangle array. Tools that write SSITS shapes re-sort the
 triangle list so each segment's tris are contiguous.
 
-Bodypart segment layout is fixed. If a segment is not used in a nif, it is present and empty to hold the slot: 
+Bodypart segment layout is fixed. If a segment is not used in a nif, it is present and
+empty to hold the slot: 
 
 ```
 Seg 0  (always empty)
@@ -56,11 +57,21 @@ Seg 3  (torso; usually no subsegments)
 Seg 4  (Left arm)
 Seg 5  (Right leg)
 Seg 6  (Left leg)
+Seg 7  (Right back leg; arthropods)
+Seg 8  (Left back leg)
 ```
 
 Any segments that are unused in a nif **must exist** — they hold the
 limb segments at fixed indices, which the `.ssf` references by
-position (see below). But trailing empty segments can be omitted.
+position (see below). E.g. gloves have an empty null and head segment, a right arm segment, a null segment for the torso, and a left arm segment. But trailing empty segments can be omitted.
+
+The Head segment does not typically have subsegments, but we have been able to give the
+AMELIA model dismemberable ears by putting left and right ears in subsegments.
+Conceiveably the same trick might give furry actors dismemberable tails.
+
+If a segment has subsegments it will have no verts or tris - they will all be in the subsegments.
+
+Subsegments also follow a scheme: They divide the limb from body to tip of limb, in that order. Each joint gets a subsegment, separated from the next by a long bone which gets its own subsegment. Cut points are on the long bones.
 
 ### 2. Per-segment shared data (the dismember tags + cut offsets)
 
@@ -91,14 +102,18 @@ Example dismember material hashes (vanilla male body):
 
 ## Cut offsets — the key to dismemberment
 
-The **cut offsets** cut the long bones to make a part severable. A subsegment with zero cut
-offsets cannot be cut; a body whose every subsegment has `Num Cut Offsets = 0`
-will not dismember at all even though its segment structure looks complete.
+The **cut offsets** cut the long bones to make a part severable. A subsegment with zero
+cut offsets cannot be cut; limbs whose every subsegment has `Num Cut Offsets = 0` will not
+dismember at all even though its segment structure looks complete. NOTE we've found this
+to be true of a body's limbs; but AMELIA's ears dismembered even though they had no cut
+points. There is more to learn here.
 
 ### Structure
 
-Each cut offset list is monotonically increasing (probably required), and every value is an integer multiple
-`k · step` of a per-bone step — so the cuts are evenly spaced (though some cuts are skipped in some meshes). Likely the even spacing is not required, though it may relate to the size of the cuff on the meatcap.
+Each cut offset list is monotonically increasing (probably required), and every value is
+an integer multiple `k · step` of a per-bone step — so the cuts are evenly spaced (though
+some cuts are skipped in some meshes). Likely the even spacing is not required, though it
+may relate to the size of the cuff on the meatcap.
 
 For vanilla `MaleBody.nif`:
 
@@ -116,7 +131,7 @@ Observations that are *certain*:
 - Cut points in vanilla meshes use consistent values of `k · step` for integer `k` on a per-bone grid. Some meshes, such as FatiguesM.nif, omit some cuts. (In the case of ArmyFatiguesM, the cut would land right at the top of the boot where the pants crumple up - probably the modeler decided a cut there would look bad.) 
 - When multiple subsegments map to one bone, generally only one subsegment has cuts--but generally only one subsegment is long enough to need them. 
 
-### Attachment slots can carry cut offsets too
+### Biped-object subsegments can carry cut offsets too
 
 `FatiguesM.nif` attaches a Pip-Boy via biped-object subsegments (`User Index` =
 the biped slot, ≥ 30, not the renumbered 1,2,3… of a dismember subsegment). The
@@ -180,7 +195,8 @@ Three things that fit:
   probably exist so the bearer (mid-shaft) cleanly owns the triangles that may be
   affected by a cut, while the joint-adjacent slabs always stay with the limb on
   whichever side.
-- **Subsegments can be used by the game for dismemberment** especially in decapitation. Not clear how this interacts with cut points.
+- **Subsegments can be used by the game for dismemberment** especially in decapitation,
+  and also AMELIA's ears. Not clear how this interacts with cut points.
 
 ## The `.ssf` file
 
@@ -269,4 +285,4 @@ For a custom skinned FO4 body to dismember:
 - [NIF files](../../file-formats/nif-files.md)
 - [Physics & collision](../../file-formats/physics-collision.md)
 
-*Verified 2026-05-30, Bad Dog*
+*Verified 2026-07-10, Bad Dog*

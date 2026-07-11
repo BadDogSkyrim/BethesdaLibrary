@@ -41,7 +41,9 @@ Key ideas:
 - **A material database, not a folder of files.** At load time the game reads
   `materialsbeta.cdb` (shipped inside `Data\Starfield - Materials.ba2`). It contains the compiled
   graphs for *every* vanilla material plus precomputed path hashes. A **loose `.mat`** in
-  `Data\Materials\…` overrides/extends the database entry with the matching path.
+  `Data\Materials\…` overrides/extends the database entry with the matching path. Its on-disk binary
+  layout — and the v4 change that breaks older readers — is documented in
+  [The `.cdb` binary format](starfield-cdb-format.md).
 
 **A loose `.mat` is sufficient — you never need to write the `.cdb`** (verified against fo76utils
 NifSkope, nifly, and Outfit Studio source). The game/CK load loose JSON `.mat` files at runtime, and
@@ -299,6 +301,17 @@ Skyrim's specular did. Each scalar PBR property is its own **single-channel BC4*
 - All textures ship with mipmaps (same requirement as `[FO4]`/`[Skyrim]`).
 - Texture paths in the `.mat` are stored **with** `Data\` prefix and **with** the `.DDS` extension —
   unlike NIF texture-set paths in older games, which omitted both. (Community tools accept either.)
+
+!!! warning "Starfield normals are BC5_**SNORM** — Blender can't decode them"
+    Starfield `_normal` maps use **BC5_SNORM** (signed) with a **DX10-header** DDS (`dxgiFormat` 84).
+    `[FO4]` normals, by contrast, are **BC5_UNORM** with the legacy `ATI2` fourCC. Blender's DDS
+    reader (through at least 5.1) handles the FO4 flavor but **not** the DX10 BC5_SNORM one — it
+    loads such a file as a **0×0 image with no data**, so any in-shader Z-reconstruction runs on
+    nothing and the normal renders as garbage (a tell-tale symptom is a hard seam where mirrored
+    front/back UVs meet). The BC1/BC4 color/rough/ao maps load fine; only the SNORM normal fails.
+    Until Blender adds BC5_SNORM support, **convert the normal to PNG** (e.g. Texture Toolbox,
+    `texconv`) — a reconstructed full-RGB normal set to **Non-Color** — and use that. The block
+    *layout* is identical to FO4's BC5; only the value convention (signed) and header differ.
 
 **Fur/skin-relevant maps:** subsurface look is driven by `TranslucencySettings` (a numeric block),
 not a dedicated "SSS map" — though a per-pixel mask can come via `_transmissive` (slot 8) and
