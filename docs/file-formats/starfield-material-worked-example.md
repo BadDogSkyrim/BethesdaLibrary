@@ -314,4 +314,4 @@ _Source: `Materials\Actors\Human\Naked_Body\Male\Naked_M_Body.mat`, extracted fr
 (build 1.16.244.0) with PyNifly's `pyn/sf_cdb.py`. JSON verbatim except for reflow/eliding of
 already-covered repeats._
 
-_Draft 2026-07-10 — reviewed by Bad Dog_
+_Reviewed 2026-07-10, Bad Dog_
