@@ -251,6 +251,24 @@ edgeMaskMin, edgeMaskDistanceMin/Max, ditherScale, ditherDistanceMin/Max, tangen
 softFalloffDepth, frostingBgndBlend, frostingBlurBias, materialAlpha, backlightScale,
 backlightSharpness, backlightTransparency, backlightTintColor, depthBias`.
 
+!!! tip "CK gotcha: effect materials invisible above opaque surfaces"
+    An animated/effect (`EffectSettings`) material can render correctly in NifSkope yet
+    turn **invisible in-game whenever it is drawn on top of an opaque material** — while
+    looking fine anywhere it is *not* over opaque geometry. Two toggles in the CK Material
+    Editor → **Effect Settings** control this (they map to `EffectSettings` flags):
+
+    - **Soft Effect → disable it.** With Soft Effect *enabled* (any value) the effect
+      vanishes over opaque surfaces; *disabled*, it draws correctly on top of them. **This
+      is the key fix.**
+    - **ZTest → enable it** so the effect is properly occluded by opaque geometry
+      (depth-tested). With ZTest *disabled* the effect renders *through* occluding opaque
+      surfaces (always-on-top).
+
+    So **Soft Effect off + ZTest on** = visible above opaque *and* correctly occluded.
+    Blend mode, the normal map, `Render before IOT`, and `Is Glass` were all found not to
+    affect this (some combinations can even CTD the CK). Community finding — the CK ships
+    no help text for these parameters.
+
 ---
 
 ## 5. TextureSet slots & DDS conventions
