@@ -196,7 +196,7 @@ Defines how a mesh is rendered.
 - SLSF1_* (Set 1): Vertex alpha, vertex colors, etc.
 - SLSF2_* (Set 2): Environment mapping, tree anim, etc.
 
-See [Shader Flags](../../reference/shader-flags.md) [TBD] for complete list.
+See [Shader Flags](../reference/shader-flags.md) [TBD] for complete list.
 
 References textures through a separate BSShaderTextureSet block
 
@@ -279,7 +279,7 @@ References cloth simulation data.
 NIFs can contain embedded animations for objects (not character animations — those are in HKX files).
 
 See [need a page for this] for details of animation structure.
-See [NIF Animations](../../workflows/animations.md#nif-embedded-animations) [TBD] for workflows.
+See [NIF Animations](../workflows/animations.md#nif-embedded-animations) [TBD] for workflows.
 
 ## Vertex Data
 
@@ -420,6 +420,6 @@ FO4 stores vertex positions as **half-float16** (16-bit floats).
 
 ---
 
-**Ready to work with NIFs?** Check out [PyNifly workflows](../../workflows/meshes-modeling.md) [TBD].
+**Ready to work with NIFs?** Check out [PyNifly workflows](../workflows/meshes-modeling.md) [TBD].
 
 _Reviewed 2026-04-25, Bad Dog_
