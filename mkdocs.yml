@@ -99,6 +99,9 @@ nav:
       - Overview: tools/pynifly/overview.md
       - Installation: tools/pynifly/installation.md
 
+  - Reference:
+    - Partition Names: reference/partition-names.md
+
   - Conventions: CONVENTIONS.md
 
 extra:

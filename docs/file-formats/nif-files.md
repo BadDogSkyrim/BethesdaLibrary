@@ -183,7 +183,9 @@ SBP_230_HEAD (BP_EXTRADATA_START) - Editor markers for extra data attachment poi
 - Has an associated external SSF (Segment SubSegment File)
 - Has material
 
-See [Partition Names](../../reference/partition-names.md) [TBD] for complete list.
+`[FO4]` See [Dismemberment](../game-specific/fallout4/dismemberment.md) for the full FO4 segment/subsegment scheme, cut offsets, and `.ssf` format.
+
+`[Skyrim]` See [Partition Names](../reference/partition-names.md) for the complete SBP_* list.
 
 ### Material/Shader Blocks
 

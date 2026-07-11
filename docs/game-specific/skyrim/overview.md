@@ -16,7 +16,7 @@ shared format, which Skyrim also has in common with Fallout 4.
 ## Formats
 
 - **[Plugins (ESP/ESM)](../../file-formats/plugins.md)** — record structure, FormIDs, master resolution. `[SSE]` supports ESL "light" plugins; `[LE]` does not.
-- **[NIF Files](../../file-formats/nif-files.md)** — `[LE]` `NiTriShape` / `NiTriStrips`; `[SSE]` `BSTriShape` and `BSDynamicTriShape` (morphable head/body with dynamic vertices).
+- **[NIF Files](../../file-formats/nif-files.md)** — `[LE]` `NiTriShape` / `NiTriStrips`; `[SSE]` `BSTriShape` and `BSDynamicTriShape` (morphable head/body with dynamic vertices). Body meshes use the **`SBP_*` partition** system to hide regions covered by armor — the partitions are defined on the [NIF Files](../../file-formats/nif-files.md) page, with the complete slot list in [Partition Names](../../reference/partition-names.md).
 - **[NIF Animations](../../file-formats/nif-animations.md)** — scene-graph object animations (doors, banners, mill wheels, enchant glow) embedded in the mesh.
 - **[Animations (HKX)](../../file-formats/animations.md)** — Havok skeleton and animation (`hk_2010.2.0-r1`). `[SSE]` uses 64-bit HKX; `[LE]` 32-bit files are not cross-loadable without conversion.
 - **[Physics & Collision](../../file-formats/physics-collision.md)** — Havok collision, plus skinned-mesh physics via HDT-SMP (and `[LE]` HDT-PE).

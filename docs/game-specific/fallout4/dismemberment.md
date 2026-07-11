@@ -140,6 +140,27 @@ same forearm grid, so it detaches when the lower-left arm is severed; the cosmet
 Pip-Boy Cap (slot 160) carries none. So cut offsets are not exclusive to the nude
 dismember parts — any subsegment riding a dismemberable bone may carry them.
 
+### Biped-object segments are equip-conditional geometry (the Pip-Boy)
+
+A segment or subsegment tagged with a biped-object `User Index` (a biped slot,
+≥ 30 — not the renumbered 1,2,3… of a dismember subsegment) is **conditional
+geometry**: the game shows or hides it based on whether that biped-object slot is
+currently filled by equipped apparel. The Pip-Boy is the vanilla example.
+
+The forearm exists in **two variants, each in its own biped-object segment keyed
+to the Pip-Boy slot**:
+
+- **Pip-Boy worn** (slot occupied) → the Pip-Boy-mount forearm is shown and the
+  bare forearm is hidden.
+- **Pip-Boy not worn** (slot empty) → the bare forearm is shown and the mount
+  variant is hidden.
+
+Only one of the pair is ever drawn, so the arm reads correctly whether or not the
+device is equipped. This makes a biped-object segment do double duty: it groups
+triangles for dismemberment (and may carry cut offsets, as above) **and** acts as
+an equip-driven visibility switch. Any body region can use the same trick to swap
+geometry depending on what's equipped in a given slot.
+
 ### A cut offset is a distance along the bone (verified against the skeleton)
 
 - **A cut offset is a distance measured along the bone from its joint (pivot).**
