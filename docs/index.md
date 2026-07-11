@@ -97,6 +97,7 @@ Quick lookup tables:
 - **[Bone Names](reference/bone-names.md) [TBD]** - Standard skeleton bone names
 - **[Shader Flags](reference/shader-flags.md) [TBD]** - SLSF1/SLSF2 flags
 - **[Partition Names](reference/partition-names.md)** - Skyrim SBP_* partition slots (complete list)
+- **[External Resources](reference/external-resources.md)** - curated wikis, tool repos, format specs, and tutorials
 - **[Expression Morphs](reference/expression-morphs.md) [TBD]** - Standard morph names
 
 ### 🤖 [AI Reference](ai-reference/glossary.md) [TBD]
