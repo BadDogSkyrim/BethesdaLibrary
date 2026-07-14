@@ -380,6 +380,52 @@ raw action units by the animation system.
 >   HumanRace clone, vanilla helmets drive it automatically. This is HideEar working
 >   **as designed** (helmet fit) — not a repurposing.
 
+### Named facial expressions (`FXPD`) — dialogue-driven bundles of action units
+
+The raw performance morphs above are the *primitives*; the engine composes named,
+higher-level expressions from them via the **`FXPD` "Facial Expression"** record —
+a flat, weighted bundle:
+
+```
+FXPD: EDID + FULL(display name) + Morphs[] { MNAM = morph name, MWGT = weight 0..1 }
+```
+
+`Starfield.esm` ships ~**31** of these (`facialExpression_Afraid`, `_Angry`, `_Happy`,
+`_Depressed`, `_Disgust`, `_Flirt`, `_Pain`, `_Rage`, `_Shocked`, `_Smug`, `_Yawn`, …),
+each listing 2–42 of the **same action-unit names as the performance `morph.dat`**.
+For example `facialExpression_Afraid` = `browLowererL 0.638`, `innerBrowRaiseR 0.853`,
+`eyeOpenL/R 1.0`, `jawOpen 0.155`, `lipCornerDepressL/R ≈0.3`, `nostrilDilator 0.621`,
+`neckFlexL/R`, … So an expression is just *"set these AUs to these weights."*
+
+**How they're triggered:** `FXPD` records are referenced by **`DIAL` (Dialog Topics)**
+and **`SCEN` (Scenes)** — the expression is attached to conversation lines and scripted
+scene beats (that's the "tied to dialogue/conditions" hook). This is distinct from the
+CK's **"Anim Archetype"** field, which is a **`KYWD`** (`AnimFaceArchetype*`) set in a
+reusable *Animation* struct on `INFO`/scenes/packages — a higher-level animation-*style*
+selector consumed by the anim system, not itself a list of morphs. (`INFO` responses
+also carry a per-line *Emotion* keyword + value in `TRDA`.)
+
+> **Furry-race implications.**
+> - Because an `FXPD` references morphs **by name**, and every face part only responds
+>   to the AU keys *its own* `performance/morph.dat` defines, a muzzle head that authors
+>   the vanilla AU names (`browLowererL`, `jawOpen`, `innerBrowRaise`, …) is driven by the
+>   **vanilla dialogue expressions automatically** — no behavior-graph authoring, no
+>   record edits. This is the cheapest path to dialogue-driven emotion on a non-human head.
+> - **`FXPD` records are global, not per-race.** There is no race field and dialogue picks
+>   the expression, not the actor's race — so you *cannot* give an anthro wolf a different
+>   `_Angry` mix from a human by adding a race-specific expression alone.
+> - **Work-around (unconfirmed, promising):** add **new, species-specific action units**
+>   (e.g. `canine_ear_angry`, `canine_ear_happy`) to the canine head/ear `performance/
+>   morph.dat`, then add those AU names to the relevant **global** `FXPD` records at chosen
+>   weights. Humans lack those keys in their morph.dat, so the added entries are **silently
+>   ignored on humans** (unknown key = no-op) but deform the canine's ears — one shared
+>   expression, species-appropriate result, no custom dialogue needed. Costs: it's an edit
+>   to base-game global records (a compatibility/"dirty edit" consideration), and the
+>   ignore-unknown-AU behavior should be confirmed in-game. A few reusable ear AUs
+>   (`earPinBack`/`earDroop`/`earPerk`) spread across the emotion `FXPD`s is tidier than a
+>   bespoke morph per emotion. Authoring *brand-new* `FXPD`s instead avoids editing vanilla
+>   records but then needs custom dialogue/scenes to trigger them.
+
 ### The morph-delta file (`.morph` / `morph.dat`)
 Stored under `Data/meshes/morphs/…/morph.dat` — always named `morph.dat`, only the folder path varies
 (e.g. `meshes/morphs/human/female/chargen/body/morph.dat`); **not** hash-named like `.mesh` files.
