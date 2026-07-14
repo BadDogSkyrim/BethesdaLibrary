@@ -259,9 +259,21 @@ separate horn or ear part that should disappear under a helmet. (Ears *integrate
 into the head mesh* instead use the head's own `HideEar` **morph** to collapse the
 ear region — see §3 Expressions.)
 
+**The `.nif` and the morph.dat are siblings under `HDPT`, not linked to each
+other.** A head part points at its mesh through **Model** (`meshes/…/*.nif` → an
+external `.mesh`) and at its morphs through **`MNAM` → `MRPH` → `TMPP`/`TCMP`**
+(`meshes/morphs/…/morph.dat`). Nothing inside the NIF references the morph file:
+the two live in different trees (`meshes/` vs `meshes/morphs/`), their names don't
+correspond, and the only thing that binds them is the shared `HDPT` record. So a
+tool importing a head NIF **cannot auto-discover its morphs** — the association has
+to come from the record (or be supplied by the user). The Creation Kit's **"tri"
+field** on a head part is this `MNAM` → `MRPH` reference (the label is a Skyrim/FO4
+legacy — Starfield morphs are `morph.dat`, not `.tri`); it **is** used, and every
+vanilla Face / Eyebrows / Teeth / Eyelashes head part sets it.
+
 ---
 
-## 3. Morphs — `MRPH` record and `.morph`/`.dat` geometry
+## 3. Morphs — `MRPH` record and `morph.dat` geometry
 
 `[Skyrim]`/`[FO4]` used `.tri` files referenced by a `BODYTRI`/`FaceGen`
 `NiStringExtraData`. **Starfield replaces `.tri` with a `MRPH` "Morphable
@@ -304,10 +316,26 @@ The extracted human female **`performance/head/morph.dat`** has **96 shape keys*
 co-activate. These action units double as **visemes** for lip-sync.
 
 By contrast the **`chargen/head/morph.dat`** (84 keys) holds the *creator*
-morphs — phenotype presets named `<sex>_<ethnicity>_<age>_<region>` (e.g.
-`female_eu_md2_Forehead`, `female_af_yo1_Jaw`) plus `Overweight`/`Thin`/`Strong`.
-The two channels are entirely distinct sets, referenced by `MRPH.TMPP`
-(performance) vs `MRPH.TCMP` (chargen).
+morphs. Its structure is exactly **3 body-shape keys + 9 phenotype presets × 9
+face regions** (verified on the vanilla male & female head morph.dat):
+
+- **Body shape (3):** `Overweight`, `Thin`, `Strong` (the same three keys as the
+  `chargen/body/morph.dat`).
+- **Face presets (81):** `<sex>_<ethnicity>_<age>_<Region>`.
+  - **9 phenotype presets** = ethnicity `af`/`as`/`eu` × age `yo`/`md`/`ol`
+    (young/mid/old), i.e. `af_md1`, `af_ol1`, `af_yo1`, `as_md1`, `as_ol1`,
+    `as_yo1`, `eu_md2`, `eu_ol1`, `eu_yo1`. (Note the trailing index is a fixed
+    token, not a free axis — `eu` uses `md2` where `af`/`as` use `md1`.)
+  - **9 regions** = `Cheeks`, `Chin`, `Ears`, `Eyes`, `Forehead`, `Jaw`, `Mouth`,
+    `Neck`, `Nose`.
+
+So `male_eu_md2_Cheeks`, `female_af_yo1_Jaw`, etc. — each region exposes 9 sliders
+(one per preset), and the creator blends them per region. The two channels are
+entirely distinct sets, referenced by `MRPH.TMPP` (performance) vs `MRPH.TCMP`
+(chargen). A specific NPC's face is then built from these: the `NPC_` record's
+**Face Morphs** array holds `FMRI` face-morph indices (into this preset set) plus
+per-region **Morph Groups** (`FMRG` name + `FMRS` blend intensity), and its `MRSV`
+**Body Morph Region Values** blend the body-shape keys.
 
 Each face part (head, eyebrows, eyelashes, teeth…) has its own
 `performance/morph.dat`, so the whole face animates together. The runtime
@@ -366,17 +394,26 @@ uint32 numShapeKeys
 uint32 numMorphData
 uint32 numOffsets         // == numVertices
 morphData[numMorphData]   // 16 bytes each:
-    uint16 offset[3]      //   position delta, half-float, stored ÷ havokScale (69.969) → metric
-    uint16 targetVertColor//   RGB565
-    uint32 normal         //   delta normal,  UDEC3 (10:10:10:2)
-    uint32 tangent        //   delta tangent, UDEC3
+    uint16 offset[3]      //   position delta, half-float, in metric (.mesh) units;
+                          //     × havokScale (69.969) → game units, as with .mesh positions
+    uint16 targetVertColor//   single scalar, value / 65535 (OS/SGB; ≈0.742 in every vanilla record)
+    uint32 normal         //   delta normal,  DEC3N signed (axis = (n>>k & 1023)/511.5 − 1.0)
+    uint32 tangent        //   delta tangent, DEC3N signed
 offsets[numOffsets]       // 20 bytes each — sparse per-vertex:
     uint32 dataStart      //   start index into morphData
     uint32 keyMarker[4]   //   128-bit bitfield → which shape keys touch this vertex (max 128 keys)
 ```
 
-So a morph is **sparse**: each vertex stores a run of deltas only for the shape keys whose bit is set
-in its `keyMarker`. Note position deltas share the `.mesh`'s `havokScale` factor.
+So a morph is **dense over vertices** (one `offsets` entry each, `numOffsets == numVertices`) but
+**sparse over keys**: a vertex stores a run of deltas only for the shape keys whose bit is set in its
+`keyMarker`, and the set bits (ascending) map 1:1 to that vertex's consecutive `morphData` records.
+Position deltas share the `.mesh`'s `havokScale` factor.
+
+> **Corrections (verified byte-exact against vanilla + the SGB `MorphIO.cpp` source, 2026-07-14):**
+> earlier notes here had `targetVertColor` as RGB565 (it's a single `/65535` scalar) and the
+> normal/tangent as UDEC3 (they're **DEC3N signed**); the position half-float is stored **metric**
+> and multiplied — not divided — by `havokScale` to reach game units. A round-trip reader/writer
+> reproduces a vanilla `morph.dat` byte-for-byte with this layout.
 
 Workflow facts (Starfield Geometry Bridge, Blender):
 - Import the `.mesh` first, then import the `.morph` onto the active mesh.
@@ -389,7 +426,7 @@ Workflow facts (Starfield Geometry Bridge, Blender):
 
 Reference implementations: Outfit Studio `SFMorphFile.{h,cpp}` (reads **and** writes) and
 StarfieldMeshConverter's `MorphIO`. Both are self-contained (~250 lines) with no NIF-library
-dependency beyond half-float + UDEC3/RGB565 helpers.
+dependency beyond half-float + DEC3N helpers.
 
 ---
 
@@ -400,14 +437,24 @@ the mesh. Starfield replaced the fixed `[Skyrim]` tint-mask layers with a
 generalized **Additive Visual Material (AVM)** system.
 
 ### Per-NPC tint application (`NPC_` → "AVMD Tints")
-Each applied tint layer:
+**Tints are applied on the `NPC_` record, not the `RACE` record** — the race has
+no tint-layer list. Each NPC carries an `EDCT` **Tint Count** plus an **AVMD
+Tints** array; each entry is one applied layer:
 | Field | Meaning |
 |---|---|
+| `MNAM` | → the `AVMD` record this layer comes from |
 | `TNAM` Tint Group | which group (e.g. skin, cheeks, "muzzle") |
 | `QNAM` Tint Name | which option in the group |
 | `VNAM` Tint Texture | the overlay texture path |
 | `NNAM` Tint Color | RGBA color |
 | `INTV` Intensity | 1–128 |
+
+So the chain that hooks a material's tint overlay to a specific character is
+**`NPC_` "AVMD Tints" → `MNAM` (`AVMD` group/option) → `VNAM` texture / `NNAM`
+color**, composited over the face material at runtime (for the player, driven by
+the creator; for NPCs, authored on the record and baked by FaceGen — §6). The NPC
+also names its per-slot colors directly as strings (`HCOL` hair, `FHCL` facial
+hair, `BCOL` eyebrow, `ECOL` eye, `JCOL` jewelry).
 
 `AVMD` ("AVMS Data") records define the tint/complexion **groups and options**
 themselves, referenced by the race's `Skin Tone AVMS Subtype` and the head part's
@@ -744,8 +791,12 @@ Concrete FormIDs/steps that trip up first-time race authors:
 
 ## Open questions / uncertainties
 
-1. ~~Exact `.morph` binary layout~~ — **RESOLVED** (verified against Outfit Studio
-   `SFMorphFile`, see §3).
+1. ~~Exact `morph.dat` binary layout~~ — **RESOLVED** (verified byte-exact against
+   vanilla + Outfit Studio `SFMorphFile` / StarfieldMeshConverter `MorphIO.cpp`;
+   corrected the color/normal encodings, see §3).
+7. ~~How a material's tint layers hook to a specific character~~ — **RESOLVED**:
+   they don't sit on the `RACE`; each `NPC_` lists its own **AVMD Tints**
+   (`MNAM` → `AVMD` group/option → texture/color), see §4.
 2. ~~Vanilla skeleton bone list~~ — **RESOLVED** (116 NiNodes extracted from
    `skeleton.nif`, see §6).
 3. **Starfield facegen output paths** — workflow confirmed, literal
@@ -766,6 +817,9 @@ Concrete FormIDs/steps that trip up first-time race authors:
   `Starfield.esm`.
 - nifly `include/Geometry.hpp` — `BSGeometry`, `BSGeometryMesh`,
   `BSGeometryMeshData` (mesh/morph/skin structure, meshlets, havokScale).
+- StarfieldMeshConverter `src/MorphIO.cpp` / `include/MorphIO.h` (SesamePaste233) —
+  authoritative `morph.dat` read/write; layout + DEC3N/half-float helpers verified
+  byte-exact against vanilla `chargen`/`performance` morph.dat, 2026-07-14.
 - Organization of Starfield's Meshes and Related Assets — https://www.nexusmods.com/starfield/articles/268 (mirror: https://allmods.net/starfield-mods/starfield-miscellaneous/organization-of-starfields-meshes-and-related-assets/)
 - "Notes and pitfalls on creating a playable race" (ExoWarlock313), the primary race-build walkthrough — https://www.nexusmods.com/starfield/articles/431
 - CharGen Resources Tutorial (AVM group catalog + RTFP config syntax) — https://www.nexusmods.com/starfield/articles/481
