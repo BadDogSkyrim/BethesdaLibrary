@@ -269,6 +269,55 @@ backlightSharpness, backlightTransparency, backlightTintColor, depthBias`.
     affect this (some combinations can even CTD the CK). Community finding — the CK ships
     no help text for these parameters.
 
+### Component representation in the `.mat`/cdb (authoring names)
+
+The field names above are the **runtime** (CommonLibSF) names. The names actually stored in a loose
+`.mat` / the `materialsbeta.cdb` are **PascalCase**, and translucency is wrapped in a
+component-plus-`Settings` envelope. A cdb/`.mat` reader (fo76utils `sfmatexport`, PyNifly) sees these
+class field sets (verified against the cdb class registry):
+
+- **`TranslucencySettingsComponent`** = `Enabled` + a nested `Settings` →
+  **`TranslucencySettings`** = `Thin, FlipBackFaceNormalsInViewSpace, UseSSS, SSSWidth, SSSStrength,
+  TransmissiveScale, TransmittanceWidth, SpecLobe0RoughnessScale, SpecLobe1RoughnessScale,
+  TransmittanceSourceLayer`. `Enabled` and `UseSSS` are **two separate gates** — the component can be
+  on with SSS off (thin translucency vs subsurface). `SpecLobe0/1RoughnessScale` are the skin
+  **dual-specular-lobe** roughness multipliers (sharp + soft highlight), not scatter depth.
+- **`HairSettingsComponent`** = fields directly: `Enabled, IsSpikyHair, SpecScale,
+  SpecularTransmissionScale, DirectTransmissionScale, DiffuseTransmissionScale, Roughness,
+  ContactShadowSoftening, BackscatterStrength, BackscatterWrap, VariationStrength,
+  IndirectSpecularScale, IndirectSpecularTransmissionScale, IndirectSpecRoughness, EdgeMaskContrast,
+  EdgeMaskMin, EdgeMaskDistanceMin/Max, MaxDepthOffset, DitherScale, DitherDistanceMin/Max,
+  Tangent (XMFLOAT3), TangentBend, DepthOffsetMaskVertexColorChannel, AOVertexColorChannel`.
+- **`AlphaSettingsComponent`** = `HasOpacity, AlphaTestThreshold, OpacitySourceLayer, Blender
+  (→ AlphaBlenderSettings), UseDitheredTransparency`. Surface alpha is a **test/clip** at
+  `AlphaTestThreshold` — there is no none/test/blend enum; `UseDitheredTransparency` selects dithered
+  coverage (hair) vs straight blend. The nested `Blender` (`AlphaBlenderSettings` = `Mode,
+  UseDetailBlendMask, UseVertexColor, VertexColorChannel, OpacityUVStream, HeightBlendThreshold,
+  HeightBlendFactor, Position, Contrast`) governs **layer** alpha-blend, distinct from surface alpha.
+- **`LayeredEmissivityComponent`** = up to three layers + two blenders + adaptive emittance:
+  `Enabled, FirstLayerIndex, FirstLayerTint, FirstLayerMaskIndex, SecondLayerActive/Index/Tint/…,
+  FirstBlenderIndex, FirstBlenderMode, ThirdLayer…, SecondBlender…, EmissiveClipThreshold,
+  AdaptiveEmittance, LuminousEmittance, ExposureOffset, EnableAdaptiveLimits, Max/MinOffsetEmittance,
+  IgnoresFog`.
+- **`ShaderModelComponent`** = `FileName` (the template name, e.g. `BodySkin2Layer`, `Hair1Layer`).
+
+Two reader gotchas:
+
+- **Only *changed* fields are stored.** The cdb keeps per-object diffs against the template default,
+  so a shipped material lists only the fields it overrode — a skin `TranslucencySettings` may carry
+  just `UseSSS` + the two `SpecLobe*RoughnessScale`s; a hair `AlphaSettingsComponent` may carry only
+  `HasOpacity`. An absent field means *template default*, not zero. To recover a field's default you
+  need the shader-model template (§3) or the class definition, not the material instance.
+- **Values are strings; colors are nested `XMFLOAT4`.** Every scalar/bool is a string (`"true"`,
+  `"0.93"`); a color is `{ Value: { Type: "XMFLOAT4", Data: { x, y, z, w } } }`. (See the cdb-format
+  page.)
+
+**Hair carries no Normal.** A hair material typically omits slot 1 — strand shading comes from the
+mesh's **geometry normals** + the anisotropic `HairSettings` model + the ID map (slot 20); the
+`_zoffset` (slot 12) pairs with `MaxDepthOffset`/`DepthOffsetMaskVertexColorChannel` to sort
+overlapping hair cards, not to bump the surface. Skin materials, by contrast, do ship a real slot-1
+normal.
+
 ---
 
 ## 5. TextureSet slots & DDS conventions
