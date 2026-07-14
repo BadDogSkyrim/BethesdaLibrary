@@ -43,6 +43,22 @@ BSGeometry (: NiAVObject : NiShape)
 
 The **4 mesh slots are the LOD levels** (slot 0 = LOD0/highest detail, slots 1–3 = successively coarser). NifSkope labels the array "Meshes". A shape may populate only slot 0.
 
+**`bounds` / `boundMinMax` are load-bearing, and the convention differs by shape kind (verified
+in-game 2026-07-11):**
+
+- **Static (non-skinned) shapes**: `bounds` (sphere: centre + max-vertex-distance radius) **and**
+  `boundMinMax` (**centre.xyz + half-extents.xyz**, *not* min/max corners — despite the name) must be
+  real, non-zero, computed from the verts in metric (`.mesh`) space. A **zero bound makes a static
+  invisible in-game AND in the Creation Kit** (the engine frustum/distance-culls it) even though the
+  geometry is perfectly valid — Blender/NifSkope ignore bounds, so it still shows there.
+- **Skinned shapes**: vanilla sets `bounds.radius = 0` and **`boundMinMax = all FLT_MAX`**
+  ("infinite, never cull"). The mesh moves with the bones, so block-level culling is delegated to the
+  per-bone bounds in `BSSkin::BoneData` (§3); a tight block AABB would cull the body the moment it
+  animates. **Do not compute a real block AABB for a skinned shape — write the infinite sentinel.**
+
+(Note: a widely-used NIF ctypes/wrapper layer may report these block bounds as zero even when the
+file has real values — validate against raw bytes, not a parsed shape buffer.)
+
 ### `BSGeometryMesh` — the pointer to a `.mesh`
 
 ```
@@ -117,6 +133,19 @@ Positions are **signed-normalized int16 × a single per-mesh `Scale` float** (ve
 read:  pos = (int16 / 32767.0) * Scale          // uniform 32767 divisor, all 3 components
 write: int16 = round((pos / Scale) * 32767.0)
 ```
+
+> **⚠ Scale MUST carry margin — never set it to the exact largest coordinate (verified in-game
+> 2026-07-11).** The encode/decode is symmetric (`×32767` / `÷32767`), so the *usable* `int16` range
+> is **±32767** — yet `int16` actually reaches **−32768**. If `Scale` equals the mesh's exact max
+> extent, the deepest verts encode right at the edge and float rounding pushes some to **−32768**, one
+> step past the symmetric range. Such a vertex **decodes to the correct position** (so it looks right
+> statically and in most viewers — this makes the bug nearly invisible to offline validation), but the
+> **engine's *skinned* vertex path mishandles the SNORM extreme and flings those verts across the map
+> when the skeleton poses them.** Observed: a body authored with `Scale = exact max` had its deepest
+> foot verts fly to ~2× body height, dragged by their foot bone. Vanilla avoids this by design — the
+> sampled body's `Scale = 2.0` sits well above its true max of ~1.63 (≈22% headroom). **Writers:
+> multiply the computed max-extent scale by a safety margin (~10% is ample) so no vertex encodes near
+> ±32767.** This is why vanilla scales look "rounded up," not tight.
 
 There is **one `Scale` field, not a separate `max_border`** — `Scale` is the world value that `int16 = 32767` maps to (effectively the mesh's largest absolute coordinate / half-extent). Readers **abort if `Scale <= 0`** (empty-geometry sentinel). An earlier signed-asymmetric variant (`raw < 0 ? 32768 : 32767`) exists only in dead `#if 0` code — do not use it. Two sampled vanilla meshes (a static and the human body) both had `Scale = 2.0`, and positions decode into **metric-scale metres** (~±2 for a body), the departure from prior games' game-unit vertices. nifly multiplies by `havokScale = 69.969` on top to reach legacy game-unit sizes (see below).
 
@@ -198,7 +227,41 @@ The `.mesh` carries indices only; the **skeleton binding lives in the NIF**. Ver
 - **`BSSkin::Instance`** — the skin-instance block (skeleton-root ref + skin-instance data), the Starfield analog of the FO4 `BSSkin::Instance`.
 - **`BSSkin::BoneData`** — per-bone bind data: `{BoundingSphere bounds, MatTransform skinToBone}` per bone (plus scales). Bounding spheres are culling data recomputed on export.
 
-**There is no `BoneTranslations` block** (an earlier guess) — the per-bone transforms are in `BSSkin::BoneData`. **Phase-2 note:** nifly models the bone name list via `BSSkin::Instance`'s `NiBoneContainer::boneRefs` (pointers to `NiNode` blocks); confirm whether merged nifly actually reads the `SkinAttach` *string* names for body NIFs, or whether the resolver needs to handle `SkinAttach` explicitly.
+**There is no `BoneTranslations` block** (an earlier guess) — the per-bone transforms are in `BSSkin::BoneData`.
+
+#### Authoring requirements for a valid skinned body (all verified in-game 2026-07-11)
+
+Reading a skinned SF body is forgiving; **writing** one that the engine and Creation Kit accept has
+several non-obvious hard requirements. Each of these, when wrong, produced a distinct failure on an
+otherwise byte-correct authored body:
+
+- **`SkinAttach` extra-data NAME must be `"SkinBMP"`** (Skin **B**one **M**a**P**). It is a
+  `NiExtraData` on the shape; its name is how the engine locates the shape's bone map. An **unnamed**
+  `SkinAttach` leaves the engine unable to resolve the `.mesh`'s bone indices → the body falls back
+  toward bind space (lies on its side) with garbage bone transforms (spazzes).
+- **`BSSkin::Instance.boneRefs` must have exactly `numBones` entries, each an EMPTY ref** (`-1` /
+  `NIF_NPOS`). SF bodies have no `NiNode` skeleton bones in the file (they're in `skeleton.nif`), so
+  every ref is empty — but the **array length must still equal the bone count**. The engine/CK walk
+  `boneRefs` in lockstep with the bone data; a length-0 array runs the iterator off the end →
+  **`EXCEPTION_ACCESS_VIOLATION` (null deref) when the CK opens an actor using the mesh.** (nifly
+  preserves the empty refs on write via `SetKeepEmptyRefs` for SF.)
+- **`BSSkin::BoneData` per-bone bounding spheres must be non-zero.** Each bone entry is
+  `{BoundingSphere bounds, MatTransform skinToBone}`. The sphere bounds that bone's weighted verts in
+  bone-local space (`skinToBone · vert`). Leaving it at the default zero radius **crashes the CK** on
+  actor load (it reads these as skin culling data). Recompute per bone on export.
+- **A skinned shape's own `BSGeometry` transform must be IDENTITY** (translation 0, identity rotation,
+  scale 1). The `skinToBone` binds already place every vertex; writing the object/placement transform
+  onto the shape too **double-applies it and the mesh explodes under animation.** (Only *static*,
+  non-skinned shapes carry a placement transform — see §1.)
+- **`BSXFlags` (name `"BSX"`) on the root node = `0x10000` (65536)** on skinned bodies. Add it if
+  absent.
+- **Vertex `Scale` must carry margin** (see §2 "Position quantization") — a zero-margin scale flings
+  the extreme (foot) verts to ~2× body height in-game.
+
+**Phase-2 note (resolved):** the engine resolves `boneIndex` → bone via the **`SkinAttach` string
+names**, not `boneRefs` (which are all empty for SF bodies). `SkinAttach`, `BSSkin::BoneData`, and the
+`.mesh` weight indices must all share one consistent bone order; the *order itself* is free (need not
+match vanilla), but the three must agree.
 
 **PyNifly implication:** import resolves `boneIndex` → bone name through the NIF's `BSSkin::Instance` bone list, then builds a Blender armature exactly like the SSE/FO4 path. Export must (a) emit `{boneIndex, uint16 weight}` in the `.mesh`, and (b) build the matching bone list + bone-data (bind transforms, bounding spheres) in the NIF.
 
