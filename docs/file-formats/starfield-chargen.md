@@ -355,6 +355,50 @@ which is how hair/brows/eyelashes stay glued to the moving face. There are **no
 emotion- or phoneme-named morphs** — moods and visemes are both composed from these
 raw action units by the animation system.
 
+#### The full expression-AU vocabulary (verified from vanilla `performance/head/morph.dat`)
+
+The complete facial set is **96 action units on the head** (the female head is the
+superset; the male head has 88 — the 8 extra are all `c_…` combination morphs, no
+male-only keys). These are the names a custom head's `performance/morph.dat` must
+reproduce to animate/lip-sync. **75 primary AUs**, grouped by region:
+
+```
+Brow    browLowererL/R  innerBrowRaiseL/R  outerBrowRaiseL/R
+Eye     eyeClosedL/R  eyeOpenL/R  eyeUp  eyeDown  eyeLeft  eyeRight
+        lidTightenerL/R  squintL/R
+Cheek   cheekPuffL/R  cheekRaiseL/R  cheekSuckL/R  dimplerL/R
+Nose    noseWrinkleL/R  noseDepressor  nostrilCompressor  nostrilDilator
+        nasolabialFurrowL/R
+Jaw     jawOpen  jawClench  jawLeft  jawRight  jawThrust
+Upper   upperLipRaiseL/R  upperLipDownL/R  upperLipFunnel  upperLipPuff
+ lip    upperLipSuck  upperLipThickness
+Lower   lowerLipDepressL/R  lowerLipUpL/R  lowerLipFunnel  lowerLipPuff
+ lip    lowerLipSuck  lowerLipThickness
+Lip     lipCornerPullL/R  lipCornerDepressL/R  lipCornerInL/R  lipStretchL/R
+ shape  lipPucker  lipPress  lipTighten  lipZipperL/R  sharpLipPullL/R
+Chin    chinRaise  chinRaiseUpperlipTweak
+Neck    neckFlexL/R  swallow
+Ear     HideEar          (collapses the ear region for helmet fit — biped slot 19)
+```
+
+Plus **21 combination/corrective `c_` morphs** that fire when two AUs co-activate
+(`c_jawdrop`, `c_eyeDown_eyeClosedL/R`, `c_eyeUp_eyeClosedL/R`, `c_eyeLeft_eyeClosedL/R`,
+`c_eyeRight_eyeClosedL/R`, `c_eyesClosed50L/R`, `c_squintL/R_eyesClosedL/R`,
+`c_squintL/R_cheekRaiserL/R`, `c_cheekRaiserL_eyesClosedL/R`,
+`c_innerBrowRaiserL/R_browLowererL/R`, `c_puckerer_lowerFunneler`,
+`c_puckerer_upperFunneler`).
+
+Other parts carry a **subset** of the same names plus their own extras: the **tongue**
+adds `tongueIn/Out`, `tongueUp/Down`, `tongueLeft/Right`, `tongueCurlUp/Down`,
+`tongueThick`, `tongueThinner`; **headgear** (hats/masks) carry `Hat` / `Mask` hide
+morphs in a performance file. Every hairstyle, eyebrow (54), eyelash (top 65 / bottom 47),
+teeth (29) and tear (73) mesh carries its own subset so it deforms with the face.
+
+> **Tooling note.** Splitting authored shape keys into the two output files is a name test:
+> a shape key whose name is in this AU vocabulary (+ tongue / `Hat` / `Mask`) exports to
+> `…/performance/<part>/morph.dat`; everything else is a creator slider and exports to
+> `…/chargen/<part>/morph.dat`.
+
 > **Furry-race implications.**
 > - A muzzle/snout head that doesn't share human topology **needs its own
 >   `performance/morph.dat` authoring the action units on the new mesh, matched by
@@ -395,15 +439,31 @@ FXPD: EDID + FULL(display name) + Morphs[] { MNAM = morph name, MWGT = weight 0.
 each listing 2–42 of the **same action-unit names as the performance `morph.dat`**.
 For example `facialExpression_Afraid` = `browLowererL 0.638`, `innerBrowRaiseR 0.853`,
 `eyeOpenL/R 1.0`, `jawOpen 0.155`, `lipCornerDepressL/R ≈0.3`, `nostrilDilator 0.621`,
-`neckFlexL/R`, … So an expression is just *"set these AUs to these weights."*
+`neckFlexL/R`, … So an expression is just *"set these AUs to these weights."* This is the
+moddable successor to Skyrim/FO4's engine-internal `Mood<Emotion>` expression morph — see
+[Morphs & Shape Keys → How dialogue drives these morphs](morphs-shapekeys.md) for the `.tri`
+ancestry and the 8-emotion enum it replaced.
 
-**How they're triggered:** `FXPD` records are referenced by **`DIAL` (Dialog Topics)**
-and **`SCEN` (Scenes)** — the expression is attached to conversation lines and scripted
-scene beats (that's the "tied to dialogue/conditions" hook). This is distinct from the
-CK's **"Anim Archetype"** field, which is a **`KYWD`** (`AnimFaceArchetype*`) set in a
-reusable *Animation* struct on `INFO`/scenes/packages — a higher-level animation-*style*
-selector consumed by the anim system, not itself a list of morphs. (`INFO` responses
-also carry a per-line *Emotion* keyword + value in `TRDA`.)
+**How they're triggered (and what is *not* a link).** No plugin record references an
+`FXPD` by FormID — DIAL, INFO, and SCEN have **no `FXPD` field**, and a full dump of
+those groups contains no reference to a `facialExpression_*` FormID. What dialogue and
+scenes *do* reference is the **"Anim (Face) Archetype" keyword** — a `KYWD` named
+`AnimFaceArchetype*`, carried in a reusable *Animation* struct (`INFO` responses, scene
+phases, packages) via its `FLMV` "Anim Face Archetype" field. Those archetype keywords
+**name-parallel the `FXPD` set** (`AnimFaceArchetypeAngry` ↔ `facialExpression_Angry`,
+`…Afraid` ↔ `…Afraid`, `…Shocked`, `…Depressed`, `…Disgust`, `…Smirk`, …) and were even
+authored in the **same FormID block** (`FXPD facialExpression_Afraid [0020D3A0]`,
+`KYWD AnimFaceArchetypeAngry [0020D3A2]`). So the trigger path is **dialogue/scene →
+`AnimFaceArchetype` keyword → (in-house animation/behavior layer) → the matching `FXPD`
+morph bundle** — the keyword↔`FXPD` binding is by **name/convention in the anim system,
+not an editable plugin reference**. (`INFO` responses additionally carry a per-line
+*Emotion* keyword + value in `TRDA`.)
+
+> **Unconfirmed:** that editing an `FXPD` actually changes the in-game performance — the
+> anim/behavior layer could source an archetype's morphs from the `.agx` graph rather than
+> the `FXPD` record, in which case `FXPD` is data the runtime doesn't read. A one-off test
+> (add an obvious morph to `facialExpression_Angry`, trigger an angry line) would settle
+> both this and the ignore-unknown-AU assumption below.
 
 > **Furry-race implications.**
 > - Because an `FXPD` references morphs **by name**, and every face part only responds
@@ -442,7 +502,7 @@ uint32 numOffsets         // == numVertices
 morphData[numMorphData]   // 16 bytes each:
     uint16 offset[3]      //   position delta, half-float, in metric (.mesh) units;
                           //     × havokScale (69.969) → game units, as with .mesh positions
-    uint16 targetVertColor//   single scalar, value / 65535 (OS/SGB; ≈0.742 in every vanilla record)
+    uint16 targetVertColor//   target vertex colour, RGB565 (5:6:5). Default gray 0xBDF7 (~0.74)
     uint32 normal         //   delta normal,  DEC3N signed (axis = (n>>k & 1023)/511.5 − 1.0)
     uint32 tangent        //   delta tangent, DEC3N signed
 offsets[numOffsets]       // 20 bytes each — sparse per-vertex:
@@ -456,10 +516,29 @@ So a morph is **dense over vertices** (one `offsets` entry each, `numOffsets == 
 Position deltas share the `.mesh`'s `havokScale` factor.
 
 > **Corrections (verified byte-exact against vanilla + the SGB `MorphIO.cpp` source, 2026-07-14):**
-> earlier notes here had `targetVertColor` as RGB565 (it's a single `/65535` scalar) and the
-> normal/tangent as UDEC3 (they're **DEC3N signed**); the position half-float is stored **metric**
-> and multiplied — not divided — by `havokScale` to reach game units. A round-trip reader/writer
-> reproduces a vanilla `morph.dat` byte-for-byte with this layout.
+> the normal/tangent are **DEC3N signed** (earlier notes said UDEC3), and the position half-float is
+> stored **metric** and multiplied — not divided — by `havokScale` to reach game units. A round-trip
+> reader/writer reproduces a vanilla `morph.dat` byte-for-byte with this layout.
+
+**`targetVertColor` is an RGB565 per-vertex colour**, **constant per vertex across all of that vertex's
+morph keys** (verified: for `chargen/coily_mohawk_f`, 0 of 10,011 multi-key vertices differ across
+keys; same for the head). SF vertex colour drives **material masks** (hair/clothing use R/G/B channels —
+`HairSettingsComponent.AOVertexColorChannel` / `DepthOffsetMaskVertexColorChannel`;
+`AlphaBlenderSettings.VertexColorChannel`; chromatic values like magenta `(1,0,1)`; faces use a
+near-gray baked AO `0xBDF7`). It's a constant on most morphs — of 1194 vanilla `morph.dat`, only 49
+carry a non-constant colour. It **correlates with the mesh's own vertex colour** but is not byte-equal
+(on the hair sample R/B match, G differs); the exact relationship is **unresolved**.
+
+Because it's one value per vertex (not per morph), it maps to a Blender **colour attribute**: import
+writes the per-vertex colours there, export RGB565-encodes them back (gray default if absent) — so a
+morph round-trips from mesh + shape keys + one colour attribute, no per-morph colour authoring. (Whether
+the engine reads these colours at all is unconfirmed; the in-game round-trip settles it, and for faces
+the gray default reproduces the real value, so only hair/fur is at risk.)
+
+> **Note — the base `.mesh` DOES carry vertex colours** (the hair sample has 1002 distinct raw colours;
+> ~22% of sampled SF `.mesh` use non-black colour/alpha). A current NIF ctypes/wrapper layer read them
+> as all-black — a vertex-colour **import bug** to fix, since it silently breaks material rendering
+> (alpha especially) on every mesh that uses vertex colour, independent of morphs.
 
 Workflow facts (Starfield Geometry Bridge, Blender):
 - Import the `.mesh` first, then import the `.morph` onto the active mesh.

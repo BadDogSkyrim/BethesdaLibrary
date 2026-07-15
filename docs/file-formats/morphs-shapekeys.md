@@ -102,6 +102,37 @@ CombatShout      - Combat shout face
 
 See [Expression Morphs Reference](../reference/expression-morphs.md) [TBD] for complete list.
 
+#### How dialogue drives these morphs
+
+The link from a spoken line to a facial pose is a **naming convention plus the engine's
+FaceFX layer — there is no "emotion → morph weights" record.**
+
+- **Emotion** is authored on the dialogue itself: the `INFO` response's `TRDA`/`TRDT`
+  "Response Data" carries an emotion (`[Skyrim]` an 8-value **Emotion Type** enum —
+  `Neutral, Anger, Disgust, Fear, Sad, Happy, Surprise, Puzzled`; `[FO4]` an **Emotion
+  keyword**), and `SCEN` scene *Dialogue* actions carry the same 8-value **Emotion Type**
+  (`DEMO`) + **Emotion Value** (`DEVA`, 0–100). The engine blends the correspondingly-named
+  **`Mood<Emotion>`** morph from the head's expression `.tri` (`Anger → MoodAnger`,
+  `Happy → MoodHappy`, …), scaled by the value. The mapping *is* the `Mood…` naming — each
+  is a single artist-baked expression shape.
+- **Lip-sync** is separate: **FaceFX** generates a phoneme track from the voice audio (the
+  `.fuz`/`.lip`), driving the **phoneme/viseme** morphs (`Aah`, `BMP`, `Oh`, …). The `RACE`
+  record's **Phoneme Target Names** list which morphs are visemes.
+- The morph **geometry** lives in the `.tri` referenced by the `HDPT` head part (type
+  `Tri` / `Race Morph` / `Chargen Morph` + a `FileName`); the `RACE` lists the named **Face
+  Morphs** (index + name). So the whole chain is by *name*: emotion/phoneme → morph name →
+  delta in the `.tri`.
+
+> **Starfield contrast.** Starfield keeps the same "drive morphs by name" idea but rebuilds
+> the layer above it. It dropped the 8-emotion enum for **~31 named `facialExpression_*`
+> `FXPD` records** (`Angry`, `Afraid`, `Smug`, `Boggled`, `Dying`, `Yawn`, …), each an
+> **explicit weighted bundle** of many primitive action units (`browLowererL 0.64`,
+> `jawOpen 0.16`, …) rather than one pre-baked `Mood` shape; dialogue selects them via
+> `AnimFaceArchetype*` keywords, mapped to the `FXPD` by name in the anim system. In effect
+> Starfield turned FO4's monolithic, engine-internal `Mood<Emotion>` morph into a
+> **composable, moddable expression record**. See
+> [Starfield chargen §3](starfield-chargen.md) for the `FXPD` / `morph.dat` details.
+
 ### CharGen Morphs
 
 Morphs used in character creation (RaceMenu sliders).
