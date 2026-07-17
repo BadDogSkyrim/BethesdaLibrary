@@ -134,15 +134,213 @@ Each material has default friction/restitution values.
 
 ### Fallout 4 Physics
 
-FO4 uses Havok packfile format (hkpPhysicsSystem) instead of individual blocks.
+FO4 replaces Skyrim's per-block collision graph (`bhkRigidBody` + shape blocks) with
+a **Havok packfile** — a serialized blob of the newer `hknp` ("Havok Physics, new")
+runtime objects — embedded in the NIF.
 
-**Key differences:**
-- Physics data stored in bhkPhysicsSystem block
-- Properties use float16 (truncated precision)
-- bhkNPCollisionObject instead of bhkCollisionObject
-- Collision shapes encoded in packfile
+**Key differences from Skyrim:**
 
-**Common issue:** FO4 collision is more finicky to edit - prefer using Creation Kit's Havok export or copying from working examples.
+- A NIF node carries a **`bhkNPCollisionObject`** (not `bhkCollisionObject`).
+- The actual physics lives in a **`bhkPhysicsSystem`** block whose payload is a raw
+  Havok packfile (`hk_2014.1.0`, 64-bit).
+- Collision shapes are encoded inside the packfile, not as NIF blocks.
+- Material/simulation properties are stored as **truncated float16** (the upper 16
+  bits of a 32-bit float taken as a `uint16`).
+
+#### Packfile contents
+
+The packfile begins with an `hknpPhysicsSystemData` followed by **N rigid bodies**
+and their shape objects. Shape types seen in vanilla:
+
+| Shape | Meaning |
+|-------|---------|
+| `hknpConvexPolytopeShape` | A convex hull (vertices + face planes). |
+| `hknpCompressedMeshShape` | A triangle mesh (quantized), for static geometry. |
+| `hknpSphereShape` | A sphere (radius; centre in the body info). |
+| `hknpDynamicCompoundShape` | **One body** whose shape is a *compound* of many child shapes with per-instance transforms (see below). |
+
+#### bhkNPCollisionObject.bodyID — the body index
+
+A `bhkNPCollisionObject` has a **`bodyID`** that indexes into its physics system's
+body array — it selects *which* body in the shared system belongs to this NIF node.
+Several nodes can share one physics system, each pointing at a different body (e.g.
+`BOSRadarDish` has a `Main` node and a `Swivel` node sharing one system, `bodyID` 0
+and 1).
+
+!!! danger "Unset bodyID crashes the game"
+    If a tool writes a `bhkNPCollisionObject` without setting `bodyID` (leaving the
+    default sentinel `0xFFFFFFFF`), the engine indexes the body array out of bounds
+    and dies on cell load in **`bhkNPCollisionObject::CreateInstance`**. A single-body
+    system must use `bodyID = 0`.
+
+#### hknpDynamicCompoundShape (compound bodies)
+
+Furniture with lots of collision detail — the armor / weapons / cooking **workbenches**,
+for instance — uses a single rigid body whose shape is an `hknpDynamicCompoundShape`:
+a container of *N* child shapes (typically convex polytopes), each placed by an
+**instance transform** (rotation + translation). The armor workbench is one body
+holding **36** convex polytopes.
+
+Crucially, the compound also owns a **bounding-volume BVH tree**, stored as a separate
+`hknpDynamicCompoundShapeData` object the compound points to. The tree is an AABB
+hierarchy over the child shapes (the armor bench's is 73 nodes over 36 leaves). The
+engine walks it while building the compound's bounds.
+
+!!! danger "A compound with no BVH tree crashes updateAabb"
+    A regenerated compound that omits the `hknpDynamicCompoundShapeData` tree (or leaves
+    a dangling pointer where it belongs) crashes on load in
+    **`hknpDynamicCompoundShape::updateAabb`**. The tree is a spatial function of the
+    child shapes' positions, so it must be rebuilt whenever they move. The pragmatic
+    workaround for unmodified collision is to **preserve the original packfile bytes
+    verbatim** rather than regenerate.
+
+*Unconfirmed:* the shape base field `hknpShape::m_userData` (a `uint64`) holds a value
+that is **shared across a compound and all its child shapes** within one file and
+differs per file. The engine appears not to interpret it, but a compound and its
+children should carry the same value (as vanilla does).
+
+#### The FO4 furniture-collision crash chain
+
+Malformed FO4 collision (e.g. from a third-party tool re-exporting a workbench) tends
+to fail as a *sequence* of access-violation crashes on cell load — each one masks the
+next, so fixing one reveals another:
+
+1. **`BSSkin::Instance::UpdateModelBound`** — a static shape was given a *skin instance
+   with zero bones*. In a furniture NIF that mixes a skinned mesh with static
+   decoration, a shape with no bone weights must **not** be skinned; a zero-bone skin
+   instance is a null the engine dereferences.
+2. **`bhkNPCollisionObject::CreateInstance`** — `bodyID` unset / out of range (above).
+3. **`hknpDynamicCompoundShape::updateAabb`** — compound missing its BVH tree (above).
+
+Reading the faulting function name from an F4SE crash logger (e.g. Buffout/Addictol)
+tells you exactly which layer failed.
+
+#### Packfile binary format
+
+The `bhkPhysicsSystem` payload is a standard Havok `hkPackfile` (`hk_2014.1.0-r1`,
+64-bit little-endian). All offsets below were derived by decoding vanilla FO4 files.
+
+**Global header (0x40 bytes):**
+
+| Offset | Size | Field | Value |
+|--------|------|-------|-------|
+| 0x00 | 8 | magic | `57 E0 E0 57 10 C0 C0 10` |
+| 0x0C | 4 | fileVersion | 11 |
+| 0x10 | 4 | layoutRules | `08 01 00 01` (ptrSize=8, LE) |
+| 0x14 | 4 | numSections | 3 |
+| 0x18 | 4 | contentsSectionIndex | 2 (the data section) |
+| 0x24 | 4 | contentsClassNameOffset | offset of `hknpPhysicsSystemData` in classnames |
+| 0x28 | 18 | contentsVersion | `hk_2014.1.0-r1\0\xFF` |
+
+**Three section headers** (0x40 bytes each, at 0x40/0x80/0xC0): `__classnames__`,
+`__types__` (empty in FO4), `__data__`. Each header: `char name[20]` (0xFF-padded),
+then `u32 absStart, localFixup, globalFixup, virtualFixup, exports, imports, end`
+(the fixup/exports fields are *relative to absStart*). `__types__` is empty; the real
+content is `__data__`.
+
+**Classnames section** — a sequence of `{u32 hash; u8 0x09; char name[] (null-term)}`,
+padded to 16 bytes with 0xFF. Useful hashes:
+
+| Hash | Class |
+|------|-------|
+| `0xB857718B` | `hknpPhysicsSystemData` |
+| `0x3CE9B3E3` | `hknpConvexPolytopeShape` |
+| `0x4620D11C` | `hknpDynamicCompoundShape` |
+| `0xF33DC3CC` | `hknpDynamicCompoundShapeData` |
+| `0x7C574867` | `hkRefCountedProperties` |
+| `0xE9191728` | `hknpShapeMassProperties` |
+
+**Fixup tables** follow the data objects, in order (terminated by `0xFFFFFFFF`):
+
+- **Local** (`{u32 src, u32 dst}`): pointer within the same section (e.g. an `hkArray`
+  header → its data).
+- **Global** (`{u32 src, u32 dstSection, u32 dst}`): pointer between sections (e.g. a
+  body's shape pointer → the shape object).
+- **Virtual** (`{u32 objOffset, u32 section, u32 classNameOffset}`): tags each object
+  in `__data__` with its class (this is how you enumerate the objects).
+
+**`hkArray` (16 bytes)**, used throughout: `u64 ptr` (patched by a local fixup),
+`u32 size`, `u32 capacityAndFlags` (= `size | 0x80000000`).
+
+##### Data section
+
+Begins with an `hknpPhysicsSystemData` (PSD, 0x80 bytes) — six `hkArray` slots + pad:
+
+| Slot @ | Array | Count |
+|--------|-------|-------|
+| 0x10 | body_props | num_bodies |
+| 0x20 | dyn_motion | 1 if any dynamic body, else 0 |
+| 0x30 | dyn_inertia | 1 if dynamic, else 0 |
+| 0x40 | BodyCInfo | num_bodies |
+| 0x60 | ShapeEntry | num_bodies |
+
+Then `body_props[N]`, `BodyCInfo[N]` (0x60 each; `+0x00` = shape pointer, `+0x10` =
+body transform), `ShapeEntry[N]` (0x10 each; `+0x00` = shape pointer), then the shape
+objects. A body's ShapeEntry and BodyCInfo both point at its shape.
+
+Material/simulation params in `body_props` use **truncated float16** — the upper 16
+bits of a float32 as a `uint16`:
+
+```python
+decode = struct.unpack('<f', struct.pack('<I', u16 << 16))[0]
+encode = struct.unpack('<I', struct.pack('<f', value))[0] >> 16
+```
+
+##### Shape objects
+
+All `hknp` shapes share a 0x30 base header: `+0x10` type/quality flags, `+0x14`
+convex radius (float), **`+0x18` `m_userData` (u64)**. `m_userData` holds one value
+**shared by a compound and all its child shapes** in a file, differing per file
+(armor bench `0x064003D4`, weapons bench `0x2A1A6690`, stove `0xB26A84C5`); the engine
+seems to ignore it but a compound and its children must agree.
+
+- **`hknpConvexPolytopeShape`** (variable): 0x30 header, then `u16 numVerts, vertsOff`
+  at 0x30; `u16 numVerts2, planesOff, numPlanes, facesOff, numFVI, fviOff` at 0x40;
+  then `vertices[]` (16 bytes: `float x,y,z; u32 w = 0x3F000000 | (index&0xFF)`),
+  `planes[]` (16 each), a 28-byte gap, `faces[]` (`u16 firstFVI; u8 numVtx; u8 flags`),
+  gap, `fvi[]` (1 byte each), padded to 8.
+- **`hknpSphereShape`** (0x50): `+0x14` radius (float, Havok space). Centre is in the
+  body's BodyCInfo, not the shape.
+- **`hknpCompressedMeshShape`** (0xC0) + a ShapeData object: quantized triangle mesh.
+  Vertices are 11-11-10-bit packed: `qx=(v>>0)&0x7FF, qy=(v>>11)&0x7FF, qz=(v>>22)&0x3FF`,
+  then `x = section.base_x + qx*section.scale_x` (etc.).
+
+##### hknpDynamicCompoundShape (0xD0) + instances + BVH tree
+
+One body whose shape is a compound of N children. The compound object is **0xD0 bytes**
+(the region past the usual 0x30 header carries its own AABB and a tree pointer):
+
+| Offset | Field |
+|--------|-------|
+| 0x10 | flags — `0x02060004` (armor/weapons benches), `0x02040004` (11-leaf stove); *likely tree size/depth* |
+| 0x18 | `m_userData` (shared with children) |
+| 0x30 | `0xFFFFFFFF` sentinel |
+| 0x40, 0x50 | empty `hkArray`s |
+| 0x60 | **instances** `hkArray` (`ptr` via local fixup, `size = N`) |
+| 0x80 | AABB min (`float x,y,z,w`, Havok space) |
+| 0x90 | AABB max (`float x,y,z,w`) |
+| 0xC0 | `u64 ptr` (global fixup) → `hknpDynamicCompoundShapeData` |
+
+**Instance (0x80 each):** rotation stored **column-major** as three `vec3`s at
+`+0x00/+0x10/+0x20` (with constant w-lanes 0.5/0.0/0.5), translation `vec3` at `+0x30`
+(Havok units), `(1,1,1,1)` at `+0x40`, and the child **shape pointer at `+0x50`**
+(global fixup → an `hknpConvexPolytopeShape`), `0xFFFFFFFF` at `+0x58`.
+
+**`hknpDynamicCompoundShapeData`** holds an **AABB bounding-volume tree** (BVH) over the
+children — armor bench: **73 nodes / 32 bytes each over 36 leaves**. Node layout:
+`aabb_min (vec3)` at `+0x00`, `aabb_max (vec3)` at `+0x10`, and `u16 link_a, link_b`
+at `+0x1C` (child/leaf references — link encoding not fully decoded). The engine walks
+this tree in `hknpDynamicCompoundShape::updateAabb` at load; it is a spatial function
+of the child positions, so a parser that *edits* shape positions must rebuild it (or
+preserve the original bytes). *Note:* the Skyrim MOPP BVH is a related AABB-tree problem
+and a likely reference for a builder.
+
+A reference implementation of the full read/write path lives in the PyNifly project
+(`pyn/bhk_autounpack.py`, `pyn/bhk_autopack.py`, and `docs/fo4_havok_packfile_format.md`).
+
+**Common issue:** FO4 collision is more finicky to edit than Skyrim's — prefer the
+Creation Kit's Havok export, copying collision from a working example, or a tool that
+preserves the original packfile bytes when the collision geometry is unchanged.
 
 ## HDT-SMP (Skinned Mesh Physics)
 

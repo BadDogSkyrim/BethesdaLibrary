@@ -66,7 +66,26 @@ Produces interpolated transform values over time, sampling from a `NiTransformDa
 
 ### NiTransformData
 
-The actual keyframe data: arrays of position keys, rotation keys (quaternion), and scale keys, each with their own interpolation modes (linear, quadratic, TBC). Same internal structure as the older `NiKeyframeData`.
+The actual keyframe data: arrays of position keys, rotation keys, and scale keys, each with their own interpolation modes (linear, quadratic, TBC). Same internal structure as the older `NiKeyframeData`.
+
+**Rotation is stored one of two ways**, selected by the `rotationType` field:
+
+- **Quaternion keys** (`LINEAR_KEY` / `QUADRATIC_KEY`) — a single array of quaternion
+  rotations. The common case.
+- **`XYZ_ROTATION_KEY`** — the quaternion array is empty and rotation is instead **three
+  independent Euler channels** (X, Y, Z), each its own array of scalar keys with its own
+  interpolation type. In NifSkope this is `Rotations` → `XYZ Rotations` → `[0]/[1]/[2]`,
+  each with its own `Interpolation`.
+
+!!! note "XYZ channels can have different key times"
+    The three Euler channels of an `XYZ_ROTATION_KEY` are genuinely independent — they
+    can have *different key counts and different time signatures*. A tool must sample
+    each channel on its own timeline (or resample all three onto a common one before
+    combining them into a quaternion); zipping the channels by index and assuming they
+    align produces wrong rotations. Vanilla files also occasionally ship **garbage times
+    on a lone constant key** (e.g. a single value-0 key stamped at time ≈ `-447392`),
+    which is harmless in game — a single key is a constant regardless of its time — but
+    plants keyframes far outside the animation range if imported literally.
 
 ## Common Controller Types
 
