@@ -256,7 +256,7 @@ small detail texture into all-over pore detail.
   "Parent": "materials\\layered\\root\\texturesets.mat" }
 ```
 **This is the base skin.** Each `MRTextureFile.Index` is a **texture slot** (see the slot table in
-[materials.md](materials.md#5-textureset-slots--dds-conventions)):
+[materials.md](materials.md#5-textureset-slots-dds-conventions)):
 
 | `Index` | Slot | This file |
 |---|---|---|
