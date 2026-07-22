@@ -1,0 +1,5 @@
+# Docs build/deploy dependencies (see .github/workflows/deploy-docs.yml).
+# Pinned to match the local authoring environment; bump deliberately.
+mkdocs==1.6.1
+mkdocs-material==9.7.6
+pymdown-extensions==10.21.2
