@@ -1,0 +1,3023 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Comprehensive reference for Skyrim, Fallout 4, and Starfield modding with PyNifly and esplib">
+      
+      
+        <meta name="author" content="Hugh Russel">
+      
+      
+      
+        <link rel="prev" href="../chargen/">
+      
+      
+        <link rel="next" href="../tools/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Plugins & Archives - Bethesda Modding Library</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#starfield-plugins-esm-ba2-archives" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Bethesda Modding Library" class="md-header__button md-logo" aria-label="Bethesda Modding Library" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Bethesda Modding Library
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Plugins & Archives
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../file-formats/overview/" class="md-tabs__link">
+          
+  
+  
+  File Formats
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../skyrim/overview/" class="md-tabs__link">
+          
+  
+  
+  Game-Specific
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../tools/pynifly/overview/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../reference/partition-names/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../CONVENTIONS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Conventions
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Bethesda Modding Library" class="md-nav__button md-logo" aria-label="Bethesda Modding Library" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Bethesda Modding Library
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    File Formats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins (ESP/ESM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/nif-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NIF Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/nif-animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NIF Animations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Animations (HKX)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/physics-collision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Physics & Collision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/morphs-shapekeys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Morphs & Shape Keys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/textures-materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Textures & Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/archives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archives (BSA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/scripts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scripts (PEX)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game-Specific
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game-Specific
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skyrim
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Skyrim
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../skyrim/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fallout 4
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Fallout 4
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fallout4/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fallout4/connect-points/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connect Points
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fallout4/dismemberment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dismemberment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Starfield
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Starfield
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meshes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meshes (NIF + .mesh)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Materials & Textures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../material-worked-example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+      ↳ .mat worked example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cdb-format/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+      ↳ .cdb binary format
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chargen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chargen, Race & Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Archives
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Archives
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-plugin-format-evolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Plugin format evolution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Plugin format evolution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-the-component-system-base-form-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 The component system (Base Form Components)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-esm-esp-master-tiers-flags-formid-ranges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 ESM / ESP / master tiers, flags &amp; FormID ranges
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-records-a-body-armor-race-mod-touches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Records a body / armor / race mod touches
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Records a body / armor / race mod touches">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-how-a-mesh-path-is-stored-in-a-record-tesmodel_component-modl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 How a mesh path is stored in a record — TESModel_Component / MODL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-race-race" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 RACE — Race
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-armo-armor-and-the-skin-body" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 ARMO — Armor (and the "skin" body)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-arma-armor-addon-the-racemodel-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 ARMA — Armor Addon (the race↔model mapping)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-hdpt-head-part" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 HDPT — Head Part
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-txst-texture-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 TXST — Texture Set
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-bptd-body-part-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 BPTD — Body Part Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#28-supporting-records-you-will-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 Supporting records you will reference
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-ba2-archive-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. BA2 archive format
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. BA2 archive format">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-versions-observed-in-the-shipped-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Versions observed in the shipped game
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-header-layout-from-byte-dumps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Header layout (from byte dumps)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-file-records-chunks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 File records &amp; chunks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-whats-inside-and-the-mesh-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 What's inside — and the .mesh split
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-loose-files-override-archives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Loose files override archives
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-two-authoring-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Two authoring tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-asset-pipeline-mesh-material-texture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Asset pipeline (mesh → material → texture)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-records-a-custom-race-mod-must-createedit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Records a custom-race mod must create/edit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-packaging-shipping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Packaging &amp; shipping
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#records-a-custom-race-mod-must-create-edit-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Records a custom-race mod must create / edit — checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyNifly
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PyNifly
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/pynifly/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/pynifly/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/partition-names/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Partition Names
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/external-resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    External Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CONVENTIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="starfield-plugins-esm-ba2-archives">Starfield Plugins (ESM) &amp; BA2 Archives</h1>
+<p>Starfield is still a TES4-family engine: a plugin is a <code>TES4</code> header record followed by <code>GRUP</code> groups of records, each record a stream of <code>[SIG:4][SIZE:2][data]</code> subrecords. The record header is the same 24 bytes as Skyrim/Fallout 4, groups behave the same, and the <code>XXXX</code> large-field trick still applies. What is genuinely new is a <strong>component system</strong> layered on top of records, a <strong>new master-tier model</strong> (full / medium / small), and a <strong>new BA2 version</strong> (v2/v3). Geometry also moved out of the <code>.nif</code> into external <code>.mesh</code> files.</p>
+<p>This page assumes familiarity with the generic <a href="../../../file-formats/plugins/">plugin</a> and <a href="../../../file-formats/archives/">archive</a> pages and only documents Starfield deltas. Record-field breakdowns are taken from the xEdit / SF1Edit definition file <code>wbDefinitionsSF1.pas</code> (the authoritative community source), cross-checked against <code>Starfield.esm</code>. Header layouts are from direct byte dumps of the shipped archives.</p>
+<ul>
+<li><strong>Plugin header version (HEDR):</strong> <code>0.96</code> (<code>[FO4]</code> was <code>0.95</code>; <code>[SSE]</code> <code>0.94</code>/Form 44).</li>
+<li><strong>xEdit game mode:</strong> SF1Edit (<code>xSFEdit.exe</code>, or <code>xEdit.exe -sf1</code>), build 4.1.4+ for read, 4.1.5+ for most editing.</li>
+</ul>
+<hr />
+<h2 id="1-plugin-format-evolution">1. Plugin format evolution</h2>
+<h3 id="11-the-component-system-base-form-components">1.1 The component system (Base Form Components)</h3>
+<p><code>[FO4]</code> records were a flat, fixed sequence of subrecords. Starfield keeps that for most fields but inserts a <strong>component block</strong> near the top of most records — an ordered, self-describing list of "components" that attach reusable capabilities (a name, a model, a container, keywords, scripts, destruction data, etc.) to a form. This is the same idea Bethesda used internally in Fallout 76; in Starfield it is exposed in the plugin format.</p>
+<p><strong>On-disk shape of the component block</strong> (xEdit calls it <em>Base Form Components</em>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&lt;component count / marker&gt;          ← xEdit surfaces this as the &quot;____&quot; known subrecord (ksrBaseFormComponents)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  BFCB  &lt;string&gt;   Component Type   e.g. &quot;TESFullName_Component&quot;
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  ... component-specific subrecords ...
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  BFCE  (empty)    End Marker
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  BFCB  &lt;string&gt;   Component Type   e.g. &quot;TESModel_Component&quot;
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  ... component-specific subrecords ...
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  BFCE
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  ...
+</code></pre></div>
+<ul>
+<li><strong><code>BFCB</code></strong> — null-terminated ASCII naming the component class (e.g. <code>BGSKeywordForm_Component</code>, <code>TESContainer_Component</code>, <code>BGSDestructibleObject_Component</code>, <code>BGSSkinForm_Component</code>). xEdit resolves the following data with a <em>decider</em> keyed on this string.</li>
+<li><strong><code>BFCE</code></strong> — empty end-of-component marker.</li>
+<li>The component's payload uses ordinary subrecord signatures (<code>FULL</code>, <code>MODL</code>, <code>DEST</code>, <code>KWDA</code>, <code>PRPS</code>, …) — the <em>same</em> signatures used inline in older games, just relocated inside a component.</li>
+</ul>
+<p>Over 70 component classes exist. The ones a body/armor/race mod touches:</p>
+<table>
+<thead>
+<tr>
+<th>Component class (<code>BFCB</code>)</th>
+<th>Carries</th>
+<th>Key subrecords</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TESFullName_Component</code></td>
+<td>Display name</td>
+<td><code>FULL</code></td>
+</tr>
+<tr>
+<td><code>TESModel_Component</code></td>
+<td>Model / mesh path</td>
+<td><code>MODL</code>, <code>MOLM</code>, <code>FLLD</code>, <code>MODC</code>, <code>XFLG</code></td>
+</tr>
+<tr>
+<td><code>BGSKeywordForm_Component</code></td>
+<td>Keywords</td>
+<td><code>KSIZ</code>/<code>KWDA</code></td>
+</tr>
+<tr>
+<td><code>TESContainer_Component</code></td>
+<td>Inventory contents</td>
+<td>container item structs</td>
+</tr>
+<tr>
+<td><code>BGSDestructibleObject_Component</code></td>
+<td>Destruction data</td>
+<td><code>DEST</code>/<code>DSTD</code>…</td>
+</tr>
+<tr>
+<td><code>BGSSkinForm_Component</code></td>
+<td>Skin (armor worn as body)</td>
+<td>skin form link</td>
+</tr>
+<tr>
+<td><code>BGSPropertySheet_Component</code></td>
+<td>Actor-value properties</td>
+<td><code>PRPS</code></td>
+</tr>
+<tr>
+<td><code>BGSPapyrusScripts_Component</code></td>
+<td>Attached scripts</td>
+<td>VMAD-style data</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Practical consequence for modders:</strong> in xEdit a Starfield ARMO/RACE/TXST shows a <code>Base Form Components</code> array with expandable <code>Component</code> nodes, <em>plus</em> the classic inline fields lower down. Copy-as-override brings the whole component block along; adding a capability (e.g. giving a form a name) means adding the right component, not just a subrecord. <strong>Unverified:</strong> xEdit still cannot fully edit component forms whose payload includes opaque <code>REFL</code> reflection blobs (<code>GBFM</code> generic base forms in particular) — treat those as read-only.</p>
+<p><code>GBFM</code> ("Generic Base Form") is the new pure-component record type — a form that is <em>nothing but</em> a component list. Ship parts use it heavily; a race mod generally does not create <code>GBFM</code> records but will encounter them.</p>
+<h3 id="12-esm-esp-master-tiers-flags-formid-ranges">1.2 ESM / ESP / master tiers, flags &amp; FormID ranges</h3>
+<p>Starfield replaces the single ESL concept with a <strong>three-tier master model</strong>. Tier is set by TES4-header flags, not by extension; almost everything ships as <code>.esm</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>TES4 flag</th>
+<th>FormID form</th>
+<th>Index range</th>
+<th>Records each</th>
+<th>Max in load order</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Full master</strong></td>
+<td><code>0x00000001</code> (ESM)</td>
+<td><code>xx000001</code>–<code>xxFFFFFF</code></td>
+<td><code>xx</code> = <code>00</code>–<code>FC</code></td>
+<td>~16.7 M</td>
+<td>253</td>
+</tr>
+<tr>
+<td><strong>Medium master</strong></td>
+<td><code>0x00000400</code> (bit 10, "Medium")</td>
+<td><code>FDxx0001</code>–<code>FDxxFFFF</code></td>
+<td><code>xx</code> = <code>00</code>–<code>FF</code></td>
+<td>65 535</td>
+<td>256</td>
+</tr>
+<tr>
+<td><strong>Small master</strong> (ESL / "light")</td>
+<td><code>0x00000100</code> (bit 8, "Small")</td>
+<td><code>FExxx001</code>–<code>FExxxFFF</code></td>
+<td><code>xxx</code> = 12-bit</td>
+<td>4 095</td>
+<td>4 096</td>
+</tr>
+</tbody>
+</table>
+<p>(<code>[FO4]</code>/<code>[SSE]</code> had only Full + Light; the <strong>Medium</strong> tier is new to Starfield, added in game update 1.11. It fills the gap between a 4 K-record ESL and a full load-order slot.)</p>
+<p><strong>Full Starfield TES4 header flag set</strong> (from <code>wbDefinitionsSF1.pas</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Bit / value</th>
+<th>Name</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x001</code></td>
+<td>Master</td>
+<td>Full master (loads first)</td>
+</tr>
+<tr>
+<td><code>0x010</code></td>
+<td>Optimized</td>
+<td>CK-optimized</td>
+</tr>
+<tr>
+<td><code>0x080</code></td>
+<td>Localized</td>
+<td>strings externalized to <code>.STRINGS</code> (default on)</td>
+</tr>
+<tr>
+<td><code>0x100</code></td>
+<td><strong>Small</strong></td>
+<td>small/light master (ESL-equivalent, <code>FE</code> FormIDs)</td>
+</tr>
+<tr>
+<td><code>0x200</code></td>
+<td>Update</td>
+<td>"update" plugin (overrides only; no new forms)</td>
+</tr>
+<tr>
+<td><code>0x400</code></td>
+<td><strong>Medium</strong></td>
+<td>medium master (<code>FD</code> FormIDs)</td>
+</tr>
+<tr>
+<td><code>0x800</code></td>
+<td><strong>Blueprint</strong></td>
+<td>blueprint master</td>
+</tr>
+</tbody>
+</table>
+<p>Notes:
+- <strong>A plugin cannot be both Small and Medium.</strong> Convert with LOOT / xEdit "compact FormIDs" only when record counts fit the tier.
+- Local FormIDs for new records in a full master conventionally start at <code>0x000800</code> (CK reserves the low range), same as prior games.
+- <code>.esm</code> vs <code>.esp</code> still only affects <strong>load-order family</strong> (<code>.esm</code> before <code>.esp</code>); the tier flags drive FormID resolution. In practice Starfield mods ship <code>.esm</code> (often small- or medium-flagged). An <code>.esp</code> with no flag is a plain full-load-order plugin.
+- <strong>Blueprint master</strong> (<code>0x800</code>) is a Starfield-specific master used for ship blueprints; not relevant to a race mod.</p>
+<p><strong>Worked FormID examples:</strong>
+- <code>0x0000347D</code> — <code>HumanRace</code> in <code>Starfield.esm</code> (master index <code>00</code>).
+- <code>0xFExxx7A2</code> — a record in a small (light) master; middle 12 bits pick the light plugin.
+- <code>0xFD030044</code> — record <code>0x0044</code> in the medium master at medium-index <code>03</code>.</p>
+<hr />
+<h2 id="2-records-a-body-armor-race-mod-touches">2. Records a body / armor / race mod touches</h2>
+<p>Signatures and field order below are from <code>wbDefinitionsSF1.pas</code>; "component block" = the <code>Base Form Components</code> array described in §1.1. Field breakdowns list the load-bearing subrecords, not every optional one.</p>
+<h3 id="21-how-a-mesh-path-is-stored-in-a-record-tesmodel_component-modl">2.1 How a mesh path is stored in a record — <code>TESModel_Component</code> / <code>MODL</code></h3>
+<p>Every visible form references its art through a <strong>Model</strong> structure, either inline (<code>wbGenericModel</code>) or as a <code>TESModel_Component</code>. The structure:</p>
+<table>
+<thead>
+<tr>
+<th>Sub</th>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MODL</code></td>
+<td>Model FileName</td>
+<td>zstring</td>
+<td>Path to a <strong><code>.nif</code></strong>, e.g. <code>meshes\actors\human\characterassets\...nif</code>. Still <code>.nif</code>, still <code>meshes\</code>.</td>
+</tr>
+<tr>
+<td><code>MOLM</code></td>
+<td>Material Swaps</td>
+<td>array of FormID → <code>LMSW</code></td>
+<td>Layered-material-swap forms applied to the nif's materials (index-matched, sortable).</td>
+</tr>
+<tr>
+<td><code>FLLD</code></td>
+<td>Light Layer</td>
+<td>uint32 flags</td>
+<td>Lighting layer bitfield (required).</td>
+</tr>
+<tr>
+<td><code>MODC</code></td>
+<td>Color Remapping Index</td>
+<td>float</td>
+<td>Palette remap.</td>
+</tr>
+<tr>
+<td><code>XFLG</code></td>
+<td>Flags</td>
+<td>uint8</td>
+<td>Model flags.</td>
+</tr>
+</tbody>
+</table>
+<p>Older <code>MODT</code>/<code>MODS</code>/<code>MODF</code> still parse but <strong>do not occur in <code>Starfield.esm</code></strong> — Starfield does material binding through <code>MOLM</code>→<code>LMSW</code> and the nif's own material references instead of the old alternate-texture arrays.</p>
+<p><strong>The mesh path is only half the story.</strong> The <code>.nif</code> named by <code>MODL</code> is a lightweight <strong>container</strong>: transforms, bone list, physics, and <em>asset references</em>. Actual geometry lives in external <strong><code>.mesh</code></strong> files (see §3.4 and §4). So a record → <code>MODL</code> (<code>.nif</code>) → <code>BSGeometry</code> mesh-path hash → <code>Data\geometries\&lt;hex1&gt;\&lt;hex2&gt;.mesh</code>. A record never names a <code>.mesh</code> directly.</p>
+<h3 id="22-race-race">2.2 <code>RACE</code> — Race</h3>
+<p>The central record for this project. It is large; the mod-relevant fields:</p>
+<table>
+<thead>
+<tr>
+<th>Sub</th>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EDID</code></td>
+<td>Editor ID</td>
+<td>zstring</td>
+<td>e.g. <code>HumanRace</code></td>
+</tr>
+<tr>
+<td><em>component block</em></td>
+<td>—</td>
+<td>—</td>
+<td><code>TESFullName_Component</code>, keywords, property sheet, etc.</td>
+</tr>
+<tr>
+<td><code>FULL</code> / <code>DESC</code></td>
+<td>Name / Description</td>
+<td>lstring</td>
+<td></td>
+</tr>
+<tr>
+<td><code>WNAM</code></td>
+<td><strong>Skin</strong></td>
+<td>FormID → <code>ARMO</code></td>
+<td>The "naked body" armor worn when nothing is equipped. <strong>Central to a custom body.</strong></td>
+</tr>
+<tr>
+<td><code>GNAM</code></td>
+<td>Body Part Data</td>
+<td>FormID → <code>BPTD</code></td>
+<td>Dismemberment / hit regions.</td>
+</tr>
+<tr>
+<td><code>DAT2</code></td>
+<td>Data struct</td>
+<td>struct</td>
+<td>Heights (male/female), default weights (thin/muscular/fat), biped-object slot indices (Head/Hair/Body/Beard/Shield/Pipboy), movement, bleedout, etc.</td>
+</tr>
+<tr>
+<td>Skeleton Data</td>
+<td><code>MNAM</code>/<code>FNAM</code> + <code>ANAM</code>,<code>NAM5</code>,<code>NAM6</code>,<code>DNAM</code></td>
+<td>strings</td>
+<td>Male &amp; female <strong>skeletal model</strong>, skeleton rig, animation root, animations (behavior graph).</td>
+</tr>
+<tr>
+<td><code>VTCK</code></td>
+<td>Voices</td>
+<td>FormID[2] → <code>VTYP</code></td>
+<td>Male/female voice types.</td>
+</tr>
+<tr>
+<td><code>PNAM</code>/<code>UNAM</code></td>
+<td>FaceGen clamps</td>
+<td>float</td>
+<td>Main / face morph clamp.</td>
+</tr>
+<tr>
+<td>Chargen &amp; Skintones</td>
+<td><code>MNAM</code>/<code>FNAM</code> blocks</td>
+<td>mixed</td>
+<td>Race presets (<code>RPRM</code>/<code>RPRF</code> → <code>NPC_</code>), <strong>Morph Groups</strong>, <strong>Face Morph Phenotypes</strong>, body/hand/face skin-tone paths (<code>BSTT</code>/<code>HSTT</code>/<code>FSTT</code>), face custom-texture base path (<code>FCTP</code>).</td>
+</tr>
+<tr>
+<td><code>NAM8</code></td>
+<td><strong>Morph Race</strong></td>
+<td>FormID → <code>RACE</code></td>
+<td>Race whose facegen morphs this race inherits.</td>
+</tr>
+<tr>
+<td><code>RNAM</code></td>
+<td><strong>Armor Race</strong></td>
+<td>FormID → <code>RACE</code></td>
+<td>Race used to resolve wearable armor models — <strong>set to <code>HumanRace</code> so your race can wear all human armor.</strong></td>
+</tr>
+<tr>
+<td><code>SRAC</code></td>
+<td><strong>Subgraph Template Race</strong></td>
+<td>FormID → <code>RACE</code></td>
+<td>Animation subgraph template — <strong>set to <code>HumanRace</code> to avoid broken animations.</strong></td>
+</tr>
+<tr>
+<td>Head Parts &amp; Bone Modifiers</td>
+<td><code>MNAM</code>/<code>FNAM</code> → <code>INDX</code>+<code>HEAD</code> (→<code>HDPT</code>), <code>BNAM</code>→<code>BMOD</code></td>
+<td>arrays</td>
+<td>Per-gender list of head parts and bone modifiers.</td>
+</tr>
+<tr>
+<td>Equip Slots</td>
+<td><code>QNAM</code>(→<code>EQUP</code>)+<code>ZNAM</code> node</td>
+<td>array</td>
+<td>Equip slot → skeleton node mapping (ordered, do not sort).</td>
+</tr>
+<tr>
+<td>Biped Object Names</td>
+<td><code>NAME</code> ×64</td>
+<td>strings</td>
+<td>Names of the 64 biped/armor slots.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="23-armo-armor-and-the-skin-body">2.3 <code>ARMO</code> — Armor (and the "skin" body)</h3>
+<p>Both real armor and the race's naked body are <code>ARMO</code> records. Mod-relevant fields:</p>
+<table>
+<thead>
+<tr>
+<th>Sub</th>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Record flags</td>
+<td><code>0x04</code> Non-Playable, <code>0x40</code> Shield</td>
+<td>flags</td>
+<td></td>
+</tr>
+<tr>
+<td><em>component block</em></td>
+<td>—</td>
+<td>—</td>
+<td><code>TESFullName_Component</code>, keywords, destructible, etc.</td>
+</tr>
+<tr>
+<td><code>MOD2</code>/<code>MOD4</code></td>
+<td>Male/Female <strong>World Model</strong></td>
+<td>Model struct</td>
+<td>Dropped/inventory model (+ <code>MOLM</code> material swaps).</td>
+</tr>
+<tr>
+<td><code>BO64</code></td>
+<td>Biped Object slots</td>
+<td>uint64</td>
+<td>Which of the 64 biped slots this armor occupies.</td>
+</tr>
+<tr>
+<td><code>RNAM</code></td>
+<td><strong>Race</strong></td>
+<td>FormID → <code>RACE</code></td>
+<td>Race the armor is built for.</td>
+</tr>
+<tr>
+<td><code>Models</code></td>
+<td>array of <code>INDX</code>(uint16)+<code>MODL</code>(→<code>ARMA</code>)</td>
+<td>array</td>
+<td><strong>The addon list</strong> — maps an addon index to an <code>ARMA</code> record. This is how an ARMO delegates its actual worn mesh to per-race addons.</td>
+</tr>
+<tr>
+<td><code>DATA</code></td>
+<td>Value / Weight / Health</td>
+<td>struct</td>
+<td></td>
+</tr>
+<tr>
+<td><code>FNAM</code></td>
+<td>Armor Rating / Base Addon Index / Stagger</td>
+<td>struct</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ETYP</code>/<code>ETYP</code></td>
+<td>Equip type</td>
+<td>FormID → <code>EQUP</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>race skin</strong> is an ARMO (pointed to by <code>RACE.WNAM</code>) whose <code>Models</code> list references body/hands <code>ARMA</code> addons. A custom body means: a skin ARMO → body <code>ARMA</code> + hands <code>ARMA</code> → each pointing at your <code>.nif</code>s and skin <code>TXST</code>. Specifics confirmed by the "creating a playable race" guide:</p>
+<ul>
+<li>The skin ARMO <strong>must have the <code>Non-Playable</code> record-header flag</strong> (or you can accidentally equip/"skin" the player).</li>
+<li><strong>Split into two addons</strong>: a <strong>body</strong> ARMA on biped slot <strong>3 (BODY)</strong> and a <strong>hands</strong> ARMA on slot <strong>6 (Gloves)</strong> — most apparel only substitutes the body addon, so hands need their own.</li>
+<li>The body ARMA needs the <strong><code>Is Skin</code></strong> flag ("Unknown 7" = <em>use skintone texture</em>); the hands ARMA needs <strong><code>Is Skin Hands</code></strong> ("Unknown 8" = <em>use gloves skintone texture</em>). Omitting the hands addon/flag is the classic <strong>invisible-hands</strong> bug.</li>
+<li><strong>Only the <em>first</em> model in a NIF receives the skin-tone texture swap</strong> — keep the naked body a single whole piece, and in apparel that shows skin, order the naked-body model first (Starfield Geometry Bridge exports models in alphabetical name order). A face-type <code>HDPT</code> receives skin-tone swap automatically (no header edit needed); align the body and head UVs so they share one skin-tone texture.</li>
+<li>Shortcut: copying the vanilla human skin ARMO + its ARMAs and re-pointing them is far less error-prone than building from scratch.</li>
+</ul>
+<h3 id="24-arma-armor-addon-the-racemodel-mapping">2.4 <code>ARMA</code> — Armor Addon (the race↔model mapping)</h3>
+<p>The record that actually binds a worn mesh to a race and gender. <strong>This is where anthropomorphic body/hand meshes get wired in.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Sub</th>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Record flags</td>
+<td><code>0x40</code> No Underarmor Scaling, <code>0x80</code> <strong>Is Skin</strong>, <code>0x100</code> <strong>Is Skin Hands</strong>, <code>0x400</code> No Model</td>
+<td>flags</td>
+<td>"Is Skin"/"Is Skin Hands" mark this addon as body vs hands skin.</td>
+</tr>
+<tr>
+<td><em>component block</em></td>
+<td>—</td>
+<td>—</td>
+<td></td>
+</tr>
+<tr>
+<td><code>BO64</code></td>
+<td>Biped Object slots</td>
+<td>uint64</td>
+<td>Slots this addon fills.</td>
+</tr>
+<tr>
+<td><code>RNAM</code></td>
+<td><strong>Race</strong></td>
+<td>FormID → <code>RACE</code></td>
+<td>Primary race.</td>
+</tr>
+<tr>
+<td><code>DNAM</code></td>
+<td>Data</td>
+<td>struct</td>
+<td>Weapon adjust, male/female priority, detection sound, health-bar offset.</td>
+</tr>
+<tr>
+<td>Biped Model</td>
+<td><code>MOD2</code> (male) / <code>MOD3</code> (female)</td>
+<td>Model structs</td>
+<td><strong>The worn 3rd-person meshes</strong> (+ <code>MOLM</code> material swaps).</td>
+</tr>
+<tr>
+<td>1st Person</td>
+<td><code>MOD4</code> (male) / <code>MOD5</code> (female)</td>
+<td>Model structs</td>
+<td>First-person meshes.</td>
+</tr>
+<tr>
+<td><code>MOD6</code>/<code>MOD7</code></td>
+<td>Male/Female Alt Skeleton</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td><code>NAM0</code>/<code>NAM1</code></td>
+<td>Male/Female <strong>Skin Texture</strong></td>
+<td>FormID → <code>TXST</code></td>
+<td>Skin texture set for body/hands.</td>
+</tr>
+<tr>
+<td><code>NAM2</code>/<code>NAM3</code></td>
+<td>Male/Female Skin Texture Swap List</td>
+<td>FormID → <code>FLST</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>NAM4</code>–<code>NAM7</code></td>
+<td>Morphs</td>
+<td>FormID → <code>MRPH</code></td>
+<td>World / 1st-person morph targets.</td>
+</tr>
+<tr>
+<td>Additional Races</td>
+<td><code>MODL</code> ×N</td>
+<td>FormID → <code>RACE</code></td>
+<td><strong>Extra races this addon also serves</strong> — add your race here to reuse vanilla addons, or add <code>HumanRace</code> to your addon so humans can wear it.</td>
+</tr>
+<tr>
+<td><code>PNAM</code></td>
+<td>Body Part Data</td>
+<td>FormID → <code>BPTD</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Race-based addon selection (verified — same as <code>[FO4]</code>).</strong> Starfield keeps FO4's per-race ARMA
+mechanism intact. An <code>ARMO</code>'s addon list can hold multiple <code>ARMA</code>s; the engine picks the one whose
+<code>RNAM</code> (or <code>Additional Races</code>) matches the wearer's <strong>Armor Race</strong>, falling back to <code>FNAM</code> Base Addon
+Index. It's used pervasively: vanilla ships 586 HumanRace, 168 HumanCrowdRace, 15 ChildRace, and
+per-creature ARMAs; <strong>704 ARMAs populate <code>Additional Races</code></strong> (human apparel routinely serves
+<code>HumanRace + HumanCorpseRace + MannequinRace</code> with one mesh — e.g. <code>AA_Naked_Body</code>). <code>ChildRace</code> gets
+distinct-mesh ARMAs, the "different mesh per race" case.</p>
+<p><strong>The redirect knob — <code>RACE.RNAM</code> (Armor Race) — decides your custom-race armor strategy:</strong></p>
+<ul>
+<li><strong>Armor Race = <code>HumanRace</code></strong> (the common custom-race default): armor resolves <em>as HumanRace</em>, so a
+  custom race uses the <strong>human</strong> ARMAs (human meshes) on its body. All vanilla armor "just works" but is
+  shaped for human proportions — fine if the custom body <strong>conforms to human armor</strong>; refit only the
+  pieces you want. Zero per-armor edits for vanilla coverage.</li>
+<li><strong>Armor Race = your custom race</strong>: the engine will auto-select <strong>your</strong> race-keyed ARMAs — but vanilla
+  armor (whose ARMAs are <code>HumanRace</code>) then won't resolve unless you either add your race to each vanilla
+  ARMA's <code>Additional Races</code> (reuse the human mesh) or add a custom ARMA to the ARMO's addon list (custom
+  mesh). Full fit control, at per-armor override cost. No global "redirect all armor" switch exists.</li>
+</ul>
+<h3 id="25-hdpt-head-part">2.5 <code>HDPT</code> — Head Part</h3>
+<p>Head/hair/eyes/ears/muzzle geometry entries referenced by <code>RACE</code> and <code>NPC_</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Sub</th>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EDID</code>, component block, <code>FULL</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Model</td>
+<td><code>wbGenericModel</code></td>
+<td>Model struct</td>
+<td><code>MODL</code> → head-part <code>.nif</code>.</td>
+</tr>
+<tr>
+<td><code>DATA</code></td>
+<td>Flags</td>
+<td>uint8</td>
+<td><code>0x01</code> Playable, <code>0x02</code> Male, <code>0x04</code> Female, <code>0x10</code> Is Extra Part, <code>0x20</code> Use Solid Tint, <code>0x40</code> <strong>Uses Body Texture</strong>, <code>0x80</code> Hide with "HideEar" morph.</td>
+</tr>
+<tr>
+<td><code>PNAM</code></td>
+<td><strong>Type</strong></td>
+<td>uint32 enum</td>
+<td>0 Misc, 1 Face, 2 Right Eye, 3 Hair, 4 Facial Hair, 5 Scar, 6 Eyebrows, 7 Jewelry, 8 Meatcaps, 9 Teeth, 10 Head Rear, 11 Extra Hair, 12 Left Eye, 13 Eyelashes, <strong>14 Creature Head, 15 Creature Torso, 16 Creature Arms, 17 Creature Legs, 18 Creature Tail, 19 Creature Wings</strong>.</td>
+</tr>
+<tr>
+<td><code>HNAM</code></td>
+<td>Extra Parts</td>
+<td>FormID[] → <code>HDPT</code></td>
+<td>Chained sub-parts.</td>
+</tr>
+<tr>
+<td><code>NAM2</code>/<code>NAM3</code></td>
+<td>Color Mapping / Mask</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td><code>TNAM</code></td>
+<td>Texture Set</td>
+<td>FormID → <code>TXST</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>RNAM</code></td>
+<td>Valid Races</td>
+<td>FormID → <code>FLST</code></td>
+<td>Form-list of races that may use this part — <strong>add your race's FLST here.</strong></td>
+</tr>
+<tr>
+<td><code>MNAM</code></td>
+<td>Morph</td>
+<td>FormID → <code>MRPH</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The creature-part types (14–19, incl. <strong>Tail</strong> and <strong>Wings</strong>) are directly useful for an anthro race — a tail can be authored as an <code>HDPT</code> of type 18.</p>
+<h3 id="26-txst-texture-set">2.6 <code>TXST</code> — Texture Set</h3>
+<table>
+<thead>
+<tr>
+<th>Sub</th>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EDID</code>, component block</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Textures (RGB/A)</td>
+<td><code>TX00</code> Diffuse, <code>TX01</code> Normal/Gloss, <code>TX08</code> Metal, <code>TX09</code> Rough, <code>TX17</code> AO, <code>TX19</code> Opacity</td>
+<td>strings</td>
+<td>Paths under <code>textures\</code> (<code>.dds</code> / <code>.png</code>→converted). Starfield's PBR set differs from <code>[FO4]</code>'s TX00–TX07.</td>
+</tr>
+<tr>
+<td><code>DODT</code>/<code>DODT</code></td>
+<td>Decal data</td>
+<td>struct</td>
+<td></td>
+</tr>
+<tr>
+<td><code>DNAM</code></td>
+<td>Flags</td>
+<td>uint16</td>
+<td><code>0x01</code> No Specular, <code>0x02</code> <strong>Facegen Textures</strong>, <code>0x04</code> Model-Space Normal, <code>0x10</code> Default To Box Decal.</td>
+</tr>
+<tr>
+<td><code>MNAM</code></td>
+<td><strong>Material</strong></td>
+<td>string</td>
+<td>Path to a material (<code>.mat</code>) — Starfield binds a TXST to a material file.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="27-bptd-body-part-data">2.7 <code>BPTD</code> — Body Part Data</h3>
+<p>Referenced by <code>RACE.GNAM</code> and <code>ARMA.PNAM</code>; defines dismemberment/hit regions. <strong>Parts are defined by <em>bone</em>, not geometry</strong> — each <code>Body Part</code> = <code>BPNN</code> "Part Node" (a skeleton bone) + health %, VATS-target bone, <code>NAM4</code> gore-target bone, <code>ENAM</code>/<code>FNAM</code> hit-reaction start/end bones, blood material (<code>MaterialActorSkin</code>). So Starfield dismemberment is entirely bone-driven and record-level (no mesh segments — unlike <code>[FO4]</code>'s <code>BSSubIndexTriShape</code>+<code>.ssf</code>). One <code>BPTD</code> per race (<code>HumanBodyPartData</code>, <code>ChildBodyPartData</code>, per-creature — 28 total); gore stumps come from the "Meatcaps" HDPT type. A furry race just <strong>reuses <code>HumanRace</code>'s BPTD</strong> via <code>GNAM</code> — bone-based severing works for free on the human skeleton; field-level edits are rarely needed for a cosmetic race.</p>
+<h3 id="28-supporting-records-you-will-reference">2.8 Supporting records you will reference</h3>
+<ul>
+<li><strong><code>LMSW</code></strong> (Layered Material Swap) — targets of <code>MOLM</code>; retexture without editing the nif.</li>
+<li><strong><code>FLST</code></strong> — form lists (valid-races lists on <code>HDPT</code>, skin texture swap lists on <code>ARMA</code>).</li>
+<li><strong><code>MRPH</code></strong> — morph targets (facegen / body morphs).</li>
+<li><strong><code>NPC_</code></strong> — the player and race presets (<code>RPRM</code>/<code>RPRF</code>).</li>
+<li><strong><code>EQUP</code></strong> — equip slots referenced by <code>RACE</code>/<code>ARMO</code>.</li>
+<li><strong><code>BMOD</code></strong> — bone modifiers referenced by <code>RACE</code>.</li>
+<li>There is <strong>no <code>MATO</code> record</strong> in Starfield's definitions; material objects were replaced by the external <code>.mat</code> material system + <code>LMSW</code>.</li>
+</ul>
+<hr />
+<h2 id="3-ba2-archive-format">3. BA2 archive format</h2>
+<p>Starfield archives are still <strong><code>BTDX</code></strong> BA2 containers, split <strong>GNRL</strong> (general) vs <strong>DX10</strong> (texture), auto-loaded by matching the plugin name. What changed is the <strong>version number</strong> and a slightly larger header.</p>
+<h3 id="31-versions-observed-in-the-shipped-game">3.1 Versions observed in the shipped game</h3>
+<p>Byte 4 of the header is the version <code>uint32</code>. From direct dumps of <code>Data\*.ba2</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Seen on</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><code>[FO4]</code> / FO76 archives</td>
+<td>GNRL &amp; DX10</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><code>Starfield - Materials/Interface/Misc/Meshes*.ba2</code> (GNRL); <code>Constellation/OldMars/ShatteredSpace/SFBGS* - Textures.ba2</code> (DX10)</td>
+<td>GNRL <strong>and</strong> DX10</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><code>Starfield - Textures01–09.ba2</code> (base-game main textures)</td>
+<td>DX10 only</td>
+</tr>
+</tbody>
+</table>
+<p>So <strong>version is not simply "GNRL=2, DX10=3."</strong> Reality (confirmed by dumps): <strong>GNRL is always v2</strong>; <strong>DX10 is v2 or v3.</strong> v3 is an optimized texture layout that streams to VRAM faster; base-game bulk textures ship v3 while most DLC/update texture archives ship v2. The community "BA2 Upgrader" tool converts v2 DX10 → v3.</p>
+<h3 id="32-header-layout-from-byte-dumps">3.2 Header layout (from byte dumps)</h3>
+<p>Common prefix (offsets in bytes):</p>
+<table>
+<thead>
+<tr>
+<th>Off</th>
+<th>Size</th>
+<th>Field</th>
+<th>Example (GNRL v2 <code>Meshes01</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>4</td>
+<td>Magic <code>"BTDX"</code></td>
+<td><code>42 54 44 58</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>Version (uint32)</td>
+<td><code>02 00 00 00</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>4</td>
+<td>Type <code>"GNRL"</code>/<code>"DX10"</code></td>
+<td><code>47 4E 52 4C</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>4</td>
+<td>File count (uint32)</td>
+<td><code>E3 E3 04 00</code> → 320 995</td>
+</tr>
+<tr>
+<td>16</td>
+<td>8</td>
+<td>Name-table offset (uint64)</td>
+<td><code>CF E3 D7 FE 00…</code> → <code>0xFED7E3CF</code></td>
+</tr>
+<tr>
+<td>24</td>
+<td>4</td>
+<td><em>New in Starfield</em> — unknown A (uint32)</td>
+<td><code>01 00 00 00</code></td>
+</tr>
+<tr>
+<td>28</td>
+<td>4</td>
+<td><em>New in Starfield</em> — unknown B (uint32)</td>
+<td><code>00 00 00 00</code></td>
+</tr>
+<tr>
+<td>32</td>
+<td>…</td>
+<td>File records begin (GNRL &amp; v2 DX10)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>For <strong>v3 DX10</strong> there is one additional <code>uint32</code> before the file records (observed value <code>03</code>), so v3 file records begin at offset <strong>36</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Textures01 (DX10 v3):
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>00: 42 54 44 58  03 00 00 00  44 58 31 30  C6 15 00 00   BTDX v3 DX10  count=0x15C6
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>10: 31 10 E5 FF  00 00 00 00  01 00 00 00  00 00 00 00   nameTblOff=0xFFE51031, A=1, B=0
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>20: 03 00 00 00  &lt;first DX10 file record...&gt;              v3 extra u32 = 3
+</code></pre></div>
+<p><code>[FO4]</code> v1 had <strong>no</strong> bytes 24–31 — file records began right after the 24-byte prefix. <strong>Unverified:</strong> the exact meaning of unknown-A/B (A is consistently <code>1</code>, B <code>0</code> across sampled archives; A may be a "compression method present" flag, B reserved).</p>
+<h3 id="33-file-records-chunks">3.3 File records &amp; chunks</h3>
+<p><strong>GNRL file entry — 36 bytes, unchanged from <code>[FO4]</code></strong> (verified against <code>Meshes01</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Off</th>
+<th>Size</th>
+<th>Field</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>4</td>
+<td>Name hash (uint32)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>File extension (char[4], e.g. <code>"nif\0"</code>)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>4</td>
+<td>Directory hash (uint32)</td>
+</tr>
+<tr>
+<td>12</td>
+<td>4</td>
+<td>Flags (uint32)</td>
+</tr>
+<tr>
+<td>16</td>
+<td>8</td>
+<td>Data offset (uint64)</td>
+</tr>
+<tr>
+<td>24</td>
+<td>4</td>
+<td>Packed (compressed) size — 0 if stored</td>
+</tr>
+<tr>
+<td>28</td>
+<td>4</td>
+<td>Unpacked size</td>
+</tr>
+<tr>
+<td>32</td>
+<td>4</td>
+<td>Sentinel <code>0xBAADF00D</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>DX10 (texture) entry</strong> keeps the <code>[FO4]</code> shape: per-file header (name hash, <code>"dds\0"</code>, dir hash, then <code>numChunks</code>, <code>chunkHeaderSize=0x18</code>, height, width, <code>numMips</code>, DXGI <code>format</code>, <code>isCubemap</code>, <code>tileMode</code>), followed by <code>numChunks</code> <strong>chunks</strong>, each <code>[offset u64][packedSize u32][unpackedSize u32][startMip u16][endMip u16][sentinel 0xBAADF00D]</code>. The DDS header is <strong>not</strong> stored; it is reconstructed on load from these fields — which is why texture BA2s load fast. v3 tweaks the chunk/streaming layout for VRAM upload but keeps the same conceptual structure.</p>
+<p><strong>Compression:</strong> GNRL/DX10 chunks are <strong>zlib</strong> by default, as in <code>[FO4]</code>. Starfield additionally introduced <strong>LZ4</strong> for some data. Chunk headers carry packed vs unpacked sizes; packed==0 (or ==unpacked) means stored uncompressed. <strong>Unverified:</strong> which archives use LZ4 vs zlib and how the format flag is encoded — community tools (BSArch Pro, Bethesda Archive Manager) auto-detect.</p>
+<h3 id="34-whats-inside-and-the-mesh-split">3.4 What's inside — and the <code>.mesh</code> split</h3>
+<p>Starfield geometry is <strong>not</strong> in the <code>.nif</code>. Archive naming reflects the split:
+- <code>... - Meshes*.ba2</code> — <code>.nif</code> <strong>container</strong> files under <code>meshes\</code>.
+- <code>Starfield - Meshes01/02</code> also carry <code>geometries\&lt;hex1&gt;\&lt;hex2&gt;.mesh</code> — the actual vertex/UV/normal/weight/LOD/meshlet data.
+- <code>... - Materials.ba2</code> — the <code>.mat</code> material database / files under <code>materials\</code>.
+- <code>... - Textures*.ba2</code> (DX10) — <code>.dds</code> under <code>textures\</code>.</p>
+<p>A <code>BSGeometry</code> node in a <code>.nif</code> stores a <strong>mesh path</strong> string (vanilla: 40 hex chars split <code>hex1/hex2</code>) resolving to <code>geometries\hex1\hex2.mesh</code> inside a meshes BA2 (or a loose file). The hex name <em>looks</em> like a digest but is <strong>not a computed/enforced hash</strong> — nifly/Outfit Studio write arbitrary (even human-readable) names and the game doesn't verify them (the only CRC32 in the pipeline is for <em>material</em> resource-ID lookup, not mesh filenames). One <code>BSGeometry</code> can reference up to <strong>4</strong> <code>.mesh</code> files (LODs). <strong>Note:</strong> game update <strong>1.11.36</strong> reorganized vanilla mesh paths; older mods needed a path-migration tool — author against current paths.</p>
+<h3 id="35-loose-files-override-archives">3.5 Loose files override archives</h3>
+<p>Same rule as every Bethesda title: <strong>loose files in <code>Data\</code> beat archived files</strong>, and later-loading archives beat earlier ones. Priority high→low:
+1. Loose file at <code>Data\&lt;path&gt;</code>
+2. Later plugin's BA2, then earlier plugins' BA2s (plugin load order)
+3. Base-game <code>Starfield - *.ba2</code></p>
+<p>During development ship loose; for release pack into <code>&lt;Plugin&gt; - Main.ba2</code> (+ <code>&lt;Plugin&gt; - Textures.ba2</code>). A BA2 auto-loads when it shares the plugin's base name.</p>
+<hr />
+<h2 id="4-workflow">4. Workflow</h2>
+<h3 id="41-two-authoring-tools">4.1 Two authoring tools</h3>
+<ul>
+<li><strong>SF1Edit / xEdit</strong> — the record surgeon. Copy vanilla records as overrides/new records, wire FormID links (<code>WNAM</code>, <code>RNAM</code>, <code>SRAC</code>, addon lists), flag master tier, compact FormIDs, detect conflicts, clean ITMs. Fastest for a race mod's record plumbing. Component forms with <code>REFL</code> blobs are the one gap.</li>
+<li><strong>Creation Kit (Starfield)</strong> — the WYSIWYG editor. Needed for facegen/chargen preview, morph setup, and anything with in-editor visualization. Heavier, slower, but authoritative for chargen.</li>
+</ul>
+<p>Most race mods do the record work in SF1Edit and use the CK for facegen/preview.</p>
+<h3 id="42-asset-pipeline-mesh-material-texture">4.2 Asset pipeline (mesh → material → texture)</h3>
+<ol>
+<li>Model the body/hands/head/tail in Blender; export to Starfield's <strong><code>.mesh</code></strong> + <strong><code>.nif</code> container</strong> (community "Starfield Geometry Bridge" / updated NifSkope; PyNifly-style tooling handles the split).</li>
+<li>Author materials as <code>.mat</code> (+ optional <code>LMSW</code> layered swaps referenced by <code>MOLM</code>).</li>
+<li>Author PBR textures (<code>_color</code>, <code>_normal</code>, <code>_rough</code>, <code>_metal</code>, <code>_ao</code>, <code>_opacity</code> <code>.dds</code>) and bind them via a <code>TXST</code>.</li>
+<li>Place files under <code>Data\meshes\</code>, <code>Data\geometries\</code>, <code>Data\materials\</code>, <code>Data\textures\</code> (loose while iterating).</li>
+</ol>
+<h3 id="43-records-a-custom-race-mod-must-createedit">4.3 Records a custom-race mod must create/edit</h3>
+<p>The concrete plumbing (see checklist at end). Load order: your race <code>.esm</code> (small- or medium-master flagged) after <code>Starfield.esm</code> and any masters whose assets you reuse. Keep new FormIDs in the correct tier range so the flag stays valid.</p>
+<h3 id="44-packaging-shipping">4.4 Packaging &amp; shipping</h3>
+<ol>
+<li>Finalize the plugin; <strong>compact FormIDs</strong> to the small/medium range and set the tier flag (LOOT or xEdit).</li>
+<li>Pack assets: <code>BSArch</code>/BSArch Pro or Bethesda Archive Manager → <code>&lt;Plugin&gt; - Main.ba2</code> (v2 GNRL: meshes, geometries, materials) and <code>&lt;Plugin&gt; - Textures.ba2</code> (v2 or v3 DX10: textures). <strong>Note:</strong> a <code>&lt;Plugin&gt; - Meshes.ba2</code> is <strong>no longer recognized</strong> by Starfield — meshes/geometries go in <code>- Main.ba2</code>.</li>
+<li>Confirm archive base names match the plugin so they auto-load.</li>
+<li>Ship plugin + BA2s (+ any loose overrides). Test with loose files first, then verify packed.</li>
+</ol>
+<hr />
+<h2 id="records-a-custom-race-mod-must-create-edit-checklist">Records a custom-race mod must create / edit — checklist</h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong><code>RACE</code></strong> — copy <code>HumanRace</code> [<code>0000347D</code>] as a new record. Set <code>FULL</code>/<code>DESC</code>; point <code>WNAM</code>→your skin ARMO; set <code>RNAM</code> (Armor Race)=<code>HumanRace</code> and <code>SRAC</code> (Subgraph Template Race)=<code>HumanRace</code> to inherit armor fit + animations; set <code>NAM8</code> (Morph Race)=<code>HumanRace</code> to inherit facegen; populate Head Parts list, skeleton-data model paths, and chargen/skintone paths.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong><code>ARMO</code> (skin)</strong> — the naked-body armor referenced by <code>RACE.WNAM</code>. Set <code>RNAM</code>→your race; <code>Models</code> list maps addon indices to the body and hands <code>ARMA</code> records.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong><code>ARMA</code> (body)</strong> — flag <strong>Is Skin</strong>; <code>RNAM</code>→your race (+ add <code>HumanRace</code> under Additional Races if reusing human armor); set male/female Biped Model <code>.nif</code>s and <code>NAM0</code>/<code>NAM1</code> skin <code>TXST</code>; set <code>BO64</code> body slots.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong><code>ARMA</code> (hands)</strong> — flag <strong>Is Skin Hands</strong>; same wiring for the hands slot (fixes the classic "invisible hands/limbs" pitfall — every skin slot needs its own addon).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong><code>TXST</code></strong> — skin texture set(s): diffuse/normal/rough/metal/AO/opacity + <code>MNAM</code> material; referenced by the <code>ARMA</code> <code>NAM0</code>/<code>NAM1</code>.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong><code>HDPT</code></strong> — head/ears/muzzle/<strong>tail</strong>/<strong>wings</strong> parts (types 14–19 for creature parts). Set <code>TNAM</code>→TXST, <code>RNAM</code>→valid-races <code>FLST</code>, add to <code>RACE</code> head-part list.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong><code>FLST</code></strong> — valid-races form list for your <code>HDPT</code> records (include your race, optionally <code>HumanRace</code>).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong><code>MRPH</code></strong> — morph targets if the race uses body/face morphs (optional; some races skip head morphs).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong><code>LMSW</code></strong> <em>(optional)</em> — layered material swaps for retexture variants via <code>MOLM</code>.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong><code>NPC_</code></strong> <em>(optional)</em> — race presets (<code>RPRM</code>/<code>RPRF</code>) and any test actor.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong><code>BPTD</code></strong> — reuse <code>HumanRace</code>'s unless adding severable limbs (e.g. a tail hit region).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Plugin/TES4</strong> — set author/description, add masters (<code>Starfield.esm</code> + any asset donors), choose master tier (small if ≤4095 new records, else medium), keep FormIDs in range.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Assets</strong> — <code>.nif</code> containers + <code>.mesh</code> geometry + <code>.mat</code> materials + <code>.dds</code> textures under the right <code>Data\</code> subfolders; pack to <code>&lt;Plugin&gt; - Main.ba2</code> / <code>&lt;Plugin&gt; - Textures.ba2</code>.</li>
+</ul>
+<hr />
+<h2 id="sources">Sources</h2>
+<ul>
+<li>xEdit / SF1Edit record &amp; header definitions — <code>wbDefinitionsSF1.pas</code> (TES5Edit-dev 4.1.6 Core), authoritative for RACE/ARMO/ARMA/HDPT/TXST/BPTD/TES4 fields, component list, and master flags. Repository: <a href="https://github.com/TES5Edit/TES5Edit">https://github.com/TES5Edit/TES5Edit</a></li>
+<li>Direct byte dumps of shipped <code>Data\*.ba2</code> archives (Starfield base game + DLC) for BA2 magic/version/type/header/file-record layout.</li>
+<li>Starfield Wiki — Archive2 / BA2 format (GNRL vs DX10, v1/v2/v3): <a href="https://starfieldwiki.net/wiki/Starfield_Mod:Archive2">https://starfieldwiki.net/wiki/Starfield_Mod:Archive2</a></li>
+<li><code>ba2</code> Rust crate docs (FO4/Starfield BA2 structures, DX10Header/Chunk/CompressionFormat, zlib+lz4): <a href="https://docs.rs/ba2/latest/ba2/fo4/index.html">https://docs.rs/ba2/latest/ba2/fo4/index.html</a></li>
+<li>BA2 Upgrader — Upgrade to BA2 Version 3 (Starfield Nexus, v2→v3 texture format): <a href="https://www.nexusmods.com/starfield/mods/1192">https://www.nexusmods.com/starfield/mods/1192</a></li>
+<li>Bethesda Archive Manager (create/extract Starfield BA2): <a href="https://www.nexusmods.com/starfield/mods/14468">https://www.nexusmods.com/starfield/mods/14468</a></li>
+<li>Ortham, "Load order in Starfield" (full/medium/small masters, FormID ranges, flags): <a href="https://blog.ortham.net/posts/2024-06-28-load-order-in-starfield/">https://blog.ortham.net/posts/2024-06-28-load-order-in-starfield/</a></li>
+<li>Modding.wiki — Converting ESMs to ESPs (master tiers &amp; conversion): <a href="https://modding.wiki/en/starfield/developers/tutorials/ESMtoESP">https://modding.wiki/en/starfield/developers/tutorials/ESMtoESP</a></li>
+<li>LOOT — Changing plugin types in Starfield: <a href="https://loot.github.io/docs/help/Changing-Plugin-Types-In-Starfield.html">https://loot.github.io/docs/help/Changing-Plugin-Types-In-Starfield.html</a></li>
+<li>Nexus — "Notes and pitfalls on creating a playable race" (RACE/ARMO/ARMA workflow, skin body+hands split, RNAM/SRAC, invisible-limb fix): <a href="https://www.nexusmods.com/starfield/articles/431">https://www.nexusmods.com/starfield/articles/431</a></li>
+<li>Nexus — "Organization of Starfield's Meshes and Related Assets" (.nif container vs external .mesh, BSGeometry hash path, up-to-4 meshes): <a href="https://www.nexusmods.com/starfield/articles/268">https://www.nexusmods.com/starfield/articles/268</a></li>
+<li>Nexus — .nif Mesh Path Migration Tool for SF 1.11.36 (mesh-path hashing change): <a href="https://www.nexusmods.com/starfield/mods/9234">https://www.nexusmods.com/starfield/mods/9234</a></li>
+<li>NifSkope Starfield support PSA (BSGeometry / mesh references): <a href="https://github.com/niftools/nifskope/issues/232">https://github.com/niftools/nifskope/issues/232</a></li>
+<li>fre-sch, "Starfield guide for creating new ship parts" (GBFM / component / BFCB structure in xEdit): <a href="https://gist.github.com/fre-sch/ea74bc201be01c8e656991baacfc9702">https://gist.github.com/fre-sch/ea74bc201be01c8e656991baacfc9702</a></li>
+</ul>
+<p><em>Draft 2026-07-06 — not yet reviewed</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2762 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Comprehensive reference for Skyrim, Fallout 4, and Starfield modding with PyNifly and esplib">
+      
+      
+        <meta name="author" content="Hugh Russel">
+      
+      
+      
+        <link rel="prev" href="../meshes/">
+      
+      
+        <link rel="next" href="../material-worked-example/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Materials & Textures - Bethesda Modding Library</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#starfield-materials-textures" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Bethesda Modding Library" class="md-header__button md-logo" aria-label="Bethesda Modding Library" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Bethesda Modding Library
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Materials & Textures
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../file-formats/overview/" class="md-tabs__link">
+          
+  
+  
+  File Formats
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../skyrim/overview/" class="md-tabs__link">
+          
+  
+  
+  Game-Specific
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../tools/pynifly/overview/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../reference/partition-names/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../CONVENTIONS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Conventions
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Bethesda Modding Library" class="md-nav__button md-logo" aria-label="Bethesda Modding Library" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Bethesda Modding Library
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    File Formats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins (ESP/ESM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/nif-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NIF Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/nif-animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NIF Animations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Animations (HKX)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/physics-collision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Physics & Collision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/morphs-shapekeys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Morphs & Shape Keys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/textures-materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Textures & Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/archives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archives (BSA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/scripts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scripts (PEX)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game-Specific
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game-Specific
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skyrim
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Skyrim
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../skyrim/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fallout 4
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Fallout 4
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fallout4/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fallout4/connect-points/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connect Points
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fallout4/dismemberment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dismemberment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Starfield
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Starfield
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meshes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meshes (NIF + .mesh)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Materials & Textures
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Materials & Textures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-architecture-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Architecture at a glance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Architecture at a glance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#where-things-live-all-paths-relative-to-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where things live (all paths relative to Data\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-mat-json-format-worked-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The .mat JSON format (worked example)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. The .mat JSON format (worked example)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#real-skeleton-abridged-from-a-shipped-material" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Real skeleton (abridged from a shipped material)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-shader-models-material-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Shader models (material templates)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-layers-blenders-and-component-blocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Layers, blenders, and component blocks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Layers, blenders, and component blocks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layer-blender-dom-paths-as-seen-in-the-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer / Blender DOM (paths as seen in the templates)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#furskin-critical-component-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fur/skin-critical component fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component-representation-in-the-matcdb-authoring-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Component representation in the .mat/cdb (authoring names)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-textureset-slots-dds-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. TextureSet slots &amp; DDS conventions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. TextureSet slots &amp; DDS conventions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#slot-index-map-authoritative-order-per-fo76utils-materialhpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slot index → map (authoritative order, per fo76utils material.hpp)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-big-shift-from-fo4-one-property-per-texture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The big shift from [FO4]: one property per texture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-mapping-to-a-blender-shader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Mapping to a Blender shader
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Mapping to a Blender shader">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-must-be-authored-to-export-a-working-starfield-material" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What must be authored to export a working Starfield material
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-contrast-with-fo4-bgsmbgem-quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Contrast with [FO4] BGSM/BGEM (quick reference)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-open-questions-uncertainties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Open questions / uncertainties
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../material-worked-example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+      ↳ .mat worked example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cdb-format/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+      ↳ .cdb binary format
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chargen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chargen, Race & Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Archives
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyNifly
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PyNifly
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/pynifly/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/pynifly/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/partition-names/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Partition Names
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/external-resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    External Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CONVENTIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="starfield-materials-textures">Starfield Materials &amp; Textures</h1>
+<p>Starfield replaced Fallout 4's flat <code>BGSM</code>/<code>BGEM</code> text materials with a <strong>layered, graph-based
+material system</strong>. Instead of one file listing a handful of texture slots and boolean flags, a
+Starfield material is a small <strong>object graph</strong> (a set of nodes and edges) describing 1–6 stacked
+material <em>layers</em>, the <em>blenders</em> between them, per-layer <em>texture sets</em>, and attached <em>component</em>
+settings (alpha, translucency/SSS, hair, decal, emissive, etc.). This graph is authored as JSON in
+a <code>.mat</code> file and compiled into a global binary <strong>material database</strong> (<code>.cdb</code>).</p>
+<p>This page targets modders coming from <code>[FO4]</code>/<code>[Skyrim]</code> who need to author skin/fur materials and
+get textures rendering correctly in Blender and in-game.</p>
+<hr />
+<h2 id="1-architecture-at-a-glance">1. Architecture at a glance</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>BSGeometry (mesh)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  └─ BSLightingShaderProperty
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        └─ Name = &quot;Materials\Path\MyMaterial.mat&quot;   ← material reference (relative to Data\, WITH .mat)
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                     │
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                     ▼
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>   .mat  (JSON object graph)  ──compiled into──▶  materialsbeta.cdb  (binary database)
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>     ├─ LayeredMaterial (root)
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>     │    ├─ Layer1 ─ Material ─ TextureSet ─▶ *.dds files
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>     │    ├─ Blender1
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>     │    ├─ Layer2 ─ Material ─ TextureSet ─▶ *.dds files
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>     │    └─ … up to Layer6
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>     └─ Components: AlphaSettings, TranslucencySettings, HairSettings, DecalSettings, …
+</code></pre></div>
+<p>Key ideas:</p>
+<ul>
+<li><strong>The mesh references a material by path</strong>, exactly like <code>[FO4]</code>: the NIF's
+  <code>BSLightingShaderProperty.Name</code> holds <code>Materials\...\Foo.mat</code> (relative to <code>Data\</code>, backslashes,
+  <strong>including</strong> the <code>.mat</code> extension). In <code>[FO4]</code> this pointed at a <code>.bgsm</code>; in Starfield it points
+  at a <code>.mat</code>. Everything else about the material lives in the <code>.mat</code>/<code>.cdb</code>, not the NIF.</li>
+<li><strong>Layers stack.</strong> Each layer is a full PBR material (its own albedo/normal/roughness/etc.). Layers
+  above are composited onto layers below through a <strong>Blender</strong> node using a mask, vertex color, or
+  height. This is how one mesh gets, e.g., base skin + a dirt layer + a tattoo layer.</li>
+<li><strong>A material database, not a folder of files.</strong> At load time the game reads
+  <code>materialsbeta.cdb</code> (shipped inside <code>Data\Starfield - Materials.ba2</code>). It contains the compiled
+  graphs for <em>every</em> vanilla material plus precomputed path hashes. A <strong>loose <code>.mat</code></strong> in
+  <code>Data\Materials\…</code> overrides/extends the database entry with the matching path. Its on-disk binary
+  layout — and the v4 change that breaks older readers — is documented in
+  <a href="../cdb-format/">The <code>.cdb</code> binary format</a>.</li>
+</ul>
+<p><strong>A loose <code>.mat</code> is sufficient — you never need to write the <code>.cdb</code></strong> (verified against fo76utils
+NifSkope, nifly, and Outfit Studio source). The game/CK load loose JSON <code>.mat</code> files at runtime, and
+NifSkope's material export (<code>sfmatexport.cpp</code>) serializes a <code>CE2Material</code> straight to a <strong>loose JSON
+<code>.mat</code></strong> (minting fresh resource IDs) — there is <strong>no <code>.cdb</code> writer anywhere</strong> in these codebases
+(the <code>.cdb</code> parsers are strictly read-only). So authoring a custom skin/fur material means emitting a
+loose <code>.mat</code>; the compiled database is only ever <em>read</em>, to resolve vanilla materials by path hash.
+Each loose node carries its own resource IDs and <code>Parent</code> links into the shared root templates.
+(The exact loose-vs-<code>.cdb</code> <em>precedence</em> rule — full replace vs merge — is still undocumented, but
+doesn't block authoring: a complete loose graph works.)</p>
+<h3 id="where-things-live-all-paths-relative-to-data">Where things live (all paths relative to <code>Data\</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compiled material DB</td>
+<td><code>Data\Starfield - Materials.ba2</code> → <code>materials\materialsbeta.cdb</code></td>
+</tr>
+<tr>
+<td>Loose material overrides</td>
+<td><code>Data\Materials\&lt;subfolders&gt;\&lt;name&gt;.mat</code></td>
+</tr>
+<tr>
+<td>Shader-model templates (loose, shipped)</td>
+<td><code>Data\EditorFiles\RuleTemplates\ShaderModels\*.json</code></td>
+</tr>
+<tr>
+<td>Root/base material graphs referenced by <code>Parent</code></td>
+<td><code>Data\Materials\Layered\Root\*.mat</code> (e.g. <code>LayeredMaterials.mat</code>, <code>Layers.mat</code>, <code>Materials.mat</code>, <code>TextureSets.mat</code>, <code>UVStreams.mat</code>) — inside the Materials <code>.ba2</code></td>
+</tr>
+<tr>
+<td>Textures</td>
+<td><code>Data\Textures\&lt;subfolders&gt;\*.dds</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> BA2 archives do <strong>not</strong> contain loose <code>.mat</code> files — only the compiled <code>.cdb</code>. Ready-to-edit
+loose <code>.mat</code> files are distributed separately (Bethesda's <code>Tools\ContentResources.zip</code>, or extracted
+by community tools such as the fo76utils NifSkope fork / SFME / Gibbed.Starfield).</p>
+<hr />
+<h2 id="2-the-mat-json-format-worked-example">2. The <code>.mat</code> JSON format (worked example)</h2>
+<p>A <code>.mat</code> is a JSON document with a top-level <code>Filename</code>, an optional <code>Import</code> list (referenced
+external resources by hash), and an <code>Objects</code> array. Each object is a graph node with:</p>
+<ul>
+<li><code>Components</code> — the typed data payloads (name, IDs, texture files, colors, floats, settings blocks).</li>
+<li><code>Edges</code> — links to other nodes (<code>BSComponentDB2::OuterEdge</code>, with a <code>To</code> target and <code>EdgeIndex</code>).</li>
+<li><code>ID</code> — a resource id <code>res:AAAAAAAA:BBBBBBBB:CCCCCCCC</code> (three 32-bit hashes).</li>
+<li><code>Parent</code> — the template/root graph this node derives from (e.g. <code>…\Root\Layers.mat</code>).</li>
+</ul>
+<p>Every typed payload is <code>{ "Data": {...}, "Index": n, "Type": "BSMaterial::Xxx" }</code>. The <code>Index</code>
+disambiguates repeated components (e.g. texture slot index within a set).</p>
+<blockquote>
+<p>For a <strong>complete, line-by-line annotated real material</strong> — a shipped 2-layer skin with SSS,
+a blend mask, and a tiled detail-normal layer — see
+<a href="../material-worked-example/"><strong>the <code>.mat</code> worked example</strong></a>.</p>
+</blockquote>
+<h3 id="real-skeleton-abridged-from-a-shipped-material">Real skeleton (abridged from a shipped material)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>{
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  &quot;Filename&quot;: &quot;MATERIALS\\SetDressing\\VaultBoyBobbleheads\\VaultBoy.mat&quot;,
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  &quot;Import&quot;: [ &quot;res:03F7ADED:0846A6FF:0074616D&quot; ],
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  &quot;Objects&quot;: [
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    {                                             // ── root layered-material node
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>      &quot;Components&quot;: [
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        { &quot;Data&quot;: { &quot;Name&quot;: &quot;VaultBoy&quot; }, &quot;Index&quot;: 0, &quot;Type&quot;: &quot;BSComponentDB::CTName&quot; },
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        { &quot;Data&quot;: { &quot;ID&quot;: &quot;res:B5EBFC45:000639FF:A4D136CD&quot; }, &quot;Index&quot;: 0, &quot;Type&quot;: &quot;BSMaterial::LayerID&quot; },
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>        { &quot;Data&quot;: { &quot;ID&quot;: &quot;res:FEED12D6:0005DAFE:A64340C8&quot; }, &quot;Index&quot;: 0, &quot;Type&quot;: &quot;BSMaterial::LODMaterialID&quot; }
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>      ],
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>      &quot;Parent&quot;: &quot;Data\\Materials\\Layered\\Root\\LayeredMaterials.mat&quot;
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    },
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    {                                             // ── Layer1: references a Material + a UV stream
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>      &quot;Components&quot;: [
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>        { &quot;Data&quot;: { &quot;Name&quot;: &quot;VaultBoy_Layer1&quot; }, &quot;Index&quot;: 0, &quot;Type&quot;: &quot;BSComponentDB::CTName&quot; },
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>        { &quot;Data&quot;: { &quot;ID&quot;: &quot;res:B5EBFC49:000639FF:A4D136CD&quot; }, &quot;Index&quot;: 0, &quot;Type&quot;: &quot;BSMaterial::MaterialID&quot; },
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>        { &quot;Data&quot;: { &quot;ID&quot;: &quot;res:B5EBFC48:000639FF:A4D136CD&quot; }, &quot;Index&quot;: 0, &quot;Type&quot;: &quot;BSMaterial::UVStreamID&quot; }
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>      ],
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>      &quot;Edges&quot;: [ { &quot;EdgeIndex&quot;: 0, &quot;To&quot;: &quot;&lt;this&gt;&quot;, &quot;Type&quot;: &quot;BSComponentDB2::OuterEdge&quot; } ],
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>      &quot;ID&quot;: &quot;res:B5EBFC45:000639FF:A4D136CD&quot;,
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>      &quot;Parent&quot;: &quot;Data\\Materials\\Layered\\Root\\Layers.mat&quot;
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>    },
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>    {                                             // ── Material1: points at a TextureSet
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>      &quot;Components&quot;: [
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>        { &quot;Data&quot;: { &quot;Name&quot;: &quot;VaultBoy_Material1&quot; }, &quot;Index&quot;: 0, &quot;Type&quot;: &quot;BSComponentDB::CTName&quot; },
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>        { &quot;Data&quot;: { &quot;ID&quot;: &quot;res:D46A0E9F:000639FF:A4D136CD&quot; }, &quot;Index&quot;: 0, &quot;Type&quot;: &quot;BSMaterial::TextureSetID&quot;, &quot;Version&quot;: 3 }
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>      ],
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>      &quot;Edges&quot;: [ { &quot;EdgeIndex&quot;: 0, &quot;To&quot;: &quot;res:B5EBFC45:000639FF:A4D136CD&quot;, &quot;Type&quot;: &quot;BSComponentDB2::OuterEdge&quot; } ],
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>      &quot;ID&quot;: &quot;res:B5EBFC49:000639FF:A4D136CD&quot;,
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>      &quot;Parent&quot;: &quot;Data\\Materials\\Layered\\Root\\Materials.mat&quot;
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>    },
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>    {                                             // ── TextureSet: the actual DDS slots
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>      &quot;Components&quot;: [
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>        { &quot;Data&quot;: { &quot;Name&quot;: &quot;VaultBoy_TextureSet2&quot; }, &quot;Index&quot;: 0, &quot;Type&quot;: &quot;BSComponentDB::CTName&quot; },
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>        { &quot;Data&quot;: { &quot;ResolutionHint&quot;: &quot;Tiling&quot; }, &quot;Index&quot;: 0, &quot;Type&quot;: &quot;BSMaterial::TextureResolutionSetting&quot; },
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>        { &quot;Data&quot;: { &quot;DisableMipBiasHint&quot;: &quot;false&quot; }, &quot;Index&quot;: 0, &quot;Type&quot;: &quot;BSMaterial::MipBiasSetting&quot; },
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>        { &quot;Data&quot;: { &quot;Value&quot;: &quot;MetalRough&quot; }, &quot;Index&quot;: 0, &quot;Type&quot;: &quot;BSMaterial::TextureSetKindComponent&quot; },
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>        { &quot;Data&quot;: { &quot;FileName&quot;: &quot;Data\\Textures\\...\\VaultBoy_d.DDS&quot; },  &quot;Index&quot;: 0, &quot;Type&quot;: &quot;BSMaterial::MRTextureFile&quot;, &quot;Version&quot;: 2 },  // albedo
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>        { &quot;Data&quot;: { &quot;FileName&quot;: &quot;Data\\Textures\\...\\VaultBoy_n.DDS&quot; },  &quot;Index&quot;: 1, &quot;Type&quot;: &quot;BSMaterial::MRTextureFile&quot;, &quot;Version&quot;: 2 },  // normal
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a>        { &quot;Data&quot;: { &quot;FileName&quot;: &quot;&quot; },                                    &quot;Index&quot;: 2, &quot;Type&quot;: &quot;BSMaterial::MRTextureFile&quot;, &quot;Version&quot;: 2 },  // opacity (empty)
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>        { &quot;Data&quot;: { &quot;FileName&quot;: &quot;Data\\Textures\\...\\VaultBoy_s.DDS&quot; },  &quot;Index&quot;: 3, &quot;Type&quot;: &quot;BSMaterial::MRTextureFile&quot;, &quot;Version&quot;: 2 },  // roughness
+<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a>        // … indices 4–20 (mostly empty in this simple material)
+<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a>
+<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a>        // Optional per-slot override tint when a texture is absent:
+<a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a>        { &quot;Data&quot;: { &quot;Enabled&quot;: &quot;false&quot;,
+<a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a>                    &quot;Color&quot;: { &quot;Data&quot;: { &quot;Value&quot;: { &quot;Data&quot;: { &quot;x&quot;:&quot;0.5&quot;,&quot;y&quot;:&quot;0.5&quot;,&quot;z&quot;:&quot;1&quot;,&quot;w&quot;:&quot;1&quot; },
+<a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a>                                                    &quot;Type&quot;: &quot;XMFLOAT4&quot; } },
+<a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a>                               &quot;Type&quot;: &quot;BSMaterial::Color&quot;, &quot;Version&quot;: 1 } },
+<a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a>          &quot;Index&quot;: 1, &quot;Type&quot;: &quot;BSMaterial::TextureReplacement&quot; },
+<a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a>
+<a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a>        { &quot;Data&quot;: { &quot;Value&quot;: 1.0 }, &quot;Index&quot;: 0, &quot;Type&quot;: &quot;BSMaterial::MaterialParamFloat&quot; }
+<a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a>      ],
+<a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a>      &quot;Edges&quot;: [ { &quot;EdgeIndex&quot;: 0, &quot;To&quot;: &quot;res:B5EBFC49:000639FF:A4D136CD&quot;, &quot;Type&quot;: &quot;BSComponentDB2::OuterEdge&quot; } ],
+<a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a>      &quot;ID&quot;: &quot;res:D46A0E9F:000639FF:A4D136CD&quot;
+<a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a>    }
+<a id="__codelineno-1-57" name="__codelineno-1-57" href="#__codelineno-1-57"></a>  ]
+<a id="__codelineno-1-58" name="__codelineno-1-58" href="#__codelineno-1-58"></a>}
+</code></pre></div>
+<p>Notes:
+- <code>TextureReplacement</code> supplies a <strong>flat fallback color</strong> (an <code>XMFLOAT4</code> RGBA) used when a slot's
+  <code>FileName</code> is empty, with <code>Enabled</code> toggling it. The <code>{0.5,0.5,1,1}</code> value above is the classic
+  flat-normal default.
+- <code>TextureSetKindComponent = "MetalRough"</code> declares the PBR convention (metal/rough workflow).
+- The example above uses legacy <code>_d/_n/_s</code> suffixes (a ported asset). Native Starfield assets use
+  the <code>_color/_normal/_rough/_metal/_ao/_opacity</code> suffixes — see §5.
+- Resource IDs (<code>res:…</code>) must be unique; when tools clone a material they randomly regenerate these
+  to avoid database collisions.</p>
+<hr />
+<h2 id="3-shader-models-material-templates">3. Shader models (material templates)</h2>
+<p>The material's <em>shape</em> (which layers, which slots, which component blocks are present) is chosen from
+a <strong>shader model / rule template</strong>. Bethesda ships these loose as JSON in
+<code>Data\EditorFiles\RuleTemplates\ShaderModels\</code>. Each template is a list of <code>TemplateRules</code> that
+<code>Add</code>/<code>Remove</code>/<code>Move</code>/<code>MakeConst</code> nodes on the base <code>BSMaterial::LayeredMaterialID</code>, i.e. it prunes the
+full DOM down to just the slots a given shader uses. Reading them is the fastest way to learn the DOM.</p>
+<p>Selected models (the <code>DisplayName</code> is what the Creation Kit / NifSkope shows):</p>
+<table>
+<thead>
+<tr>
+<th>Template file</th>
+<th>DisplayName</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BaseMaterial.json</code></td>
+<td><em>(locked base)</em></td>
+<td>Root DOM every model derives from</td>
+</tr>
+<tr>
+<td><code>1LayerStandard.json</code></td>
+<td><code>Standard1Layer</code></td>
+<td>Most opaque props; 1 layer</td>
+</tr>
+<tr>
+<td><code>TwoSided1Layer.json</code></td>
+<td><code>StandardTwoSided1Layer</code></td>
+<td>Double-sided</td>
+</tr>
+<tr>
+<td><code>2LayerStandard.json</code> / <code>3LayerStandard.json</code> / <code>4LayerStandard.json</code></td>
+<td><code>Standard2/3/4Layer</code></td>
+<td>Multi-layer blends</td>
+</tr>
+<tr>
+<td><code>ColorEmissive.json</code></td>
+<td><code>ColorEmissive</code></td>
+<td>Flat color + emissive</td>
+</tr>
+<tr>
+<td><code>*Effect*.json</code>, <code>TranslucentThin1Layer.json</code>, <code>Water*.json</code></td>
+<td>—</td>
+<td><code>[FO4]</code>-<code>BGEM</code>-equivalent effect/translucent shaders</td>
+</tr>
+<tr>
+<td><strong><code>BodySkin1Layer.json</code></strong></td>
+<td><code>BodySkin1Layer</code></td>
+<td>Body skin, SSS via TranslucencySettings</td>
+</tr>
+<tr>
+<td><strong><code>Skin5Layer.json</code></strong></td>
+<td><code>CharacterSkin5Layer</code></td>
+<td>Face/character skin, up to 6 blended layers</td>
+</tr>
+<tr>
+<td><strong><code>Character2/3/4Layer.json</code></strong></td>
+<td>—</td>
+<td>Layered character skin variants</td>
+</tr>
+<tr>
+<td><strong><code>Hair1Layer.json</code></strong></td>
+<td><code>CharacterHair1Layer</code></td>
+<td>Anisotropic hair (<code>HairSettings</code>)</td>
+</tr>
+<tr>
+<td><code>Eye1Layer.json</code>, <code>EyeWetness1Layer.json</code>, <code>1LayerEyebrow.json</code>, <code>1LayerMouth.json</code></td>
+<td>—</td>
+<td>Face parts</td>
+</tr>
+</tbody>
+</table>
+<p><code>MetaData.ComplexityCost</code> gauges shader expense; <code>DisableLOD</code> / <code>Locked</code> are authoring hints.</p>
+<p><strong>Implication for a custom furry race:</strong> the skin path should start from <code>Skin5Layer</code> /
+<code>BodySkin1Layer</code> (SSS + multi-layer) and hair/fur from <code>Hair1Layer</code> (anisotropic + backscatter).
+Fur that is <em>painted into skin</em> can be a blend layer; fur that is <em>card/shell geometry</em> is a separate
+<code>Hair1Layer</code> material.</p>
+<hr />
+<h2 id="4-layers-blenders-and-component-blocks">4. Layers, blenders, and component blocks</h2>
+<h3 id="layer-blender-dom-paths-as-seen-in-the-templates">Layer / Blender DOM (paths as seen in the templates)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>LayeredMaterial
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>├─ Layer1 / Layer2 / … / Layer6
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>│    └─ Material
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>│         ├─ UseVertexColorAsTint, Color Tint, Override Color Blend Type, FlipBookComp
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>│         └─ TextureSet
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>│              └─ (slots — see §5)
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>├─ Blender1 … Blender5          (Blender_N sits &quot;above&quot; Layer_(N+1))
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>│    ├─ BlendMode               (e.g. Linear, Additive, PositionContrast, Skin)
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>│    ├─ UseVertexColor, VertexColorChannel
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>│    ├─ Blend Albedo / Blend Metal / Blend Roughness / Blend Ambient Occlusion
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>│    ├─ BlendTextureNormal, Blend Normals additively
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>│    └─ UseDetailBlendMask
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>├─ AlphaSettings ─ Blender ─ { Mode, VertexColorChannel, UseDetailBlendMask }, AlphaBlendEnabled
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>├─ DetailBlenderSettings ─ { IsDetailBlendMaskSupported, … }
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>├─ TranslucencySettings  (skin/SSS)   — see below
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>├─ HairSettings          (hair/fur)   — see below
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>├─ DecalSettings         (decals/parallax)
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>├─ EffectSettings        (BGEM-style effects: falloff, backlight, frosting)
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>├─ TerrainTintSettings, MaterialNoiseComponent, CollisionSettings, DissolveComponent
+</code></pre></div>
+<p>Blenders expose <strong>per-channel blend toggles</strong> (blend albedo/metal/roughness/AO/normal
+independently) plus a mask source (detail-blend mask, vertex-color channel, or height). The <strong>Blender
+blend-mode enum</strong> is (fo76utils <code>material.hpp</code>): <code>0 Linear, 1 Additive, 2 PositionContrast, 3 None,
+4 CharacterCombine, 5 Skin</code>. Note Starfield has <strong>several distinct blend enums</strong> — don't conflate
+them: <code>Material.alphaBlendMode</code> (Linear/Additive/PositionContrast/None), <code>EffectSettings.blendMode</code>
+(8 values: AlphaBlend/Additive/…/None), the Opacity/LayeredEmissive modes
+(Lerp/Additive/Subtractive/Multiplicative), and <code>DecalSettings.blendMode</code> (None/Additive). NifSkope's
+renderer supports up to <strong>6</strong> layers.</p>
+<h3 id="furskin-critical-component-fields">Fur/skin-critical component fields</h3>
+<p><code>TranslucencySettings</code> (subsurface scattering — the core of believable skin/fur):
+<code>isEnabled, isThin, flipBackFaceNormalsInVS, useSSS, sssWidth, sssStrength, transmissiveScale,
+transmittanceWidth, specLobe0RoughnessScale, specLobe1RoughnessScale, sourceLayer</code>.
+(The skin templates rename these to friendly labels: <em>Subsurface Scattering Width/Strength</em>, <em>Scale</em>,
+<em>Transmittance Width</em>, <em>SpecLobe 1/2 Roughness Scale</em>, <em>Transmittance Source Layer</em>.)</p>
+<p><code>HairSettings</code> (anisotropic strand/fur shading):
+<code>isEnabled, isSpikyHair, depthOffsetMaskVertexColorChannel, aoVertexColorChannel, specScale,
+specularTransmissionScale, directTransmissionScale, diffuseTransmissionScale, roughness,
+contactShadowSoftening, backscatterStrength, backscatterWrap, variationStrength,
+indirectSpecularScale, indirectSpecularTransmissionScale, indirectSpecRoughness, edgeMaskContrast,
+edgeMaskMin, edgeMaskDistanceMin/Max, ditherScale, ditherDistanceMin/Max, tangent, maxDepthOffset</code>.</p>
+<p><code>EffectSettings</code> (the <code>[FO4]</code> <code>BGEM</code> analogue):
+<code>flags, blendMode, falloffStart/StopAngle, falloffStart/StopOpacity, alphaThreshold,
+softFalloffDepth, frostingBgndBlend, frostingBlurBias, materialAlpha, backlightScale,
+backlightSharpness, backlightTransparency, backlightTintColor, depthBias</code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">CK gotcha: effect materials invisible above opaque surfaces</p>
+<p>An animated/effect (<code>EffectSettings</code>) material can render correctly in NifSkope yet
+turn <strong>invisible in-game whenever it is drawn on top of an opaque material</strong> — while
+looking fine anywhere it is <em>not</em> over opaque geometry. Two toggles in the CK Material
+Editor → <strong>Effect Settings</strong> control this (they map to <code>EffectSettings</code> flags):</p>
+<ul>
+<li><strong>Soft Effect → disable it.</strong> With Soft Effect <em>enabled</em> (any value) the effect
+  vanishes over opaque surfaces; <em>disabled</em>, it draws correctly on top of them. <strong>This
+  is the key fix.</strong></li>
+<li><strong>ZTest → enable it</strong> so the effect is properly occluded by opaque geometry
+  (depth-tested). With ZTest <em>disabled</em> the effect renders <em>through</em> occluding opaque
+  surfaces (always-on-top).</li>
+</ul>
+<p>So <strong>Soft Effect off + ZTest on</strong> = visible above opaque <em>and</em> correctly occluded.
+Blend mode, the normal map, <code>Render before IOT</code>, and <code>Is Glass</code> were all found not to
+affect this (some combinations can even CTD the CK). Community finding — the CK ships
+no help text for these parameters.</p>
+</div>
+<h3 id="component-representation-in-the-matcdb-authoring-names">Component representation in the <code>.mat</code>/cdb (authoring names)</h3>
+<p>The field names above are the <strong>runtime</strong> (CommonLibSF) names. The names actually stored in a loose
+<code>.mat</code> / the <code>materialsbeta.cdb</code> are <strong>PascalCase</strong>, and translucency is wrapped in a
+component-plus-<code>Settings</code> envelope. A cdb/<code>.mat</code> reader (fo76utils <code>sfmatexport</code>, PyNifly) sees these
+class field sets (verified against the cdb class registry):</p>
+<ul>
+<li><strong><code>TranslucencySettingsComponent</code></strong> = <code>Enabled</code> + a nested <code>Settings</code> →
+  <strong><code>TranslucencySettings</code></strong> = <code>Thin, FlipBackFaceNormalsInViewSpace, UseSSS, SSSWidth, SSSStrength,
+  TransmissiveScale, TransmittanceWidth, SpecLobe0RoughnessScale, SpecLobe1RoughnessScale,
+  TransmittanceSourceLayer</code>. <code>Enabled</code> and <code>UseSSS</code> are <strong>two separate gates</strong> — the component can be
+  on with SSS off (thin translucency vs subsurface). <code>SpecLobe0/1RoughnessScale</code> are the skin
+  <strong>dual-specular-lobe</strong> roughness multipliers (sharp + soft highlight), not scatter depth.</li>
+<li><strong><code>HairSettingsComponent</code></strong> = fields directly: <code>Enabled, IsSpikyHair, SpecScale,
+  SpecularTransmissionScale, DirectTransmissionScale, DiffuseTransmissionScale, Roughness,
+  ContactShadowSoftening, BackscatterStrength, BackscatterWrap, VariationStrength,
+  IndirectSpecularScale, IndirectSpecularTransmissionScale, IndirectSpecRoughness, EdgeMaskContrast,
+  EdgeMaskMin, EdgeMaskDistanceMin/Max, MaxDepthOffset, DitherScale, DitherDistanceMin/Max,
+  Tangent (XMFLOAT3), TangentBend, DepthOffsetMaskVertexColorChannel, AOVertexColorChannel</code>.</li>
+<li><strong><code>AlphaSettingsComponent</code></strong> = <code>HasOpacity, AlphaTestThreshold, OpacitySourceLayer, Blender
+  (→ AlphaBlenderSettings), UseDitheredTransparency</code>. Surface alpha is a <strong>test/clip</strong> at
+  <code>AlphaTestThreshold</code> — there is no none/test/blend enum; <code>UseDitheredTransparency</code> selects dithered
+  coverage (hair) vs straight blend. The nested <code>Blender</code> (<code>AlphaBlenderSettings</code> = <code>Mode,
+  UseDetailBlendMask, UseVertexColor, VertexColorChannel, OpacityUVStream, HeightBlendThreshold,
+  HeightBlendFactor, Position, Contrast</code>) governs <strong>layer</strong> alpha-blend, distinct from surface alpha.</li>
+<li><strong><code>LayeredEmissivityComponent</code></strong> = up to three layers + two blenders + adaptive emittance:
+  <code>Enabled, FirstLayerIndex, FirstLayerTint, FirstLayerMaskIndex, SecondLayerActive/Index/Tint/…,
+  FirstBlenderIndex, FirstBlenderMode, ThirdLayer…, SecondBlender…, EmissiveClipThreshold,
+  AdaptiveEmittance, LuminousEmittance, ExposureOffset, EnableAdaptiveLimits, Max/MinOffsetEmittance,
+  IgnoresFog</code>.</li>
+<li><strong><code>ShaderModelComponent</code></strong> = <code>FileName</code> (the template name, e.g. <code>BodySkin2Layer</code>, <code>Hair1Layer</code>).</li>
+</ul>
+<p>Two reader gotchas:</p>
+<ul>
+<li><strong>Only <em>changed</em> fields are stored.</strong> The cdb keeps per-object diffs against the template default,
+  so a shipped material lists only the fields it overrode — a skin <code>TranslucencySettings</code> may carry
+  just <code>UseSSS</code> + the two <code>SpecLobe*RoughnessScale</code>s; a hair <code>AlphaSettingsComponent</code> may carry only
+  <code>HasOpacity</code>. An absent field means <em>template default</em>, not zero. To recover a field's default you
+  need the shader-model template (§3) or the class definition, not the material instance.</li>
+<li><strong>Values are strings; colors are nested <code>XMFLOAT4</code>.</strong> Every scalar/bool is a string (<code>"true"</code>,
+  <code>"0.93"</code>); a color is <code>{ Value: { Type: "XMFLOAT4", Data: { x, y, z, w } } }</code>. (See the cdb-format
+  page.)</li>
+</ul>
+<p><strong>Hair carries no Normal.</strong> A hair material typically omits slot 1 — strand shading comes from the
+mesh's <strong>geometry normals</strong> + the anisotropic <code>HairSettings</code> model + the ID map (slot 20); the
+<code>_zoffset</code> (slot 12) pairs with <code>MaxDepthOffset</code>/<code>DepthOffsetMaskVertexColorChannel</code> to sort
+overlapping hair cards, not to bump the surface. Skin materials, by contrast, do ship a real slot-1
+normal.</p>
+<hr />
+<h2 id="5-textureset-slots-dds-conventions">5. TextureSet slots &amp; DDS conventions</h2>
+<h3 id="slot-index-map-authoritative-order-per-fo76utils-materialhpp">Slot index → map (authoritative order, per fo76utils <code>material.hpp</code>)</h3>
+<p>Each <code>BSMaterial::MRTextureFile</code> in a TextureSet carries an <code>Index</code> selecting the slot:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Index</th>
+<th>Map</th>
+<th>Native suffix</th>
+<th>DDS format</th>
+<th>Color space</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0</td>
+<td>Albedo / base color</td>
+<td><code>_color</code> (<code>_d</code>)</td>
+<td>BC7_UNORM_SRGB (or BC1)</td>
+<td><strong>sRGB</strong></td>
+</tr>
+<tr>
+<td style="text-align: right;">1</td>
+<td>Normal (tangent)</td>
+<td><code>_normal</code> (<code>_n</code>)</td>
+<td>BC5_SNORM (2-ch XY)</td>
+<td>linear</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td>Opacity / alpha</td>
+<td><code>_opacity</code></td>
+<td>BC4_UNORM</td>
+<td>linear</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td>Roughness</td>
+<td><code>_rough</code> (<code>_s</code>*)</td>
+<td>BC4_UNORM</td>
+<td>linear</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td>Metalness</td>
+<td><code>_metal</code></td>
+<td>BC4_UNORM</td>
+<td>linear</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td>Ambient occlusion</td>
+<td><code>_ao</code></td>
+<td>BC4_UNORM</td>
+<td>linear</td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td>Height / parallax</td>
+<td><code>_height</code></td>
+<td>BC4_UNORM</td>
+<td>linear</td>
+</tr>
+<tr>
+<td style="text-align: right;">7</td>
+<td>Emissive / glow</td>
+<td><code>_emissive</code></td>
+<td>BC7/BC1 SRGB</td>
+<td><strong>sRGB</strong></td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td>Transmissive (translucency)</td>
+<td><code>_transmissive</code></td>
+<td>BC4_UNORM</td>
+<td>linear</td>
+</tr>
+<tr>
+<td style="text-align: right;">9</td>
+<td>Curvature</td>
+<td><code>_curvature</code></td>
+<td>BC4_UNORM</td>
+<td>linear</td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td>Mask</td>
+<td><code>_mask</code></td>
+<td>BC4_UNORM</td>
+<td>linear</td>
+</tr>
+<tr>
+<td style="text-align: right;">12</td>
+<td>Depth/Z offset</td>
+<td><code>_zoffset</code></td>
+<td>BC4_UNORM</td>
+<td>linear</td>
+</tr>
+<tr>
+<td style="text-align: right;">14</td>
+<td>Overlay color</td>
+<td>—</td>
+<td>BC7</td>
+<td>sRGB</td>
+</tr>
+<tr>
+<td style="text-align: right;">15</td>
+<td>Overlay roughness</td>
+<td>—</td>
+<td>BC4</td>
+<td>linear</td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td>Overlay metalness</td>
+<td>—</td>
+<td>BC4</td>
+<td>linear</td>
+</tr>
+<tr>
+<td style="text-align: right;">20</td>
+<td>HairID / id mask</td>
+<td><code>_id</code></td>
+<td>BC4/BC7</td>
+<td>linear</td>
+</tr>
+</tbody>
+</table>
+<p>* The legacy <code>_s</code> in ported assets is read into the roughness slot; don't confuse with <code>[FO4]</code>'s
+packed specular.</p>
+<p>The slot table above is confirmed verbatim against fo76utils <code>material.hpp</code> (<code>maxTexturePaths = 21</code>,
+indices 0–20). <strong>Indices 11, 13, 17, 18, 19 are undefined gaps</strong> (no map). Names like
+<code>NormalIntensity</code>, <code>Flow</code>, <code>Frost</code>, <code>Secondary Opacity</code>, <code>ScatteringDirections/ForwardAlpha</code>, and
+<code>Overlay AO</code> are <strong>not texture slots</strong> — e.g. <code>NormalIntensity</code> is a <code>TextureSet</code> <strong>float parameter</strong>
+(scales the normal map's RG in-shader), and the others are settings-block fields, not <code>MRTextureFile</code>
+paths. Don't allocate texture slots for them.</p>
+<h3 id="the-big-shift-from-fo4-one-property-per-texture">The big shift from <code>[FO4]</code>: <strong>one property per texture</strong></h3>
+<p>Starfield does <strong>not</strong> pack roughness+metal+AO into a single texture the way <code>[FO4]</code>'s <code>_s</code> /
+Skyrim's specular did. Each scalar PBR property is its own <strong>single-channel BC4</strong> DDS. Rules of thumb:</p>
+<ul>
+<li><code>_color</code>, <code>_emissive</code>, overlays → <strong>BC7 (or BC1) <code>_SRGB</code></strong>.</li>
+<li><code>_normal</code> → <strong>BC5_SNORM</strong>, storing X/Y only; Z is reconstructed in-shader (so a "flat" pixel is
+  <code>(0.5, 0.5)</code> in R/G). No blue/alpha channel to rely on.</li>
+<li><code>_rough</code>, <code>_metal</code>, <code>_ao</code>, <code>_opacity</code>, <code>_height</code>, <code>_mask</code>, <code>_transmissive</code>, <code>_curvature</code>,
+  <code>_zoffset</code>, <code>_id</code> → <strong>BC4_UNORM</strong> grayscale, <strong>linear</strong>.</li>
+<li>All textures ship with mipmaps (same requirement as <code>[FO4]</code>/<code>[Skyrim]</code>).</li>
+<li>Texture paths in the <code>.mat</code> are stored <strong>with</strong> <code>Data\</code> prefix and <strong>with</strong> the <code>.DDS</code> extension —
+  unlike NIF texture-set paths in older games, which omitted both. (Community tools accept either.)</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Starfield normals are BC5_<strong>SNORM</strong> — Blender can't decode them</p>
+<p>Starfield <code>_normal</code> maps use <strong>BC5_SNORM</strong> (signed) with a <strong>DX10-header</strong> DDS (<code>dxgiFormat</code> 84).
+<code>[FO4]</code> normals, by contrast, are <strong>BC5_UNORM</strong> with the legacy <code>ATI2</code> fourCC. Blender's DDS
+reader (through at least 5.1) handles the FO4 flavor but <strong>not</strong> the DX10 BC5_SNORM one — it
+loads such a file as a <strong>0×0 image with no data</strong>, so any in-shader Z-reconstruction runs on
+nothing and the normal renders as garbage (a tell-tale symptom is a hard seam where mirrored
+front/back UVs meet). The BC1/BC4 color/rough/ao maps load fine; only the SNORM normal fails.
+Until Blender adds BC5_SNORM support, <strong>convert the normal to PNG</strong> (e.g. Texture Toolbox,
+<code>texconv</code>) — a reconstructed full-RGB normal set to <strong>Non-Color</strong> — and use that. The block
+<em>layout</em> is identical to FO4's BC5; only the value convention (signed) and header differ.</p>
+</div>
+<p><strong>Fur/skin-relevant maps:</strong> subsurface look is driven by <code>TranslucencySettings</code> (a numeric block),
+not a dedicated "SSS map" — though a per-pixel mask can come via <code>_transmissive</code> (slot 8) and
+<code>sourceLayer</code>. Fur "fuzz"/sheen comes from <code>HairSettings</code> backscatter params, optionally masked by an
+<code>_id</code>/<code>_mask</code> texture. There is no single <code>[Skyrim]</code>-style <code>_sk</code> skin-tint slot; tinting is done with
+<code>Color Tint</code> / <code>UseVertexColorAsTint</code> on a layer.</p>
+<hr />
+<h2 id="6-mapping-to-a-blender-shader">6. Mapping to a Blender shader</h2>
+<p>A faithful <strong>import</strong> for the common <code>Standard1Layer</code> case (Principled BSDF v2 in Blender 4.x):</p>
+<table>
+<thead>
+<tr>
+<th>Starfield slot</th>
+<th>Blender wiring</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Albedo <code>_color</code> (sRGB)</td>
+<td>Image (Color Space <strong>sRGB</strong>) → <strong>Base Color</strong></td>
+</tr>
+<tr>
+<td>Normal <code>_normal</code> (BC5, XY)</td>
+<td>Image (<strong>Non-Color</strong>) → <em>reconstruct Z</em> → Normal Map node → <strong>Normal</strong></td>
+</tr>
+<tr>
+<td>Roughness <code>_rough</code></td>
+<td>Image (<strong>Non-Color</strong>) → <strong>Roughness</strong></td>
+</tr>
+<tr>
+<td>Metalness <code>_metal</code></td>
+<td>Image (<strong>Non-Color</strong>) → <strong>Metallic</strong></td>
+</tr>
+<tr>
+<td>AO <code>_ao</code></td>
+<td>Multiply into Base Color (or MixRGB/<code>AO</code> in a custom group)</td>
+</tr>
+<tr>
+<td>Opacity <code>_opacity</code></td>
+<td>Image (<strong>Non-Color</strong>) → <strong>Alpha</strong>; set material blend/clip per <code>AlphaSettings</code></td>
+</tr>
+<tr>
+<td>Emissive <code>_emissive</code> (sRGB)</td>
+<td>Image → <strong>Emission Color</strong>; strength from emissive params</td>
+</tr>
+<tr>
+<td>Transmissive / SSS block</td>
+<td><strong>Subsurface Weight/Radius</strong> driven by <code>sssStrength</code>/<code>sssWidth</code> (approx.)</td>
+</tr>
+<tr>
+<td>Hair block</td>
+<td>Anisotropy/sheen approximation, or a dedicated hair node group</td>
+</tr>
+</tbody>
+</table>
+<p>Because <code>_normal</code> is <strong>XY-only BC5</strong>, the importer must <strong>reconstruct Z</strong>
+(<code>z = sqrt(1 - x² - y²)</code>) with a small node group before the Normal Map node — a plain image → Normal
+Map will read blue≈0 and give wrong lighting. Also handle the <strong>green-channel convention</strong>: Starfield
+normals are DirectX-style (Y-down); Blender expects OpenGL (Y-up), so <strong>invert green</strong> on import (and
+re-invert on export).</p>
+<p>For <strong>multi-layer</strong> materials, no single Principled node suffices: build one Principled per layer and
+composite with Mix nodes driven by each <code>Blender_N</code>'s mask/vertex-color channel, honoring the
+per-channel <code>Blend Albedo/Metal/Roughness/AO/Normal</code> toggles. For a first pass, importing <strong>Layer1
+only</strong> (plus a note) is a reasonable MVP.</p>
+<h3 id="what-must-be-authored-to-export-a-working-starfield-material">What must be authored to <strong>export</strong> a working Starfield material</h3>
+<ol>
+<li>A NIF whose <code>BSLightingShaderProperty.Name</code> = <code>Materials\&lt;path&gt;\&lt;name&gt;.mat</code>.</li>
+<li>A <code>.mat</code> graph: root LayeredMaterial → Layer(s) → Material → TextureSet, with unique <code>res:</code> IDs
+   and correct <code>Parent</code> links to the shipped <code>…\Root\*.mat</code> templates.</li>
+<li>Per-layer TextureSet <code>MRTextureFile</code> entries at the correct <strong>indices</strong> (0=albedo, 1=normal, …).</li>
+<li>Correct component blocks for the shader model chosen (e.g. <code>TranslucencySettings</code> for skin,
+   <code>HairSettings</code> for fur), plus <code>TextureSetKindComponent = "MetalRough"</code>.</li>
+<li>DDS files in the right formats/color spaces (§5), with mipmaps, under <code>Data\Textures\…</code>.</li>
+<li>Ship the loose <code>.mat</code> — this is sufficient; <strong>no <code>.cdb</code> compile step is needed</strong> (the game loads
+   loose JSON <code>.mat</code> at runtime).</li>
+</ol>
+<p><strong>Practical shortcut:</strong> rather than emit the full graph from scratch, PyNifly can <strong>clone a shipped
+template <code>.mat</code></strong> (regenerating <code>res:</code> IDs) and rewrite the <code>CTName</code>, <code>MRTextureFile</code> filenames, and
+the numeric component fields — the approach NifSkope's "Clone and Copy to Clipboard" spell uses.</p>
+<hr />
+<h2 id="7-contrast-with-fo4-bgsmbgem-quick-reference">7. Contrast with <code>[FO4]</code> BGSM/BGEM (quick reference)</h2>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th><code>[FO4]</code> BGSM/BGEM</th>
+<th>Starfield <code>.mat</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Format</td>
+<td>Flat JSON-ish, fixed field list</td>
+<td>Graph of typed nodes/edges (JSON)</td>
+</tr>
+<tr>
+<td>Layers</td>
+<td>Single material</td>
+<td>1–6 blended layers + blenders</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>Loose <code>.bgsm</code>/<code>.bgem</code> in <code>Data\Materials\</code></td>
+<td>Loose <code>.mat</code> <strong>and</strong> compiled <code>materialsbeta.cdb</code></td>
+</tr>
+<tr>
+<td>Mesh link</td>
+<td><code>BSLightingShaderProperty.Name</code> → <code>.bgsm</code></td>
+<td>Same field → <code>.mat</code></td>
+</tr>
+<tr>
+<td>PBR packing</td>
+<td>Specular/gloss packed (<code>_s</code>)</td>
+<td><strong>One texture per property</strong> (BC4), metal/rough workflow</td>
+</tr>
+<tr>
+<td>Normal</td>
+<td>BC7/BC5, Z present</td>
+<td><strong>BC5 XY-only</strong>, Z reconstructed, DirectX green</td>
+</tr>
+<tr>
+<td>SSS/skin</td>
+<td>Backlight map + flags</td>
+<td><code>TranslucencySettings</code> numeric block (+ optional transmissive map)</td>
+</tr>
+<tr>
+<td>Effects</td>
+<td>Separate <code>.bgem</code> (<code>Shader:"Effect"</code>)</td>
+<td><code>EffectSettings</code> component / effect shader models</td>
+</tr>
+<tr>
+<td>Editor</td>
+<td>CK Material Editor (BGSM)</td>
+<td>CK Material Editor, NifSkope (fo76utils fork), Material Editor Lite, SFME</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-open-questions-uncertainties">8. Open questions / uncertainties</h2>
+<ul>
+<li>~~<strong><code>.cdb</code> write path.</strong>~~ <strong>RESOLVED:</strong> a loose <code>.mat</code> is sufficient for shipping — the game/CK
+  load loose JSON <code>.mat</code> at runtime, and no tool (NifSkope/nifly/Outfit Studio) writes a <code>.cdb</code> at
+  all; NifSkope authors a loose JSON <code>.mat</code> directly. No <code>.cdb</code> compile step is required, including
+  for the character/skin path. (Remaining minor unknown: exact loose-vs-<code>.cdb</code> <em>precedence</em>, which
+  doesn't block authoring.)</li>
+<li><strong>Exact slot indices</strong> for the non-core slots (<code>NormalIntensity</code>, <code>Flow</code>, <code>Frost</code>, <code>Secondary
+  Opacity</code>, <code>ScatteringDirections/ForwardAlpha</code>, <code>Overlay AO</code>, <code>AmbientOcclusion</code>) — the fo76utils
+  index list and the CK template names don't fully line up; needs a byte-level check against a real
+  character <code>.mat</code>.</li>
+<li><strong>Loose-vs-<code>.cdb</code> override semantics</strong> (full replace vs merge) — undocumented.</li>
+<li><strong>Blend-mode enumeration</strong> (Linear/Additive/Skin/PositionContrast and any others) and their exact
+  compositing math — inferred from renderer support, not from official docs.</li>
+<li><strong>How the skin/hair numeric params map to Blender's Principled v2</strong> (SSS radius units, backscatter →
+  sheen) — needs perceptual calibration against in-game reference.</li>
+</ul>
+<hr />
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Starfield Geometry Bridge — Material (.mat) file: https://starfieldgeometrybridge.github.io/docs/tips/material/</li>
+<li>Nexus — "Creating A CUSTOM material for your Mod in Starfield": https://www.nexusmods.com/starfield/articles/411</li>
+<li>Nexus forums — "Starfield's .cdb Material Database" discussion: https://forums.nexusmods.com/topic/13361451-starfields-cdb-material-database/</li>
+<li>fo76utils NifSkope fork — CHANGELOG (Starfield material handling): https://github.com/fo76utils/nifskope/blob/develop/CHANGELOG.md</li>
+<li>fo76utils NifSkope — <code>lib/libfo76utils/src/material.hpp</code> (texture slot order, settings structs): https://github.com/fo76utils/nifskope/blob/develop/lib/libfo76utils/src/material.hpp</li>
+<li>fo76utils NifSkope — <code>src/spells/sfmatexport.cpp</code>, <code>src/matcomps.cpp</code>, <code>src/bsrefl.cpp</code> (material JSON export): https://github.com/fo76utils/nifskope</li>
+<li>Gibbed.Starfield (.cdb tooling): https://github.com/gibbed/Gibbed.Starfield</li>
+<li>fo76utils / ce2utils (material dump, mat_names.txt): https://github.com/fo76utils/ce2utils</li>
+<li>Starfield Material Exporter (SFME): https://github.com/maximusmaxy/SFME and https://www.nexusmods.com/starfield/mods/7830</li>
+<li>Material Editor Lite: https://www.nexusmods.com/starfield/mods/14659</li>
+<li>Step Mods — "Starfield Texture Formats" (BC7/BC5/BC4 conventions, suffixes): https://stepmodifications.org/forum/topic/19037-starfield-texture-formats/</li>
+<li>Allmods — "Organization of Starfield's Meshes and Related Assets": https://allmods.net/starfield-mods/starfield-miscellaneous/organization-of-starfields-meshes-and-related-assets/</li>
+<li>Real shipped <code>.mat</code> example: HelixTechGroup/HTG-Regenesys-Character <code>…\VaultBoyBobbleheads\VaultBoy.mat</code>: https://github.com/HelixTechGroup/HTG-Regenesys-Character</li>
+<li>Local game data: <code>Data\EditorFiles\RuleTemplates\ShaderModels\*.json</code> (shader-model templates), <code>Data\Starfield - Materials.ba2</code> (<code>materialsbeta.cdb</code>)</li>
+</ul>
+<p><em>Draft 2026-07-06 — not yet reviewed</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

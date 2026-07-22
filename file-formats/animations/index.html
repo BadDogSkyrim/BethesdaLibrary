@@ -1,0 +1,3136 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Comprehensive reference for Skyrim, Fallout 4, and Starfield modding with PyNifly and esplib">
+      
+      
+        <meta name="author" content="Hugh Russel">
+      
+      
+      
+        <link rel="prev" href="../nif-animations/">
+      
+      
+        <link rel="next" href="../physics-collision/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Animations (HKX) - Bethesda Modding Library</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#animations-hkx-files" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Bethesda Modding Library" class="md-header__button md-logo" aria-label="Bethesda Modding Library" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Bethesda Modding Library
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Animations (HKX)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../overview/" class="md-tabs__link">
+          
+  
+  
+  File Formats
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../game-specific/skyrim/overview/" class="md-tabs__link">
+          
+  
+  
+  Game-Specific
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../tools/pynifly/overview/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/partition-names/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../CONVENTIONS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Conventions
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Bethesda Modding Library" class="md-nav__button md-logo" aria-label="Bethesda Modding Library" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Bethesda Modding Library
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    File Formats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins (ESP/ESM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nif-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NIF Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nif-animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NIF Animations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Animations (HKX)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Animations (HKX)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Types
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#skeleton-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skeleton Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animation-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animation Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#behavior-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Behavior Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#skeleton-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skeleton Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Skeleton Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wire-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wire format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-inventory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object inventory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object graph
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animation-skeleton-hkaskeleton" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animation skeleton (hkaSkeleton)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-variable-length-data-is-stored-on-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How variable-length data is stored on disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bone-naming-convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bone Naming Convention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required-bones-skyrim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Bones (Skyrim)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bone-transform-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bone Transform Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ragdoll-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ragdoll Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xml-representation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        XML Representation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="XML Representation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#section-folding-reversible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section folding (reversible)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#float-precision-irreversible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Float precision (irreversible)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-xml-is-and-isnt-appropriate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When XML is and isn't appropriate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#animation-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animation Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Animation Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#keyframe-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keyframe Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compression
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compression">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#track-structure-per-bone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track structure per bone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#time-blocking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time blocking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-spline-fitting-loses-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How spline fitting loses information
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bit-quantization-additional-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bit quantization (additional loss)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#continuous-sampling-at-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuous sampling at runtime
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tunable-tolerance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tunable tolerance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#re-export-compounding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-export compounding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best practice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#annotation-tracks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Annotation Tracks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animation-blending" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animation Blending
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fo4-fallout-4-differences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FO4 Fallout 4 Differences
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FO4 Fallout 4 Differences">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#64-bit-havok" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        64-bit Havok
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#facebones-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FaceBones System
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skin-bones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skin Bones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pynifly-blender-addon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PyNifly (Blender Addon)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#havok-content-tools-hct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Havok Content Tools (HCT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hkxpack-hkxcmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hkxpack / hkxcmd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nifskope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NifSkope
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creation-kit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creation Kit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflow-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow Tips
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workflow Tips">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-custom-skeletons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating Custom Skeletons
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-animations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating Animations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#converting-le-se" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Converting LE → SE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#converting-lese-fo4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Converting LE/SE → FO4
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#animation-not-playing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animation Not Playing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animation-jitterybroken" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animation Jittery/Broken
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skeleton-causes-ctd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skeleton Causes CTD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mesh-not-following-skeleton" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesh Not Following Skeleton
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../physics-collision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Physics & Collision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../morphs-shapekeys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Morphs & Shape Keys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../textures-materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Textures & Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archives (BSA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scripts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scripts (PEX)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game-Specific
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game-Specific
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skyrim
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Skyrim
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/skyrim/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fallout 4
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Fallout 4
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/fallout4/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/fallout4/connect-points/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connect Points
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/fallout4/dismemberment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dismemberment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Starfield
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Starfield
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/starfield/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/starfield/meshes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meshes (NIF + .mesh)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/starfield/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Materials & Textures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/starfield/material-worked-example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+      ↳ .mat worked example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/starfield/cdb-format/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+      ↳ .cdb binary format
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/starfield/chargen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chargen, Race & Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/starfield/plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Archives
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/starfield/tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyNifly
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PyNifly
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/pynifly/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/pynifly/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/partition-names/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Partition Names
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/external-resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    External Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CONVENTIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="animations-hkx-files">Animations (HKX Files)</h1>
+<p>HKX files contain skeleton hierarchies and compressed animation data for Bethesda games. They use Havok's proprietary binary format.
+- <a href="#animations-hkx-files">Animations (HKX Files)</a>
+  - <a href="#overview">Overview</a>
+  - <a href="#file-types">File Types</a>
+    - <a href="#skeleton-files">Skeleton Files</a>
+    - <a href="#animation-files">Animation Files</a>
+    - <a href="#behavior-files">Behavior Files</a>
+  - <a href="#skeleton-structure">Skeleton Structure</a>
+    - <a href="#wire-format">Wire format</a>
+    - <a href="#object-inventory">Object inventory</a>
+    - <a href="#object-graph">Object graph</a>
+    - <a href="#animation-skeleton-hkaskeleton">Animation skeleton (<code>hkaSkeleton</code>)</a>
+    - <a href="#how-variable-length-data-is-stored-on-disk">How variable-length data is stored on disk</a>
+    - <a href="#bone-naming-convention">Bone Naming Convention</a>
+    - <a href="#required-bones-skyrim">Required Bones (Skyrim)</a>
+    - <a href="#bone-transform-data">Bone Transform Data</a>
+    - <a href="#ragdoll-data">Ragdoll Data</a>
+  - <a href="#xml-representation">XML Representation</a>
+    - <a href="#section-folding-reversible">Section folding (reversible)</a>
+    - <a href="#float-precision-irreversible">Float precision (irreversible)</a>
+    - <a href="#when-xml-is-and-isnt-appropriate">When XML is and isn't appropriate</a>
+  - <a href="#animation-data">Animation Data</a>
+    - <a href="#keyframe-structure">Keyframe Structure</a>
+    - <a href="#compression">Compression</a>
+      - <a href="#track-structure-per-bone">Track structure per bone</a>
+      - <a href="#time-blocking">Time blocking</a>
+      - <a href="#how-spline-fitting-loses-information">How spline fitting loses information</a>
+      - <a href="#bit-quantization-additional-loss">Bit quantization (additional loss)</a>
+      - <a href="#continuous-sampling-at-runtime">Continuous sampling at runtime</a>
+      - <a href="#worked-example">Worked example</a>
+      - <a href="#tunable-tolerance">Tunable tolerance</a>
+      - <a href="#re-export-compounding">Re-export compounding</a>
+      - <a href="#best-practice">Best practice</a>
+    - <a href="#annotation-tracks">Annotation Tracks</a>
+    - <a href="#animation-blending">Animation Blending</a>
+  - <a href="#fo4-fallout-4-differences"><code>FO4</code> Fallout 4 Differences</a>
+    - <a href="#64-bit-havok">64-bit Havok</a>
+    - <a href="#facebones-system">FaceBones System</a>
+    - <a href="#skin-bones">Skin Bones</a>
+  - <a href="#tools">Tools</a>
+    - <a href="#pynifly-blender-addon">PyNifly (Blender Addon)</a>
+    - <a href="#havok-content-tools-hct">Havok Content Tools (HCT)</a>
+    - <a href="#hkxpack--hkxcmd">hkxpack / hkxcmd</a>
+    - <a href="#nifskope">NifSkope</a>
+    - <a href="#creation-kit">Creation Kit</a>
+  - <a href="#workflow-tips">Workflow Tips</a>
+    - <a href="#creating-custom-skeletons">Creating Custom Skeletons</a>
+    - <a href="#creating-animations">Creating Animations</a>
+    - <a href="#converting-le--se">Converting LE → SE</a>
+    - <a href="#converting-lese--fo4">Converting LE/SE → FO4</a>
+  - <a href="#common-issues">Common Issues</a>
+    - <a href="#animation-not-playing">Animation Not Playing</a>
+    - <a href="#animation-jitterybroken">Animation Jittery/Broken</a>
+    - <a href="#skeleton-causes-ctd">Skeleton Causes CTD</a>
+    - <a href="#mesh-not-following-skeleton">Mesh Not Following Skeleton</a>
+  - <a href="#see-also">See Also</a></p>
+<h2 id="overview">Overview</h2>
+<p><strong>Extension:</strong> <code>.hkx</code><br />
+<strong>Format:</strong> Havok binary (proprietary, version-specific)<br />
+<strong>Contains:</strong> Skeletons, animations, ragdolls, behavior data</p>
+<p><strong>Havok versions:</strong>
+- <strong>Skyrim LE/SE:</strong> hk_2010.2.0-r1 (32-bit for LE, 64-bit for SE)
+- <strong>Fallout 4:</strong> hk_2014.1.0-r1 (64-bit)</p>
+<p><strong>Compatibility:</strong> HKX files are <strong>NOT</strong> cross-compatible between Havok versions. SE/FO4 require conversion from LE formats.</p>
+<h2 id="file-types">File Types</h2>
+<h3 id="skeleton-files">Skeleton Files</h3>
+<p>Define an actor's bone hierarchy, bind pose, and (in Skyrim) the bundled ragdoll. <strong>Filename pattern:</strong> <code>skeleton.hkx</code>, <code>skeleton_female.hkx</code>, <code>skeleton_beast.hkx</code> under <code>meshes/actors/&lt;race&gt;/character assets/</code>. Bone names correspond to NiNode names in the paired <code>skeleton.nif</code>. See <a href="#skeleton-structure">Skeleton Structure</a> for the binary-format walkthrough and bone-level details.</p>
+<h3 id="animation-files">Animation Files</h3>
+<p>Define bone motion for one animation. Each animated bone is stored as up to three B-spline-compressed tracks (position, rotation, scale) with bit-quantized control points; a parallel annotation track carries event markers (<code>hitFrame</code>, <code>footstep</code>, etc.) that the behavior graph routes to sounds and scripted callbacks. <strong>Filename pattern:</strong> <code>&lt;animname&gt;.hkx</code> (e.g. <code>1hm_attackright.hkx</code>) under <code>meshes/actors/&lt;race&gt;/animations/</code>. See <a href="#animation-data">Animation Data</a> for the format details.</p>
+<h3 id="behavior-files">Behavior Files</h3>
+<p>Behavior graphs are the state machines that decide which animation plays at any moment for a given actor. Game code feeds runtime parameters (movement speed, equipped weapon type, attack stage, ragdoll state, etc.); the graph picks the active state, blends animations from blend trees, and handles transitions between states. Annotation events embedded in animation HKXs (<code>hitFrame</code>, <code>footstep</code>, etc.) are routed back through the graph to trigger sounds, scripted callbacks, or further state changes.</p>
+<p><strong>Location:</strong> <code>meshes/actors/&lt;race&gt;/behaviors/</code></p>
+<p><strong>Vanilla files:</strong> <code>defaultmale.hkx</code> / <code>defaultfemale.hkx</code> (plus per-creature equivalents).</p>
+<p><strong>Format:</strong> Binary Havok packfile — same <code>.hkx</code> wrapper as skeletons and animations, different content type (<code>hkbBehaviorGraph</code> and related blocks). <code>hkxpack</code> / <code>hkxcmd</code> extract to readable XML for editing; Havok Content Tools is the official editor (license required).</p>
+<p><strong>Modding:</strong> Adding a new animation usually means adding a new state or transition to the behavior graph. <strong>FNIS</strong> and <strong>Nemesis</strong> are the community tools that automate this — they read each mod's animation list and patch the behavior HKX so manual XML editing isn't needed.</p>
+<h2 id="skeleton-structure">Skeleton Structure</h2>
+<p><code>skeleton.hkx</code> is a Havok packfile bundling an animation skeleton, a simplified ragdoll skeleton, and the physics bodies and constraints that wire them together. The vanilla Skyrim SE human skeleton (<code>meshes/actors/character/character assets/skeleton.hkx</code>, 85408 bytes) is used below as a worked example. The wire-format details apply to all HKX files; the object inventory and bone-level details are skeleton-specific.</p>
+<h3 id="wire-format">Wire format</h3>
+<p>The packfile starts with an 80-byte file header (magic, classversion, pointer size, version string <code>hk_2010.2.0-r1</code>, layout flags), followed by a section table. The file has three sections:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Name</th>
+<th>Size</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td><code>__classnames__</code></td>
+<td>480 bytes</td>
+<td>Table of <code>(signature, name)</code> pairs, one per class used in the file</td>
+</tr>
+<tr>
+<td>1</td>
+<td><code>__types__</code></td>
+<td>0 bytes</td>
+<td>Empty for <code>hk_2010.2.0-r1</code>; type info is identified by class name + signature against a known type registry</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>__data__</code></td>
+<td>84720 bytes</td>
+<td>Object payload + fixup tables</td>
+</tr>
+</tbody>
+</table>
+<p>Each section's data is laid out as <code>payload | local_fixups | global_fixups | virtual_fixups | exports | imports</code>, with byte offsets stored in the section header. <code>__classnames__</code> and <code>__types__</code> have no fixups (classnames are literal strings; types is empty), so for those sections only the payload region has any size.</p>
+<p>The <code>__data__</code> section's payload is 70448 bytes of object data, followed by ~3 KB of fixup tables: 567 local fixups (8 bytes each), 486 global fixups (12 bytes each), and 324 virtual fixups (12 bytes each). Each virtual fixup marks the start of one top-level object in the payload and identifies its class by pointing at a name string in <code>__classnames__</code>. So the file contains exactly <strong>324 top-level objects</strong> in the data section.</p>
+<h3 id="object-inventory">Object inventory</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Count</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hkRootLevelContainer</code></td>
+<td>1</td>
+<td>Top-level entry point, holds 6 named variants</td>
+</tr>
+<tr>
+<td><code>hkaAnimationContainer</code></td>
+<td>1</td>
+<td>Wraps the two skeletons</td>
+</tr>
+<tr>
+<td><code>hkaSkeleton</code></td>
+<td>2</td>
+<td>Animation skeleton (99 bones) + ragdoll skeleton (18 bones)</td>
+</tr>
+<tr>
+<td><code>hkaSkeletonMapper</code></td>
+<td>2</td>
+<td>Map poses between the two skeletons (one per direction)</td>
+</tr>
+<tr>
+<td><code>hkaRagdollInstance</code></td>
+<td>1</td>
+<td>Binds the ragdoll skeleton to its physics bodies</td>
+</tr>
+<tr>
+<td><code>hkpPhysicsData</code> / <code>hkpPhysicsSystem</code></td>
+<td>1 each</td>
+<td>Physics-world wrapper</td>
+</tr>
+<tr>
+<td><code>hkpRigidBody</code></td>
+<td>19</td>
+<td>One per ragdoll body (plus one extra for whole-actor world collision)</td>
+</tr>
+<tr>
+<td><code>hkpCapsuleShape</code></td>
+<td>19</td>
+<td>Collision geometry, one per rigid body</td>
+</tr>
+<tr>
+<td><code>hkpShapeInfo</code></td>
+<td>19</td>
+<td>Shape metadata, one per rigid body</td>
+</tr>
+<tr>
+<td><code>hkpConstraintInstance</code></td>
+<td>34</td>
+<td>Wrappers around the constraint datas</td>
+</tr>
+<tr>
+<td><code>hkpRagdollConstraintData</code></td>
+<td>18</td>
+<td>6-DOF ragdoll joints</td>
+</tr>
+<tr>
+<td><code>hkpLimitedHingeConstraintData</code></td>
+<td>16</td>
+<td>Single-axis hinges (elbows, knees)</td>
+</tr>
+<tr>
+<td><code>hkpPositionConstraintMotor</code></td>
+<td>1</td>
+<td>Referenced from inside one of the constraints</td>
+</tr>
+<tr>
+<td><code>hkMemoryResourceContainer</code></td>
+<td>151</td>
+<td>Per-bone / per-attachment resource bookkeeping</td>
+</tr>
+<tr>
+<td><code>hkMemoryResourceHandle</code></td>
+<td>38</td>
+<td>Resource handles</td>
+</tr>
+</tbody>
+</table>
+<h3 id="object-graph">Object graph</h3>
+<p>The 324 objects form a graph rooted at <code>hkRootLevelContainer</code>. Its <code>namedVariants[6]</code> array points at the six top-level subsystems:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>hkRootLevelContainer
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├─ &quot;Merged Animation Container&quot;  → hkaAnimationContainer
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│                                  └─ skeletons[2] → hkaSkeleton (animation, 99 bones)
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│                                                    hkaSkeleton (ragdoll,    18 bones)
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>├─ &quot;Resource Data&quot;               → hkMemoryResourceContainer (root of a tree of 151 containers)
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>├─ &quot;Physics Data&quot;                → hkpPhysicsData
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│                                  └─ systems[1]    → hkpPhysicsSystem
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│                                                     ├─ rigidBodies[19]    (each → hkpCapsuleShape)
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│                                                     └─ constraints[17]    → hkpConstraintInstance
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>├─ &quot;RagdollInstance&quot;             → hkaRagdollInstance
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│                                  ├─ rigidBodies[18]    (subset of the 19 in PhysicsSystem)
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│                                  ├─ constraints[17]    (subset of the 34 instances)
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│                                  └─ skeleton            → the ragdoll hkaSkeleton
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>├─ &quot;SkeletonMapper&quot;              → hkaSkeletonMapper      (one direction)
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>└─ &quot;SkeletonMapper&quot;              → hkaSkeletonMapper      (the other direction)
+</code></pre></div>
+<p>Both skeleton mappers carry the literal string <code>"SkeletonMapper"</code> as their name in <code>namedVariants[]</code> — they're distinguished only by their mapping direction (animation→ragdoll vs. ragdoll→animation), not by name.</p>
+<h3 id="animation-skeleton-hkaskeleton">Animation skeleton (<code>hkaSkeleton</code>)</h3>
+<p>The animation <code>hkaSkeleton</code> object is 9600 bytes in the <code>__data__</code> section. Its fields:</p>
+<ul>
+<li><strong><code>name = "NPC Root [Root]"</code></strong> — the skeleton's overall label</li>
+<li><strong><code>parentIndices[99]</code></strong> — <code>int16</code> per bone. <code>-1</code> marks a top-level bone. The human skeleton has exactly <strong>two top-level bones</strong>: <code>NPC Root [Root]</code> (index 0) and <code>Camera3rd [Cam3]</code> (index 97). <code>Camera3rd</code> is the player's third-person camera anchor; on creature skeletons, only <code>NPC Root</code> is top-level. All other bones are descendants of one of these two.</li>
+<li><strong><code>bones[99]</code></strong> — flat list, children always after their parent. Each entry is just <code>(char* name, bool lockTranslation)</code> — the hierarchy is encoded in <code>parentIndices</code>, not in the bone struct.</li>
+<li><strong><code>referencePose[99]</code></strong> — bind-pose <code>hkQsTransform</code> per bone (translation + quaternion + scale, vec4-padded to 48 bytes for SIMD).</li>
+<li><strong><code>referenceFloats[8]</code></strong> — parallel to <code>floatSlots</code>, all <code>0.0</code> in vanilla.</li>
+<li><strong><code>floatSlots[8]</code></strong> — named float channels the animation system can drive. The human skeleton carries: <code>hkFade:AnimObjectA/B/L/R</code>, <code>hkVis:Shield</code>, <code>hkVis:NPC L MagicNode [LMag]</code>, <code>hkVis:NPC R MagicNode [RMag]</code>, <code>hkVis:Weapon</code>. Used to hide or fade attached props during animation. Creature skeletons typically have zero <code>floatSlots</code> — these channels exist because humanoids carry equipment that the animation system needs to show or hide.</li>
+<li><strong><code>localFrames[]</code></strong> — empty (unused in vanilla).</li>
+</ul>
+<p><code>lockTranslation</code> is set on 94 of 99 bones, telling the runtime to ignore translation tracks for those bones and pin them to the rest position. Only five bones translate freely: <code>NPC Root</code>, <code>x_NPC LookNode</code>, <code>x_NPC Translate</code>, <code>x_NPC Rotate</code>, <code>NPC COM</code>. Note the <code>x_NPC</code> prefix on three of them — the engine drives those nodes directly (look-target IK, root motion) rather than through skinned-mesh rigging.</p>
+<h3 id="how-variable-length-data-is-stored-on-disk">How variable-length data is stored on disk</h3>
+<p>Pick the <code>hkMemoryResourceContainer</code> named <code>"NPC Spine2 [Spn2]"</code> (one of the 151). It's 144 bytes and lays out as:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>+0x00..+0x10  base-class fields (vtable space, refcount)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>+0x10..+0x18  char*                       name         ← stored as zero on disk
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>+0x18..+0x20  hkRefPtr&lt;...&gt;               parent       (SERIALIZE_IGNORED, zero on disk)
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>+0x20..+0x30  hkArray&lt;hkRefPtr&lt;Handle&gt;&gt;   resourceHandles  (16 bytes: ptr + size + cap_and_flags)
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>+0x30..+0x40  hkArray&lt;hkRefPtr&lt;Container&gt;&gt; children         (16 bytes: ptr + size + cap_and_flags)
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>+0x40..+0x60  inline &quot;NPC Spine2 [Spn2]\0&quot; + padding
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>+0x60..+0x90  children[6]   six pointers, each stored as zero on disk
+</code></pre></div>
+<p>The <code>name</code> and <code>children.data</code> pointer fields, and every slot of the children array, are stored as zero bytes on disk. They're filled in at load time using the file's fixup tables:</p>
+<ul>
+<li>A <strong>local fixup</strong> records <code>(src=+0x10, dst=+0x40)</code>. At load time the loader writes <code>(in-memory address of object) + 0x40</code> into the pointer field at <code>+0x10</code>, so <code>name</code> ends up pointing at the embedded ASCII string at <code>+0x40</code>.</li>
+<li>A <strong>local fixup</strong> records <code>(src=+0x30, dst=+0x60)</code>. Same mechanism patches <code>children.data</code> to point at the array start at <code>+0x60</code>.</li>
+<li>For each element of the array, a <strong>global fixup</strong> records <code>(src=+0x60..+0x88, target_section=__data__, target_offset=...)</code>. At load time each child pointer is patched to point at another <code>hkMemoryResourceContainer</code> somewhere in <code>__data__</code>.</li>
+</ul>
+<p>This is why a Havok packfile can be loaded almost in-place: read the bytes into memory, walk the fixup tables, rewrite a few pointer fields per object, and the on-disk struct becomes a live in-memory struct. It's also why object sizes vary even within a single class — <code>hkMemoryResourceContainer</code> is 96, 112, or 144 bytes depending on its inline string length and inline array length, since the variable-length data is embedded right after the fixed struct header in the same allocation.</p>
+<p>The same mechanism explains how <code>hkaSkeleton</code> packs all 99 bone-name strings, the <code>parentIndices</code> array, the <code>bones</code> array, and the <code>referencePose</code> array into a single 9600-byte allocation. The internal pointers (each <code>hkaBone.name</code>, the array bases) are zero on disk and patched at load time using local fixups.</p>
+<p>The <code>dump_hkx.py</code> utility at the project root parses this structure and prints a per-object listing with the resolved fixups inline, including field-name labels for the well-known classes (<code>hkRootLevelContainer</code>, <code>hkaSkeleton</code>, <code>hkpPhysicsSystem</code>, <code>hkMemoryResourceContainer</code>, etc.) — so a fixup can be reported as <code>[bones[12].name]</code> or <code>[namedVariants[3].variant]</code> rather than just an offset. The offsets in this section were derived from that output.</p>
+<p><strong>Notes:</strong>
+- <code>[FO4]</code> Hair with physics can have their own facebones HKX file, e.g. <code>FemaleHair06_faceBones.hkx</code>. See <a href="#facebones-system">FaceBones System</a> below. Skyrim has no equivalent.
+- Skirt physics bones (<code>SkirtRBone01-03</code>, <code>SkirtLBone01-03</code>, <code>SkirtBBone01-03</code>, <code>SkirtFBone01-03</code>) and pauldron bones (<code>NPC L Pauldron</code>, <code>NPC R Pauldron</code>) are part of the vanilla SE skeleton — not mod additions. XPMSSE-style skeleton replacers add other bones (chest physics for HDT, butt, wings, etc.) by extending <code>bones[]</code> and <code>parentIndices[]</code>, interspersing new bones without changing the vanilla parenting structure.</p>
+<h3 id="bone-naming-convention">Bone Naming Convention</h3>
+<p>The naming convention varies by actor type.</p>
+<p><strong>Humanoid skeletons</strong> (human, child, elf, orc — all share a single skeleton structure) use:</p>
+<p><strong>Format:</strong> <code>NPC &lt;Side&gt; &lt;Part&gt; [&lt;Short&gt;]</code></p>
+<p><strong>Examples:</strong>
+- <code>NPC Root [Root]</code> — Root bone
+- <code>NPC L Hand [LHnd]</code> — Left hand
+- <code>NPC R UpperArm [RUar]</code> — Right upper arm
+- <code>NPC Pelvis [Pelv]</code> — Pelvis (center, no side)</p>
+<p><strong>Short codes (in brackets):</strong>
+- 4-character shorthand included as part of the full bone name string
+- Convention only — animations, behavior graphs, NiSkinInstance, and script <code>GetNodeName</code> all reference the full name (e.g. <code>"NPC Spine [Spn0]"</code>), not the short code independently
+- Likely a holdover from Gamebryo-era tooling; useful for modders eyeballing skeletons but not parsed out by the engine</p>
+<p><strong>Utility-node prefix:</strong> A small set of bones uses <code>x_NPC</code> instead of <code>NPC</code>: <code>x_NPC LookNode [Look]</code>, <code>x_NPC Translate [Pos ]</code>, <code>x_NPC Rotate [Rot ]</code>. These are children of <code>NPC Root</code> that the engine drives directly (look-target IK, root motion) rather than being shaped by skinned-mesh rigging.</p>
+<p><strong>Creature skeletons</strong> use a simpler convention with no shortcodes and no L/R prefix as a separate token:</p>
+<p><strong>Format:</strong> <code>&lt;Race&gt;_&lt;Part&gt;</code> (<code>Canine_*</code>, <code>Bear_*</code>, <code>Dragon_*</code>, etc., capitalized to match the asset)</p>
+<p><strong>Examples</strong> (from a canine skeleton):
+- <code>NPC Root [Root]</code> — the root bone keeps the humanoid form even on creature skeletons
+- <code>Canine_COM</code>, <code>Canine_Pelvis</code>, <code>Canine_Spine1</code>, <code>Canine_Spine2</code>, <code>Canine_Spine3</code>
+- <code>Canine_LFrontLeg1</code>, <code>Canine_RBackLeg1</code>, <code>Canine_Tail1</code>, <code>Canine_JawBone</code>, <code>Canine_LEar01</code></p>
+<p>The corresponding ragdoll skeleton uses a <code>Ragdoll_&lt;Race&gt;_&lt;Part&gt;</code> prefix (e.g. <code>Ragdoll_Canine_LBackLeg1</code>). The same <code>Ragdoll_</code> convention is used for the humanoid ragdoll bones — they're named <code>Ragdoll_NPC &lt;Part&gt; [&lt;Short&gt;]</code> (e.g. <code>Ragdoll_NPC L Thigh [LThg]</code>).</p>
+<h3 id="required-bones-skyrim">Required Bones (Skyrim)</h3>
+<p>Minimum bones for character skeleton:
+- <code>NPC Root [Root]</code> - World space root
+- <code>NPC COM [COM]</code> - Center of mass
+- <code>NPC Pelvis [Pelv]</code> - Hips
+- <code>NPC Spine [Spn0]</code>, <code>Spine1 [Spn1]</code>, <code>Spine2 [Spn2]</code> - Torso
+- <code>NPC L/R Clavicle [L/RClv]</code> - Shoulders
+- <code>NPC L/R UpperArm [L/RUar]</code> - Upper arms
+- <code>NPC L/R Forearm [L/RLar]</code> - Forearms
+- <code>NPC L/R Hand [L/RHnd]</code> - Hands
+- <code>NPC L/R Thigh [L/RThg]</code> - Thighs
+- <code>NPC L/R Calf [L/RClf]</code> - Shins
+- <code>NPC L/R Foot [L/RFt ]</code> - Feet
+- <code>NPC L/R Toe0 [L/RToe]</code> - Toes
+- <code>NPC Neck [Neck]</code> - Neck
+- <code>NPC Head [Head]</code> - Head</p>
+<p><strong>Weapons:</strong>
+- <code>WeaponBack</code> - Sheathed weapon on back
+- <code>WeaponSword</code> - Sheathed sword on hip
+- <code>WeaponAxe</code> - Sheathed axe
+- <code>WeaponDagger</code> - Sheathed dagger
+- <code>WEAPON</code> - Equipped weapon in hand</p>
+<p><strong>Custom bones:</strong>
+- Can add bones for tails, wings, capes, etc.
+- Must be in hierarchy (connected to existing bone)
+- Must export to HKX skeleton</p>
+<h3 id="bone-transform-data">Bone Transform Data</h3>
+<p>Each bone stores:</p>
+<p><strong>Translation:</strong> 3D offset from parent (X, Y, Z)</p>
+<p><strong>Rotation:</strong> Quaternion (X, Y, Z, W) </p>
+<p><strong>Scale:</strong> 3D scale factors (X, Y, Z)
+- Usually (1, 1, 1)
+- Non-uniform scale can cause issues</p>
+<h3 id="ragdoll-data">Ragdoll Data</h3>
+<p>The Havok format combines skeleton and ragdoll in one HKX (<code>hkpPhysicsData</code> + <code>hkaRagdollInstance</code> alongside the <code>hkaSkeleton</code>), and <strong>Skyrim's actor <code>skeleton.hkx</code> files use that path</strong> — including the human ones.</p>
+<p><code>[Skyrim]</code> <code>skeleton.hkx</code> and <code>skeleton_female.hkx</code> are byte-identical in structure: 324 objects in the <code>__data__</code> section, organized as the canonical Havok dual-skeleton ragdoll bundle:</p>
+<ul>
+<li>1× <code>hkRootLevelContainer</code>, 1× <code>hkaAnimationContainer</code></li>
+<li><strong>2× <code>hkaSkeleton</code></strong> — one for animation (<code>NPC Root [Root]</code>, 99 bones), one for the ragdoll (<code>Ragdoll_NPC COM [COM ]</code>, 18 bones)</li>
+<li>2× <code>hkaSkeletonMapper</code> — translate poses between the two skeletons in either direction</li>
+<li><code>hkpPhysicsData</code> → <code>hkpPhysicsSystem</code> → 19× <code>hkpRigidBody</code> (each with an <code>hkpCapsuleShape</code>), tied together by an <code>hkaRagdollInstance</code></li>
+<li>34× <code>hkpConstraintInstance</code> wrapping 18× <code>hkpRagdollConstraintData</code> (6-DOF) + 16× <code>hkpLimitedHingeConstraintData</code> (single-axis, elbows/knees). One <code>hkpPositionConstraintMotor</code> is referenced from inside one of the constraints, not as an instance of its own.</li>
+<li>Bookkeeping: <code>hkMemoryResourceContainer</code>, <code>hkMemoryResourceHandle</code></li>
+</ul>
+<p>A binary class-name scan of all 38 vanilla Skyrim <code>skeleton*.hkx</code> files under <code>meshes\actors\</code> (human, every creature, dragons, dwarven constructs, atronachs, etc.) finds the ragdoll classes (<code>hkaRagdollInstance</code>, <code>hkpPhysicsData</code>, <code>hkpRigidBody</code>, <code>hkpRagdollConstraint</code>) in every one. Bundled ragdoll is the rule for actor skeletons in Skyrim, not an exception for creatures.</p>
+<p>Creature skeletons use the same wire format and the same base ragdoll classes, but quadrupeds typically have more bones in both skeletons (the tail, separate front/back legs, separately animated ears/jaw/tongue) and a higher fraction of those bones participate in the ragdoll than for humans. Some creatures also include <code>hkpConvexVerticesShape</code> and <code>hkpConvexVerticesConnectivity</code> objects for collision bodies whose shape doesn't fit a capsule (e.g. a head).</p>
+<p>The paired <code>skeleton.nif</code> <em>also</em> carries ragdoll data — <code>bhkRigidBody</code>, <code>bhkRagdollConstraint</code>, <code>bhkLimitedHingeConstraint</code>, and <code>bhkBlendCollisionObject</code> blocks attached to bone NiNodes via <code>bhkCollisionObject</code>. Each rigid body carries its own collision shape, mass, friction, and restitution; the constraints define the joint limits between parent/child bodies. The role split between the HKX ragdoll and the NIF ragdoll isn't documented here.</p>
+<p><code>[FO4]</code> FO4's <code>skeleton.hkx</code> ragdoll structure hasn't been verified for this library.</p>
+<h2 id="xml-representation">XML Representation</h2>
+<p>Community tools (<code>hkxpack</code>, <code>hkxcmd</code>, <code>hkxc</code>) convert HKX files to and from a human-readable XML representation. <strong>The XML is a logical view of the object graph, not a faithful image of the binary</strong>, and a round trip through XML is lossy in two distinct ways.</p>
+<h3 id="section-folding-reversible">Section folding (reversible)</h3>
+<p>The binary packfile has three sections (<code>__classnames__</code>, <code>__types__</code>, <code>__data__</code>); the XML shows only one <code>&lt;hksection name="__data__"&gt;</code> root. The two folded sections are essentially metadata:</p>
+<ul>
+<li><code>__classnames__</code> is a lookup table mapping class signatures (32-bit hashes) to class-name strings. The XML embeds both directly on each <code>&lt;hkobject class="..." signature="..."&gt;</code>, so the table is regenerable from the XML on re-serialization.</li>
+<li><code>__types__</code> carries embedded type-layout metadata for forward-compat. In <code>hk_2010.2.0-r1</code> this section is empty — the format identifies types by class name + signature against a known type registry. Newer Havok versions (FO4's <code>hk_2014.1.0-r1</code>) use this section more.</li>
+</ul>
+<p>This folding is fully reversible. Round-tripping XML → HKX regenerates the header, classnames, and types sections byte-identically.</p>
+<h3 id="float-precision-irreversible">Float precision (irreversible)</h3>
+<p>XML formats floating-point values with <code>%f</code>-style notation (six decimal places). Anything below ~1e-6 prints as <code>0.000000</code>, and parsing <code>0.000000</code> yields exact zero — sub-precision noise is silently stripped. A round trip through XML therefore quantizes every float in the file to ~6 decimal digits.</p>
+<p>For a vanilla SE <code>skeleton.hkx</code>, a round trip produces a file of the exact same size (85408 bytes — layout is deterministic) but with ~8.5% of bytes different from the original. The header, <code>__classnames__</code>, and (empty) <code>__types__</code> sections round-trip byte-identically; the entire diff is float values within <code>__data__</code>. Verified by checking that the byte-level diff begins past the section table and exclusively touches IEEE-754 fields like quaternion components and reference-pose offsets.</p>
+<p>For skeletons this loss is harmless (the affected values are subnormal noise on identity quaternions and zero offsets) but for animations it compounds with the precision losses inherent to spline-compressed animation tracks — see <a href="#compression">Compression</a>. The decode-spline → format-floats → re-fit-spline → re-quantize path through XML adds float-format loss on top of the existing decode/refit/requantize cycle.</p>
+<p>The implication: <strong>the XML pipeline is not a transparent inspection or patching layer</strong>. It's good for reading and structural editing. It's not byte-faithful — re-saving a file through XML is a lossy export pass even if no field values were touched.</p>
+<h3 id="when-xml-is-and-isnt-appropriate">When XML is and isn't appropriate</h3>
+<table>
+<thead>
+<tr>
+<th>Use case</th>
+<th>XML</th>
+<th>Direct binary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reading or auditing structure</td>
+<td>✓</td>
+<td>adequate via <code>dump_hkx.py</code></td>
+</tr>
+<tr>
+<td>Adding/renaming bones in skeletons</td>
+<td>✓</td>
+<td>hard</td>
+</tr>
+<tr>
+<td>Behavior graph editing</td>
+<td>✓</td>
+<td>hard</td>
+</tr>
+<tr>
+<td>Verifying a file is unchanged byte-for-byte</td>
+<td>✗ (re-export changes bytes)</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>Round-tripping animations without data loss</td>
+<td>✗</td>
+<td>✓ if you avoid the conversion entirely</td>
+</tr>
+<tr>
+<td>Patching a single field without rewriting</td>
+<td>✗</td>
+<td>✓</td>
+</tr>
+</tbody>
+</table>
+<p>For inspection without precision loss, the <code>dump_hkx.py</code> utility at the project root parses the binary structure and prints a human-readable report — header fields, section table, classnames, and per-object byte ranges with outgoing references resolved by class name — without converting any field values to text. Object payloads are summarized by class and size, not field-by-field; for that, the XML view is the practical choice (with the precision caveat above).</p>
+<h2 id="animation-data">Animation Data</h2>
+<h3 id="keyframe-structure">Keyframe Structure</h3>
+<p><strong>Frame:</strong> Single snapshot of skeleton pose at specific time</p>
+<p><strong>Transform per bone:</strong>
+- Translation (X, Y, Z)
+- Rotation (quaternion)
+- Scale (X, Y, Z) - often omitted if always 1</p>
+<p><strong>Timeline:</strong>
+- Start time: 0.0
+- End time: Duration (seconds)
+- Source authoring rate: Typically 30 fps (animator's keyframe spacing before export). This is <strong>not</strong> a runtime cap — see <a href="#continuous-sampling-at-runtime">Continuous sampling</a> below.
+- Stored data: A fitted B-spline, not the source keyframes (see <a href="#compression">Compression</a>)</p>
+<h3 id="compression">Compression</h3>
+<p>Skyrim and Fallout 4 store per-bone animation data as <code>hkaSplineCompressedAnimation</code>. The format is <strong>structurally lossy</strong> — the original animator's keyframes don't survive export. What's in the file is a fitted B-spline approximation plus bit-quantized control points.</p>
+<h4 id="track-structure-per-bone">Track structure per bone</h4>
+<p>Each bone (Havok calls one a "track") gets up to three independent B-splines:</p>
+<ul>
+<li><strong>Position</strong> — one B-spline whose control points are 3D vectors. Each axis (X / Y / Z) is independently classified, so a bone moving only on X stores a full spline for X but a single constant for Y and Z.</li>
+<li><strong>Rotation</strong> — one B-spline whose control points are quaternions. <strong>All-or-nothing</strong>: the whole quaternion is one of the three classifications below; you can't decompose it per-axis without breaking unit-length normalization.</li>
+<li><strong>Scale</strong> — same per-axis structure as position. Most bones leave all three axes as <code>identity</code> since scale rarely animates.</li>
+</ul>
+<p>The per-component classifications:</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>What's stored</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spline</code></td>
+<td>Knot vector + sequence of quantized control points</td>
+</tr>
+<tr>
+<td><code>static</code></td>
+<td>One quantized constant value</td>
+</tr>
+<tr>
+<td><code>identity</code></td>
+<td>Nothing — translation = 0, scale = 1, rotation = identity quat</td>
+</tr>
+</tbody>
+</table>
+<p>A typical idle bone might be <code>pos=identity, rot=spline, scale=identity</code>. A finger that only rotates would be <code>pos=identity, rot=spline, scale=identity</code> too. The COM bone with root motion is more like <code>pos=spline (all axes), rot=spline, scale=identity</code>.</p>
+<h4 id="time-blocking">Time blocking</h4>
+<p>Long animations are chunked into time blocks of <code>max_frames_per_block</code> (256 in Skyrim). Each block carries its own set of splines for every track. So a 600-frame animation becomes ~3 blocks, with each animated bone getting up to three sets of splines (one per block) for each of position / rotation / scale.</p>
+<p>This keeps each spline fit local — fitting a single B-spline through hundreds of frames is computationally hard and produces poor approximations. Short animations (under 256 frames) just have one block.</p>
+<h4 id="how-spline-fitting-loses-information">How spline fitting loses information</h4>
+<p>The Havok Content Tools exporter fits a B-spline through the source animation curve within a configurable error tolerance, then stores the resulting knot vector and control points. The control points are <strong>not</strong> the source keyframes:</p>
+<ul>
+<li><strong>Their parameter positions are wherever the fitter chose to place them</strong>, dictated by the knot vector. A region with rapid change gets denser knots; a flat region gets sparse ones. Nothing forces alignment with the animator's keyframe times.</li>
+<li><strong>Their values are off-curve weights, not samples.</strong> A B-spline <code>C(t) = Σᵢ Nᵢ(t) · Pᵢ</code> doesn't pass through its control points except at the endpoints (and only when the knot vector is clamped there with multiplicity = degree+1).</li>
+</ul>
+<p>Original keyframes are not preserved anywhere in the file. High-frequency wiggle that doesn't fit the spline is smoothed away.</p>
+<p>(Other Havok formats, like <code>hkaInterleavedUncompressedAnimation</code>, <em>can</em> preserve frame-aligned data. Skyrim and Fallout 4 don't use them — every animation HKX in those games is <code>hkaSplineCompressedAnimation</code>.)</p>
+<h4 id="bit-quantization-additional-loss">Bit quantization (additional loss)</h4>
+<p>Every stored value — spline control points and static-track constants alike — is bit-quantized:</p>
+<ul>
+<li><strong>Positions / scales:</strong> 8-bit or 16-bit integer per axis, mapped back to a per-axis <code>[min, max]</code> range stored alongside the spline data</li>
+<li><strong>Rotation quaternions:</strong> 32-bit or 40-bit total (3 of 4 components packed; ~12 bits/component for the 40-bit form, which is the most common)</li>
+</ul>
+<p>This loss compounds with the spline-fitting loss above and is independent of it.</p>
+<h4 id="continuous-sampling-at-runtime">Continuous sampling at runtime</h4>
+<p>B-splines are continuous functions of a real-valued parameter <code>t</code> — you can evaluate them at any <code>t</code>, not just integer frames. Skyrim's playback isn't locked to 30 Hz: the engine samples the splines at whatever timestep the animation update produces, giving smooth playback on a 60+ Hz display. The "source authoring rate" (typically 30 fps when the animator placed keyframes before export) and the "runtime sample rate" (engine frame time) are independent.</p>
+<p>To play an animation at altered speed, the behavior graph just samples at <code>t' = playback_rate · wall_clock_time</code>. The encoded duration and knot spacing are fixed at export time, but the engine retimes by adjusting <code>t</code>.</p>
+<h4 id="worked-example">Worked example</h4>
+<p>A real spline pulled out of <code>meshes/actors/character/animations/1hm_equip.hkx</code> (87 frames, 1.433 s, 99 bone tracks). Picking one bone's rotation track:</p>
+<ul>
+<li>Spline degree: <strong>3</strong> (cubic B-spline)</li>
+<li>Knot vector (<strong>15</strong> entries; values are frame-space):
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>[0.0, 0.0, 0.0, 0.0, 4.0, 10.0, 18.0, 18.0, 28.0, 38.0, 38.0, 86.0, 86.0, 86.0, 86.0]
+</code></pre></div></li>
+<li><strong>11</strong> quaternion control points <code>[x, y, z, w]</code>:
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>CP[ 0]  [+0.998466, -0.015545, +0.005527, +0.052852]
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>CP[ 1]  [+0.998366, -0.019690, +0.006909, +0.053197]
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>CP[ 2]  [+0.998138, -0.033507, +0.013817, +0.049052]
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>CP[ 3]  [+0.997595, -0.022108, +0.002763, +0.065633]
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>CP[ 4]  [+0.999516, -0.015890, -0.023490, +0.012781]
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>CP[ 5]  [+0.999201, -0.017963, -0.034889, -0.007600]
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>CP[ 6]  [+0.998549, -0.045943, -0.026944, -0.007945]
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>CP[ 7]  [+0.998524, -0.038343, -0.036616, +0.011745]
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>CP[ 8]  [+0.997635, -0.044907, -0.051815, +0.004836]
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>CP[ 9]  [+0.997890, -0.036616, -0.042143, +0.033162]
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>CP[10]  [+0.998322, -0.036271, -0.039725, +0.021417]
+</code></pre></div></li>
+</ul>
+<p>Things to notice:</p>
+<ul>
+<li><strong>Knots are not at frame positions.</strong> Frame indices run 0–86. The knots cluster at {0, 4, 10, 18, 28, 38, 86} — dense at the start (where the equip motion ramps up) and sparse later (when the bone settles).</li>
+<li><strong>Repeated knots reduce continuity locally.</strong> The duplicate <code>18.0, 18.0</code> and <code>38.0, 38.0</code> drop the curve from C² to C¹ at those parameter values; the source animation had a kink there.</li>
+<li><strong>Only the endpoint control points sit on the curve.</strong> Because of the knot-multiplicity-of-4 clamping at start (<code>0, 0, 0, 0</code>) and end (<code>86, 86, 86, 86</code>), CP[0] equals the spline's value at frame 0 and CP[10] equals its value at frame 86. Verified: CP[0] = <code>[+0.998466, -0.015545, +0.005527, +0.052852]</code>, and the spline evaluated at frame 0 = the same.</li>
+<li><strong>Interior control points do not correspond to any frame.</strong> CP[5] = <code>[+0.999201, -0.017963, -0.034889, -0.007600]</code>. There is no frame at which the bone's rotation equals this quaternion. It's an off-curve weight that pulls the spline through its arc. The actual frame-50 value is <code>[+0.998068, -0.041318, -0.044963, +0.011491]</code> — nothing like CP[5].</li>
+<li><strong>Compression ratio:</strong> 11 quaternions × ~4 bytes (32-bit packed) + 15 knot bytes + 4-byte mask ≈ 63 bytes. Versus 87 frames × 16 bytes (full float32 quaternion) = 1392 bytes uncompressed. <strong>~22× compression</strong> on this single rotation track.</li>
+</ul>
+<h4 id="tunable-tolerance">Tunable tolerance</h4>
+<p>The exporter exposes position and rotation tolerance parameters. Defaults produce visible error on dense or high-frequency curves; setting tolerance near zero minimizes loss but defeats the size advantage. Modders have reported visible artifacts ("the protagonist shivers like someone infected by malaria") at default tolerance, fixed by tightening it.[^havok-fidelity-thread]</p>
+<h4 id="re-export-compounding">Re-export compounding</h4>
+<p>Each export pass — decode spline → re-fit new spline to decoded samples → re-quantize — accumulates error. The compounding follows mathematically from the format; how visible it is in practice depends on tolerance settings and curve content.</p>
+<h4 id="best-practice">Best practice</h4>
+<p>Keep original source files (FBX, Blender) and treat HKX as a build artifact, not a master format.</p>
+<p>[^havok-fidelity-thread]: <a href="https://forums.nexusmods.com/topic/13478686-how-to-avoid-visible-animation-fidelity-loss-when-exporting-with-havok-content-tools/">How to avoid visible animation fidelity loss when exporting with Havok content tools? — Nexus Mods forums</a></p>
+<h3 id="annotation-tracks">Annotation Tracks</h3>
+<p>Annotations mark specific events in animations.</p>
+<p><strong>Common annotations:</strong>
+- <code>preHitFrame</code> - Just before weapon contacts
+- <code>HitFrame</code> - Weapon impact point
+- <code>KillMove</code> - Special kill move timing
+- <code>FootLeft</code> / <code>FootRight</code> - Footstep sounds
+- <code>SwapWeapon</code> - Switch weapon in hand
+- <code>TriggerActivate</code> - Activate event fires</p>
+<p><strong>Usage:</strong> Behavior graphs trigger events, sounds, effects at annotation points.</p>
+<h3 id="animation-blending">Animation Blending</h3>
+<p>Game blends multiple animations at runtime.</p>
+<p><strong>Blend types:</strong>
+- Additive (add on top of base)
+- Override (replace base)
+- Partial (specific bones only, e.g., upper body aim)</p>
+<p><strong>Blend weight:</strong> 0.0-1.0 (how much each animation contributes)</p>
+<p><strong>Transition:</strong> Smooth blend from one animation to another over time.</p>
+<h2 id="fo4-fallout-4-differences"><code>FO4</code> Fallout 4 Differences</h2>
+<h3 id="64-bit-havok">64-bit Havok</h3>
+<p><strong>hk_2014.1.0-r1:</strong> Updated Havok version</p>
+<p><strong>Changes:</strong>
+- 64-bit pointers (incompatible with LE/SE)
+- Updated compression
+- Slightly different binary structure</p>
+<p><strong>Conversion:</strong> Use Havok Content Tools or community converters (hkxpack).</p>
+<h3 id="facebones-system">FaceBones System</h3>
+<p>Fallout 4 has dual armature system for faces.</p>
+<p><strong>FaceBones skeleton:</strong> <code>meshes/actors/character/character assets/facebone.hkx</code></p>
+<p><strong>Special bones:</strong>
+- Facial expression bones (brow, cheek, jaw, etc.)
+- Separate from body skeleton
+- Merged at runtime</p>
+<p><strong>Head mesh requirements:</strong>
+- Weighted to <strong>both</strong> body skeleton and FaceBones
+- Complex rigging workflow</p>
+<p><strong>Export challenge:</strong> Blender doesn't natively support dual armatures - requires special export scripts.</p>
+<h3 id="skin-bones">Skin Bones</h3>
+<p>Fallout 4 has special <code>_skin</code> suffix bones.</p>
+<p><strong>Example:</strong> <code>LArm_Skin</code></p>
+<p><strong>Purpose:</strong>
+- Twist/deformation helpers
+- Special parenting behavior
+- Auto-generated from base bones in some cases</p>
+<p><strong>Constraint:</strong> Not fully documented, trial-and-error required.</p>
+<h2 id="tools">Tools</h2>
+<h3 id="pynifly-blender-addon">PyNifly (Blender Addon)</h3>
+<p><strong>Import/export HKX skeletons and animations.</strong></p>
+<p><strong>Skeleton import:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">bpy</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">io_scene_nifly</span><span class="w"> </span><span class="kn">import</span> <span class="n">pynifly</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">pynifly</span><span class="o">.</span><span class="n">import_hkx_skeleton</span><span class="p">(</span><span class="s1">&#39;skeleton.hkx&#39;</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>Animation export:</strong>
+- Blender action → HKX animation
+- Supports bone animation only (no morph/shape keys)
+- Applies Havok compression on export</p>
+<p>See <a href="../tools/pynifly/animations.md">PyNifly Animation Workflow</a> [TBD].</p>
+<h3 id="havok-content-tools-hct">Havok Content Tools (HCT)</h3>
+<p><strong>Official Havok toolset</strong> (requires license).</p>
+<p><strong>Features:</strong>
+- Convert between formats (FBX ↔ HKX)
+- Preview animations
+- Adjust compression settings
+- Batch processing</p>
+<p><strong>Filter Manager:</strong> Configure export settings (compression level, sample rate, etc.)</p>
+<p><strong>Availability:</strong> Expensive commercial license. Bethesda has custom version. Community reverse-engineered alternatives exist.</p>
+<h3 id="hkxpack-hkxcmd">hkxpack / hkxcmd</h3>
+<p><strong>Community tools</strong> for HKX conversion.</p>
+<p><strong>hkxcmd (older):</strong>
+- Convert HKX ↔ XML
+- Edit in XML, convert back
+- Fragile, version-specific</p>
+<p><strong>hkxpack (newer):</strong>
+- Python-based HKX packer/unpacker
+- More reliable than hkxcmd
+- Supports LE/SE/FO4 formats</p>
+<p><strong>Usage:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c"># Unpack HKX to XML</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">hkxpack</span> <span class="n">unpack</span> <span class="n">animation</span><span class="p">.</span><span class="n">hkx</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c"># Edit animation_unpacked.xml</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c"># Repack XML to HKX</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">hkxpack</span> <span class="n">pack</span> <span class="n">animation_unpacked</span><span class="p">.</span><span class="n">xml</span> <span class="n">animation_new</span><span class="p">.</span><span class="n">hkx</span>
+</code></pre></div></p>
+<h3 id="nifskope">NifSkope</h3>
+<p><strong>View skeleton references</strong> in NIF files.</p>
+<p><strong>Check:</strong>
+- Which skeleton NIF references (NiStringExtraData "HKX")
+- Bone names in NiSkinInstance
+- Bone order</p>
+<h3 id="creation-kit">Creation Kit</h3>
+<p><strong>View animations</strong> in preview window.</p>
+<p><strong>Limitations:</strong>
+- Preview only, no editing
+- Doesn't show annotation tracks</p>
+<h2 id="workflow-tips">Workflow Tips</h2>
+<h3 id="creating-custom-skeletons">Creating Custom Skeletons</h3>
+<ol>
+<li><strong>Start from existing:</strong> Modify Skyrim/FO4 skeleton, don't build from scratch</li>
+<li><strong>Maintain required bones:</strong> Keep all vanilla bones, add custom bones as children</li>
+<li><strong>Name consistently:</strong> Follow <code>NPC &lt;Part&gt; [Code]</code> convention</li>
+<li><strong>Export to HKX:</strong> Use PyNifly or HCT</li>
+<li><strong>Test in-game:</strong> Load with simple NPC to verify</li>
+</ol>
+<h3 id="creating-animations">Creating Animations</h3>
+<ol>
+<li><strong>Rig character in Blender</strong> with matching skeleton</li>
+<li><strong>Animate bones</strong> (keyframes on timeline)</li>
+<li><strong>Export to HKX</strong> via PyNifly</li>
+<li><strong>Test in-game:</strong></li>
+<li>Place in <code>Data/meshes/actors/&lt;race&gt;/animations/</code></li>
+<li>Add to behavior graph (or use animation replacer mod)</li>
+<li><strong>Iterate:</strong> Adjust timing, transitions</li>
+</ol>
+<h3 id="converting-le-se">Converting LE → SE</h3>
+<p><strong>Skeleton:</strong> Usually compatible (same hk_2010.2.0-r1)</p>
+<p><strong>Animations:</strong> Usually compatible</p>
+<p><strong>If issues:</strong> Re-export from source (FBX/Blender) with SE settings.</p>
+<h3 id="converting-lese-fo4">Converting LE/SE → FO4</h3>
+<p><strong>Required:</strong> Convert with hkxpack or HCT (different Havok version).</p>
+<p><strong>Process:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c"># Unpack LE/SE animation</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">hkxpack</span> <span class="n">unpack</span> <span class="n">skyrim_anim</span><span class="p">.</span><span class="n">hkx</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c"># Repack for FO4</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">hkxpack</span> <span class="n">pack</span> <span class="n">skyrim_anim_unpacked</span><span class="p">.</span><span class="n">xml</span> <span class="n">fo4_anim</span><span class="p">.</span><span class="n">hkx</span> <span class="p">-</span><span class="n">-fallout4</span>
+</code></pre></div></p>
+<p><strong>Limitations:</strong>
+- Some features not cross-compatible
+- Ragdoll data may need adjustment
+- Test thoroughly</p>
+<h2 id="common-issues">Common Issues</h2>
+<h3 id="animation-not-playing">Animation Not Playing</h3>
+<ul>
+<li><strong>Wrong skeleton:</strong> Animation bones don't match skeleton</li>
+<li><strong>Missing behavior graph entry:</strong> Animation not referenced</li>
+<li><strong>Filename mismatch:</strong> Animation name doesn't match behavior graph reference</li>
+<li><strong>Fix:</strong> Check bone names, verify behavior graph, check file paths</li>
+</ul>
+<h3 id="animation-jitterybroken">Animation Jittery/Broken</h3>
+<ul>
+<li><strong>Bone mismatch:</strong> Bone names don't match exactly</li>
+<li><strong>Scale issues:</strong> Non-uniform bone scales</li>
+<li><strong>Quaternion corruption:</strong> Rotation data invalid</li>
+<li><strong>Fix:</strong> Re-export from clean source, verify bone names</li>
+</ul>
+<h3 id="skeleton-causes-ctd">Skeleton Causes CTD</h3>
+<ul>
+<li><strong>Corrupted HKX:</strong> Binary corruption</li>
+<li><strong>Wrong Havok version:</strong> LE HKX in SE game</li>
+<li><strong>Missing required bones:</strong> Essential bones removed</li>
+<li><strong>Fix:</strong> Re-export skeleton, verify version, restore missing bones</li>
+</ul>
+<h3 id="mesh-not-following-skeleton">Mesh Not Following Skeleton</h3>
+<ul>
+<li><strong>Bone name mismatch:</strong> NIF bone names ≠ HKX bone names</li>
+<li><strong>Wrong skeleton reference:</strong> NIF points to different skeleton</li>
+<li><strong>Fix:</strong> Check NiStringExtraData "HKX" in NIF, verify bone names match</li>
+</ul>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="../tools/pynifly/animations.md">PyNifly Animations</a> [TBD] - Blender animation workflow</li>
+<li><a href="../nif-files/">NIF Files</a> - NiSkinInstance and bone references</li>
+<li><a href="../reference/bone-names.md">Bone Names Reference</a> [TBD] - Standard bone names</li>
+<li><a href="../workflows/animations.md">Animation Workflows</a> [TBD] - Step-by-step guides</li>
+<li><a href="../debugging/animation-issues.md">Animation Debugging</a> [TBD] - Troubleshooting</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

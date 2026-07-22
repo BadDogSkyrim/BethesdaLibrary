@@ -1,0 +1,3427 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Comprehensive reference for Skyrim, Fallout 4, and Starfield modding with PyNifly and esplib">
+      
+      
+        <meta name="author" content="Hugh Russel">
+      
+      
+      
+        <link rel="prev" href="../cdb-format/">
+      
+      
+        <link rel="next" href="../plugins/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Chargen, Race & Skeleton - Bethesda Modding Library</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#starfield-character-generation-race-skeleton-body" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Bethesda Modding Library" class="md-header__button md-logo" aria-label="Bethesda Modding Library" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Bethesda Modding Library
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chargen, Race & Skeleton
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../file-formats/overview/" class="md-tabs__link">
+          
+  
+  
+  File Formats
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../skyrim/overview/" class="md-tabs__link">
+          
+  
+  
+  Game-Specific
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../tools/pynifly/overview/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../reference/partition-names/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../CONVENTIONS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Conventions
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Bethesda Modding Library" class="md-nav__button md-logo" aria-label="Bethesda Modding Library" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Bethesda Modding Library
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    File Formats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins (ESP/ESM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/nif-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NIF Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/nif-animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NIF Animations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Animations (HKX)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/physics-collision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Physics & Collision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/morphs-shapekeys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Morphs & Shape Keys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/textures-materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Textures & Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/archives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archives (BSA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/scripts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scripts (PEX)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game-Specific
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game-Specific
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skyrim
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Skyrim
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../skyrim/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fallout 4
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Fallout 4
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fallout4/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fallout4/connect-points/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connect Points
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fallout4/dismemberment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dismemberment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Starfield
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Starfield
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meshes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meshes (NIF + .mesh)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Materials & Textures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../material-worked-example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+      ↳ .mat worked example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cdb-format/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+      ↳ .cdb binary format
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chargen, Race & Skeleton
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chargen, Race & Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-race-record" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The RACE record
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. The RACE record">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-races-are-used-verified-against-starfieldesm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How races are used (verified against Starfield.esm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ambient-crowds-humancrowdrace-generated-on-the-fly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ambient crowds (HumanCrowdRace) — generated on the fly
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#record-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Record fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#core-data-dat2-data-struct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core data (DAT2 "Data" struct)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skeleton-data-per-gender" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skeleton Data (per gender)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#facegen-clamps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FaceGen clamps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#biped-object-names-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Biped Object Names / Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chargen-and-skintones-per-gender-the-character-creator-payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chargen and Skintones (per gender) — the character-creator payload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#head-parts-and-bone-modifiers-per-gender" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Head Parts and Bone Modifiers (per gender)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-race-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Other race links
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-head-parts-hdpt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Head Parts (HDPT)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Head Parts (HDPT)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-enum-pnam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Type enum (PNAM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hdpt-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HDPT fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-morphs-mrph-record-and-morphdat-geometry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Morphs — MRPH record and morph.dat geometry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Morphs — MRPH record and morph.dat geometry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mrph-record-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MRPH record fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expressions-performance-morphs-verified-from-vanilla-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expressions (performance morphs) — verified from vanilla assets
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Expressions (performance morphs) — verified from vanilla assets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-full-expression-au-vocabulary-verified-from-vanilla-performanceheadmorphdat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The full expression-AU vocabulary (verified from vanilla performance/head/morph.dat)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#named-facial-expressions-fxpd-dialogue-driven-bundles-of-action-units" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Named facial expressions (FXPD) — dialogue-driven bundles of action units
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-morph-delta-file-morph-morphdat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The morph-delta file (.morph / morph.dat)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-tints-complexions-overlays-the-avm-system-avmdavms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Tints, complexions &amp; overlays — the AVM system (AVMD/AVMS)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Tints, complexions &amp; overlays — the AVM system (AVMD/AVMS)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#per-npc-tint-application-npc_-avmd-tints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-NPC tint application (NPC_ → "AVMD Tints")
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-the-body-head-mesh-mesh-files-and-bsgeometry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. The body &amp; head mesh — .mesh files and BSGeometry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. The body &amp; head mesh — .mesh files and BSGeometry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#body-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Body layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-skeleton-and-adding-a-tail-ears-digitigrade-legs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Skeleton, and adding a tail / ears / digitigrade legs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Skeleton, and adding a tail / ears / digitigrade legs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-skeleton" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The skeleton
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-ways-to-add-animated-appendages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two ways to add animated appendages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digitigrade-legs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Digitigrade legs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-biped-slots-the-64-slot-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Biped slots (the 64-slot layout)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-facegen-baking-npc-faces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. FaceGen (baking NPC faces)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-what-the-community-has-actually-achieved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. What the community has actually achieved
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-practical-path-building-a-custom-anthro-race" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Practical path — building a custom anthro race
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Practical path — building a custom anthro race">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#finishing-fixes-gotchas-verified-article-431" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finishing fixes &amp; gotchas (verified, article 431)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hard-blockers-honest-assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hard blockers (honest assessment)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-a-custom-anthro-race-requires-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What a custom anthro race requires — checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-questions-uncertainties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open questions / uncertainties
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Archives
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyNifly
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PyNifly
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/pynifly/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/pynifly/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/partition-names/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Partition Names
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/external-resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    External Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CONVENTIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="starfield-character-generation-race-skeleton-body">Starfield: Character Generation, Race, Skeleton &amp; Body</h1>
+<p>Everything the Starfield engine needs to build, morph, tint, skin, and bake a
+playable character — with an eye toward what a <strong>custom anthropomorphic (furry)
+playable race</strong> would require. Starfield's chargen is a direct descendant of the
+Fallout 4 / Skyrim system, but nearly every piece has been rebuilt: geometry
+lives in external <code>.mesh</code> files, morphs are <code>.morph</code>/<code>.dat</code> deltas, tints are a
+layered "AVM" material system, and animated appendages can be driven by <strong>Bone
+Modifiers (BMOD)</strong> attached at the race level instead of a hand-authored Havok
+behavior graph.</p>
+<p>Record field names below come from the SF1Edit (xEdit) Starfield record
+definitions (<code>wbDefinitionsSF1.pas</code>), cross-checked against <code>Starfield.esm</code>.
+Mesh/skeleton details come from nifly's <code>BSGeometry</code> implementation and community
+tooling (Starfield Geometry Bridge / StarfieldMeshConverter). Community-folklore
+claims are marked <strong>Unverified</strong>.</p>
+<hr />
+<h2 id="1-the-race-record">1. The RACE record</h2>
+<h3 id="how-races-are-used-verified-against-starfieldesm">How races are used (verified against <code>Starfield.esm</code>)</h3>
+<p><code>Starfield.esm</code> contains just <strong>31 <code>RACE</code> records</strong>, and <strong>essentially every human
+person in the game is the single <code>HumanRace [0000347D]</code></strong>. Starfield dropped the
+many-races model — there is no race choice in chargen; all human variety is
+appearance/morphs on that one race. The only other humanoid races are
+<code>HumanCorpseRace [00034FB1]</code> (bodies), <code>ChildRace [002AABCD]</code>,
+<code>HumanCrowdRace [002BBC09]</code> (ambient background crowds), and
+<code>MannequinRace [001EE4DA]</code>; the remaining ~26 are creatures/fauna
+(<code>QuadrupedA/B/C</code>, <code>BipedA</code>, <code>FloaterA</code>, <code>Terrormorph</code>…) and machines
+(<code>AutopilotRace</code>, <code>*TurretRace</code>, <code>SecurityCameraRace</code>…).</p>
+<p>This is <em>why</em> the whole custom-race workflow is "clone HumanRace" — you inherit
+everything the game's race checks rely on. Two design paths follow:</p>
+<ul>
+<li><strong>Clone HumanRace → a new race</strong>, assigned to the player and chosen NPCs.
+  Selective, toggleable, mod-compatible (the article-431 route documented below).</li>
+<li><strong>Override <code>HumanRace</code> itself</strong> (swap its skin ARMO / default head parts) →
+  <em>everyone</em> changes, with no per-NPC editing, but it's total, not toggleable, and
+  conflicts with other appearance/body mods. Ambient crowds are <code>HumanCrowdRace</code>
+  (override that too for full coverage); kids are <code>ChildRace</code>.</li>
+</ul>
+<p><strong>Selecting the player's race is done by plugin, not in the creator</strong> (same as <code>[FO4]</code>):
+Starfield has no in-chargen race picker, so a mod sets the player's race by <strong>overriding
+the player NPC record (form <code>7</code>) + its 12 copies</strong> (article 431). This pairs naturally
+with the chargen topology-lock (above): put the <strong>topology boundary at the race/plugin</strong>
+— one race (and a small player-setting plugin) per distinct head <em>geometry</em> (canid,
+felid, …) — and handle all same-topology variety (fur color, markings via AVMD overlays,
+ear/tail head parts, muzzle morphs) <em>inside</em> the creator. For a multi-species pack: a
+core master defining all races + shared assets, plus one tiny "player" plugin per race
+that does the player-record override (only one can win — enabling one = the choice).</p>
+<p>What actually "notices" a race swap: conditions testing a <strong>keyword</strong>
+(<code>ActorTypeNPC</code>/<code>ActorTypeHuman</code>, etc.) <strong>pass</strong> — a clone inherits HumanRace's
+keywords, covering most generic AI/quest/dialogue checks. Conditions testing the
+<strong>specific race form</strong> (<code>GetIsRace HumanRace</code>) or a <strong>race form-list</strong> <strong>fail</strong> until
+you add your race — which is exactly what the finishing-fix form-lists patch
+(spacesuit <code>CNDF:0003D8C1</code>, dialogue camera <code>CPTH:000C1056</code>; see §10). Going wide to
+named NPCs also means re-baking <strong>FaceGen</strong> per NPC (the slow, fragile part);
+player-only avoids it.</p>
+<h3 id="ambient-crowds-humancrowdrace-generated-on-the-fly">Ambient crowds (<code>HumanCrowdRace</code>) — generated on the fly</h3>
+<p>Background city crowds are <strong>not</strong> hand-authored NPCs with baked FaceGen — they use a
+separate, deliberately lightweight race (<code>HumanCrowdRace [002BBC09]</code>) and a
+<strong>data-driven spawn system</strong>:</p>
+<ul>
+<li>The crowd race has its own crowd body skin (<code>Skin_Crowd_Base_Body_NOTPLAYABLE</code>) and
+  its own skeleton (<code>actors\human_crowd\…\skeleton.nif</code>) but shares human animations/
+  rig. Crucially it carries <strong>almost no chargen data</strong> — no race presets, no morph
+  groups, <strong>no race-level head-part list</strong> (just a "default" phenotype + a skin index).</li>
+<li>Crowds draw on <strong>per-location leveled lists</strong>: <code>LCharCrowdKeywords_DEFAULT</code>
+  (+ <code>_Akila</code> / <code>_NewAtlantisWell</code> / <code>_NeonUnderbelly</code>) is a list of ~58 template NPCs
+  named by <strong>mood × prop</strong> (<code>CrowdActor_KEYWORDS_Angry_Briefcase</code>, <code>_Angry_Coffee</code>…),
+  fed into the actors' <strong>Keywords</strong> template slot; <code>LCharCrowdVoices_Male/Female</code> list
+  voice templates. (The engine also LOD-renders distant ambient walkers on top.)</li>
+<li><strong>The crowd actor records carry no face</strong> — but the face is <strong>not</strong> engine-generated
+  from scratch; it's a <strong>randomly-equipped head ARMO</strong>. Verified across the 181
+  <code>CrowdActor_*</code> NPC records: each has <code>RNAM</code>=HumanCrowdRace, <code>WNAM</code>=crowd body skin, a
+  skin-tone index, a <strong>randomized height range</strong> (e.g. 0.98–1.02), an outfit and a voice
+  — but <strong>no <code>PNAM</code> head parts, no face morphs, <code>EDCT</code> (tint count) = 0</strong>, and <code>ACBS</code>
+  template flags of <code>Factions, Keywords</code> only (<strong>not <code>Traits</code></strong> → appearance not
+  inherited). The head instead comes from the <strong>outfit</strong>: each <code>Outfit_Crowds_*</code> equips
+  clothing <strong>plus a leveled list <code>LL_Crowd_Heads [000F4E92]</code></strong> (variants
+  <code>_Overweight</code> / <code>_Thin</code>) that draws one of <strong>8 authored <code>CrowdHead_&lt;phenotype&gt;</code> ARMOs</strong>
+  (<code>CrowdHead_af_md1</code>, <code>_eu_yo1</code>, … ethnicity×age). A <code>CrowdHead</code> ARMO sits on <strong>biped
+  slot 2 (Hide Head)</strong> and shows its head mesh via an <code>AA_CrowdHead_*</code> addon. So a crowd
+  face = a random head ARMO from a finite pool + random skin tone + random height. No
+  per-NPC FaceGen.</li>
+</ul>
+<p><strong>Full crowd appearance pipeline:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>CrowdActor NPC → DOFT: Outfit_Crowds_&lt;location&gt;
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                    ├─ clothing items
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                    └─ LL_Crowd_Heads (leveled list, 8 CrowdHead_* ARMOs)
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                          └─ random CrowdHead_&lt;phenotype&gt;  → ARMO on slot 2 (Hide Head)
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                └─ AA_CrowdHead_* addon → head mesh
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  body: WNAM = Skin_Crowd_Base_Body   ·   skin tone: STON   ·   height: randomized
+</code></pre></div></p>
+<p><strong>Modding implication (appearance):</strong> the head is an <strong>equippable ARMO chosen by a
+leveled list</strong>, so mixed-species furry crowds are a <em>data-driven</em> job, not per-NPC and
+not multi-race:
+- Author furry head ARMOs (<code>CrowdHead_Wolf</code>, <code>_Cat</code>… — ARMO on slot 2 + <code>AA_CrowdHead_*</code>
+  addon → furry head mesh/material) and <strong>add them to <code>LL_Crowd_Heads</code> (+ <code>_Overweight</code>/
+  <code>_Thin</code>)</strong>. Every crowd NPC then randomly draws a furry head → mixed-species crowds
+  from <strong>one leveled-list edit</strong>. One crowd race hosts all species — no extra races.
+- The <strong>body</strong> is the shared <code>WNAM</code> (<code>Skin_Crowd_Base_Body</code>); override it to a furry body.
+  Head and body vary independently (vanilla reconciles via skin-tone textures), so either
+  use one generic fur-textured anthro body and vary only heads (simplest), or tie body to
+  head species (bundle a body into each <code>CrowdHead</code> set / make species-specific
+  actors/outfits) if per-NPC body-species matching is required.
+- <strong>How much body-matching matters depends on visible skin.</strong> A crowd outfit equips just
+  three things: one <strong>slot-3 (BODY) full-body garment</strong> + <code>LL_Crowd_Heads</code> + a hair
+  leveled list (<code>LL_Crowd_Hairs_NoHats</code>). Vanilla crowd clothing is nearly all long-sleeved
+  full-body pieces (jackets/sweaters/jumpsuits/fatigues) with boots, so the exposed skin is
+  usually just <strong>head/neck + hands</strong> (sleeves end at the wrist; hands are the shared body
+  skin, not gloved). So outside revealing areas a generic fur body + varied heads reads as
+  seamless — only the head needs to carry species. <strong>Neon is the exception</strong> (catsuits/
+  short-sleeve fashion show arms/skin), where body markings must match the head species.
+  Note hair is <em>also</em> a leveled-list item — for animal heads, swap/empty <code>LL_Crowd_Hairs_*</code>
+  or repurpose it as mane/head-fur.
+- Crowds are a distinct race from a cloned player race → full coverage means handling
+  both (plus <code>ChildRace</code> for kids).</p>
+<h3 id="record-fields">Record fields</h3>
+<p>Signature <code>RACE</code>. Far larger than its predecessors. The parts that matter for a
+new race:</p>
+<h3 id="core-data-dat2-data-struct">Core data (<code>DAT2</code> "Data" struct)</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Male Height / Female Height</td>
+<td>scale multipliers</td>
+</tr>
+<tr>
+<td>Male/Female Default Weight</td>
+<td>three floats each: <strong>Thin / Muscular / Fat</strong> — the body-triangle anchors</td>
+</tr>
+<tr>
+<td>Head Biped Object</td>
+<td>biped slot index that counts as "head"</td>
+</tr>
+<tr>
+<td>Hair Biped Object</td>
+<td>slot index for hair</td>
+</tr>
+<tr>
+<td>Beard Biped Object</td>
+<td>slot index for beard</td>
+</tr>
+<tr>
+<td>Body Biped Object</td>
+<td>slot index for body</td>
+</tr>
+<tr>
+<td>Shield Biped Object / Pipboy Biped Object</td>
+<td>slot indices</td>
+</tr>
+<tr>
+<td>Flags (u64), Intelligence Level</td>
+<td>AI/behavior</td>
+</tr>
+<tr>
+<td>OnCripple / Bleedout / Electromagnetic Shocked</td>
+<td>combat-dismemberment reactions</td>
+</tr>
+</tbody>
+</table>
+<p><code>WNAM</code> <strong>Skin</strong> → <code>ARMO</code> (the default skin armor — the body/hands mesh set).
+<code>GNAM</code> <strong>Body Part Data</strong> → <code>BPTD</code> (dismemberment regions; see the
+<code>dismemberment.md</code> page for the FO4/Skyrim ancestor).</p>
+<h3 id="skeleton-data-per-gender">Skeleton Data (per gender)</h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Skeleton Data
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├─ Male Data   (MNAM marker)
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>│   ├─ ANAM  Skeletal Model     — path to the skeleton .nif
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│   ├─ NAM5  Skeleton Rig
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│   ├─ NAM6  Animation Root
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│   └─ DNAM  Animations
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>└─ Female Data (FNAM marker)    — same fields
+</code></pre></div>
+This is where a custom-skeleton race points at its own <code>skeleton.nif</code>,
+rig, and animation root. Contrast <code>[Skyrim]</code>/<code>[FO4]</code> which used a single
+<code>ANAM Skeletal Model</code> string per gender with far less structure.</p>
+<h3 id="facegen-clamps">FaceGen clamps</h3>
+<ul>
+<li><code>PNAM</code> <strong>FaceGen – Main clamp</strong></li>
+<li><code>UNAM</code> <strong>FaceGen – Face clamp</strong></li>
+</ul>
+<p>These bound how far the chargen morphs may push the face.</p>
+<h3 id="biped-object-names-conditions">Biped Object Names / Conditions</h3>
+<ul>
+<li><code>NAME</code> × <strong>64</strong> — human-readable names for the 64 biped slots.</li>
+<li><code>RBPC</code> × 64 — a per-slot condition (<code>AVIF</code>) gating whether the slot shows.</li>
+</ul>
+<p>Compare <code>[FO4]</code> 32 biped slots / <code>[Skyrim]</code> 32 body-part flags — Starfield
+doubles it to 64 and splits armor vs. <strong>spacesuit ("SS")</strong> variants (see §7).</p>
+<h3 id="chargen-and-skintones-per-gender-the-character-creator-payload">Chargen and Skintones (per gender) — the character-creator payload</h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Chargen and Skintones
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>└─ Male / Female
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>   ├─ Chargen (NAM0 marker)
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>   │   ├─ Race Presets      RPRM/RPRF → NPC_  (preset faces in the creator)
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>   │   ├─ Morph Groups      MPGN name + MPGM morph-name list
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>   │   ├─ Face Morph Phenotypes  FMRI index + FMRN name  (named face presets)
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>   │   ├─ Skin Tone AVMS Subtype (FDDS string)
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>   │   └─ Face Dials        FDSI Skin Index + FDSL Label  (individual sliders)
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>   ├─ Body Skin Tones   (BSTT string path)
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>   ├─ Hand Skin Tones   (HSTT string path)
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>   ├─ Face Custom Textures Base Path  (FCTP)
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>   └─ Face Skin Tones   (FSTT string path)
+</code></pre></div>
+So the creator UI is <strong>data-driven from the RACE record</strong>: the list of
+sliders ("Face Dials"), the named presets ("Face Morph Phenotypes"), the
+grouped morphs ("Morph Groups"), and the skin-tone palettes are all here.
+There is no separate "genes" record type — what players call the "genes"
+system is this combination of <strong>face dials + morph phenotypes + shape-blend
+morphs + skin-tone AVM subtypes</strong>.</p>
+<h3 id="head-parts-and-bone-modifiers-per-gender">Head Parts and Bone Modifiers (per gender)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Head Parts and Bone Modifiers
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>└─ Male Data / Female Data
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>   ├─ Head Parts    INDX index + HEAD → HDPT   (the default head-part set)
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>   └─ Bone Modifiers  BNAM → BMOD               (runtime bone behaviors — §6)
+</code></pre></div>
+<h3 id="other-race-links">Other race links</h3>
+<ul>
+<li><code>NAM8</code> <strong>Morph Race</strong> → RACE (which race's morphs to borrow)</li>
+<li><code>RNAM</code> <strong>Armor Race</strong> → RACE (which race's armor addons fit)</li>
+<li><code>SRAC</code> <strong>Subgraph Template Race</strong> + <strong>Subgraph Data</strong> (<code>SGNM</code> Behaviour Graph
+  path, <code>SAPT</code> Animation Paths, role/perspective flags) — the Havok behavior
+  wiring, normally inherited from <code>HumanRace</code>.</li>
+<li><code>VTCK</code> Voices, <code>MTNM</code> Movement Type Names, <code>WKMV/SWMV/FLMV/SNMV</code> movement
+  defaults, <code>UNWP</code> Unarmed Weapon.</li>
+</ul>
+<hr />
+<h2 id="2-head-parts-hdpt">2. Head Parts (<code>HDPT</code>)</h2>
+<p>Signature <code>HDPT</code>. <strong>This is the single most important record for a furry race</strong> —
+Starfield added dedicated <strong>Creature</strong> head-part types.</p>
+<h3 id="type-enum-pnam">Type enum (<code>PNAM</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Type</th>
+<th></th>
+<th>#</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Misc</td>
+<td></td>
+<td>10</td>
+<td>Head Rear</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Face</td>
+<td></td>
+<td>11</td>
+<td>Extra Hair</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Right Eye</td>
+<td></td>
+<td>12</td>
+<td>Left Eye</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Hair</td>
+<td></td>
+<td>13</td>
+<td>Eyelashes</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Facial Hair</td>
+<td></td>
+<td>14</td>
+<td><strong>Creature Head</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Scar</td>
+<td></td>
+<td>15</td>
+<td><strong>Creature Torso</strong></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Eyebrows</td>
+<td></td>
+<td>16</td>
+<td><strong>Creature Arms</strong></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Jewelry</td>
+<td></td>
+<td>17</td>
+<td><strong>Creature Legs</strong></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Meatcaps</td>
+<td></td>
+<td>18</td>
+<td><strong>Creature Tail</strong></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Teeth</td>
+<td></td>
+<td>19</td>
+<td><strong>Creature Wings</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Types 14–19 are Bethesda's built-in hooks for non-human morphology. A muzzle/
+snout would most naturally be a <strong>Creature Head</strong> (or a Face + extra part), a
+tail a <strong>Creature Tail</strong>, ears a Head-Rear/Extra part or a Creature part.
+Note the split of eyes into <strong>Right Eye / Left Eye</strong> (vs <code>[Skyrim]</code>/<code>[FO4]</code>
+single "Eyes"), plus new <strong>Meatcaps</strong> (gore stumps), <strong>Head Rear</strong>, <strong>Eyelashes</strong>.</p>
+<h3 id="hdpt-fields">HDPT fields</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DATA Flags</td>
+<td><code>Playable</code>, <code>Male</code>, <code>Female</code>, <code>Is Extra Part</code>, <code>Use Solid Tint</code>, <code>Uses Body Texture</code>, <code>Hide with "HideEar" Morph</code></td>
+</tr>
+<tr>
+<td>Model</td>
+<td><code>.nif</code> path (which points at an external <code>.mesh</code> — §5)</td>
+</tr>
+<tr>
+<td>HNAM Extra Parts</td>
+<td>list of sub-HDPTs pulled in together (e.g. a head that also spawns eyes)</td>
+</tr>
+<tr>
+<td>NAM2 Color Mapping</td>
+<td>AVMS/AVMD color-group name</td>
+</tr>
+<tr>
+<td>NAM3 Mask</td>
+<td>tint mask name</td>
+</tr>
+<tr>
+<td>TNAM Texture Set</td>
+<td>→ <code>TXST</code></td>
+</tr>
+<tr>
+<td>RNAM <strong>Valid Races</strong></td>
+<td>→ <code>FLST</code> (a FormID list of races the part is offered to)</td>
+</tr>
+<tr>
+<td>MNAM <strong>Morph</strong></td>
+<td>→ <code>MRPH</code> (the morphable-object record; <strong>replaces the TRI reference</strong>)</td>
+</tr>
+</tbody>
+</table>
+<p><code>RNAM Valid Races</code> is the mechanism by which a new head part is offered in the
+creator only to your race. The <code>Hide with "HideEar" Morph</code> flag ties a whole
+head part's <strong>visibility</strong> to the <strong>Hide Ear</strong> toggle (biped slot 19), which
+helmets/headgear occupy — so the part vanishes when headgear is worn. Handy for a
+separate horn or ear part that should disappear under a helmet. (Ears <em>integrated
+into the head mesh</em> instead use the head's own <code>HideEar</code> <strong>morph</strong> to collapse the
+ear region — see §3 Expressions.)</p>
+<p><strong>The <code>.nif</code> and the morph.dat are siblings under <code>HDPT</code>, not linked to each
+other.</strong> A head part points at its mesh through <strong>Model</strong> (<code>meshes/…/*.nif</code> → an
+external <code>.mesh</code>) and at its morphs through <strong><code>MNAM</code> → <code>MRPH</code> → <code>TMPP</code>/<code>TCMP</code></strong>
+(<code>meshes/morphs/…/morph.dat</code>). Nothing inside the NIF references the morph file:
+the two live in different trees (<code>meshes/</code> vs <code>meshes/morphs/</code>), their names don't
+correspond, and the only thing that binds them is the shared <code>HDPT</code> record. So a
+tool importing a head NIF <strong>cannot auto-discover its morphs</strong> — the association has
+to come from the record (or be supplied by the user). The Creation Kit's <strong>"tri"
+field</strong> on a head part is this <code>MNAM</code> → <code>MRPH</code> reference (the label is a Skyrim/FO4
+legacy — Starfield morphs are <code>morph.dat</code>, not <code>.tri</code>); it <strong>is</strong> used, and every
+vanilla Face / Eyebrows / Teeth / Eyelashes head part sets it.</p>
+<hr />
+<h2 id="3-morphs-mrph-record-and-morphdat-geometry">3. Morphs — <code>MRPH</code> record and <code>morph.dat</code> geometry</h2>
+<p><code>[Skyrim]</code>/<code>[FO4]</code> used <code>.tri</code> files referenced by a <code>BODYTRI</code>/<code>FaceGen</code>
+<code>NiStringExtraData</code>. <strong>Starfield replaces <code>.tri</code> with a <code>MRPH</code> "Morphable
+Object" record plus external morph-delta files.</strong></p>
+<h3 id="mrph-record-fields"><code>MRPH</code> record fields</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TMPP</code> Target Morph Path</td>
+<td>expression/animation morph file</td>
+</tr>
+<tr>
+<td><code>TCMP</code> Target Chargen Morph Path</td>
+<td>the chargen-slider morph file</td>
+</tr>
+<tr>
+<td><code>BMPP</code> Bone Morph Definition File</td>
+<td>drives <strong>bones</strong> from morph values (skeletal morphs)</td>
+</tr>
+<tr>
+<td><code>MOBC</code> Base Vertex Color</td>
+<td>base color for the morphed mesh</td>
+</tr>
+</tbody>
+</table>
+<p>Key insight: a <code>MRPH</code> separates the <strong>face-animation morphs</strong> (expressions,
+visemes) from the <strong>chargen morphs</strong> (creator sliders), and can additionally
+map morph sliders onto <strong>bone transforms</strong> via the Bone Morph Definition File —
+so a slider can move bones, not just vertices.</p>
+<h3 id="expressions-performance-morphs-verified-from-vanilla-assets">Expressions (performance morphs) — verified from vanilla assets</h3>
+<p>Facial <strong>expressions and lip-sync are blendshape morphs</strong>, stored in a
+<strong>separate <code>performance/</code> <code>morph.dat</code></strong> from the creator sliders. The morph tree
+splits every head part three ways:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>meshes/morphs/human/&lt;sex&gt;/performance/head/morph.dat   ← runtime expressions
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>meshes/morphs/human/&lt;sex&gt;/chargen/head/morph.dat        ← creator sliders
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>meshes/morphs/.../chargen/facefx/morph.dat              ← chargen-time face-FX preview
+</code></pre></div>
+<p>The extracted human female <strong><code>performance/head/morph.dat</code></strong> has <strong>96 shape keys</strong>
+(15370 verts) — textbook <strong>FACS action units</strong>: <code>jawOpen</code>, <code>jawClench</code>,
+<code>jawLeft/Right/Thrust</code>, <code>browLowererL/R</code>, <code>innerBrowRaiseL/R</code>, <code>outerBrowRaiseL/R</code>,
+<code>eyeClosedL/R</code>, <code>eyeOpenL/R</code>, <code>squintL/R</code>, <code>lidTightenerL/R</code>, <code>cheekPuffL/R</code>,
+<code>cheekRaiseL/R</code>, <code>dimplerL/R</code>, <code>lipCornerPullL/R</code>, <code>lipCornerDepressL/R</code>,
+<code>lipStretchL/R</code>, <code>lipPucker</code>, <code>lipPress</code>, <code>upperLipRaiseL/R</code>, <code>lowerLipDepressL/R</code>,
+<code>noseWrinkleL/R</code>, <code>nostrilDilator</code>, <code>chinRaise</code>, <code>neckFlexL/R</code>, <code>swallow</code>,
+<code>HideEar</code>, plus <code>c_</code>-prefixed <strong>combination/corrective</strong> morphs (e.g.
+<code>c_eyeLeft_eyeClosedL</code>, <code>c_squintL_cheekRaiserL</code>) that fire when two action units
+co-activate. These action units double as <strong>visemes</strong> for lip-sync.</p>
+<p>By contrast the <strong><code>chargen/head/morph.dat</code></strong> (84 keys) holds the <em>creator</em>
+morphs. Its structure is exactly <strong>3 body-shape keys + 9 phenotype presets × 9
+face regions</strong> (verified on the vanilla male &amp; female head morph.dat):</p>
+<ul>
+<li><strong>Body shape (3):</strong> <code>Overweight</code>, <code>Thin</code>, <code>Strong</code> (the same three keys as the
+  <code>chargen/body/morph.dat</code>).</li>
+<li><strong>Face presets (81):</strong> <code>&lt;sex&gt;_&lt;ethnicity&gt;_&lt;age&gt;_&lt;Region&gt;</code>.</li>
+<li><strong>9 phenotype presets</strong> = ethnicity <code>af</code>/<code>as</code>/<code>eu</code> × age <code>yo</code>/<code>md</code>/<code>ol</code>
+    (young/mid/old), i.e. <code>af_md1</code>, <code>af_ol1</code>, <code>af_yo1</code>, <code>as_md1</code>, <code>as_ol1</code>,
+    <code>as_yo1</code>, <code>eu_md2</code>, <code>eu_ol1</code>, <code>eu_yo1</code>. (Note the trailing index is a fixed
+    token, not a free axis — <code>eu</code> uses <code>md2</code> where <code>af</code>/<code>as</code> use <code>md1</code>.)</li>
+<li><strong>9 regions</strong> = <code>Cheeks</code>, <code>Chin</code>, <code>Ears</code>, <code>Eyes</code>, <code>Forehead</code>, <code>Jaw</code>, <code>Mouth</code>,
+    <code>Neck</code>, <code>Nose</code>.</li>
+</ul>
+<p>So <code>male_eu_md2_Cheeks</code>, <code>female_af_yo1_Jaw</code>, etc. — each region exposes 9 sliders
+(one per preset), and the creator blends them per region. The two channels are
+entirely distinct sets, referenced by <code>MRPH.TMPP</code> (performance) vs <code>MRPH.TCMP</code>
+(chargen). A specific NPC's face is then built from these: the <code>NPC_</code> record's
+<strong>Face Morphs</strong> array holds <code>FMRI</code> face-morph indices (into this preset set) plus
+per-region <strong>Morph Groups</strong> (<code>FMRG</code> name + <code>FMRS</code> blend intensity), and its <code>MRSV</code>
+<strong>Body Morph Region Values</strong> blend the body-shape keys.</p>
+<p>Each face part (head, eyebrows, eyelashes, teeth…) has its own
+<code>performance/morph.dat</code>, so the whole face animates together. The runtime
+<strong>in-house animation/behavior system</strong> (<code>.agx</code>/<code>.af</code>) drives which action units
+blend for dialogue emotion, idle emotes, and lip-sync. (The <code>_facebones.nif</code> rig
+is a <em>separate</em> mechanism — facial-<strong>region bone</strong> weighting for chargen sculpting;
+expressions themselves are morph-based, not bone-based.)</p>
+<p><strong>Every attached face part carries its own <code>performance/morph.dat</code> holding a
+<em>subset</em> of the same named action units</strong> — not just head/eyebrows/eyelashes/teeth
+but <strong>every individual hairstyle</strong> (and tear meshes, hair beads, etc.). Sizes scale
+to what each part needs: the head has 96 keys, an eyebrow 54, a tear mesh 73, and a
+hair mesh only ~15 (the big <code>jawOpen</code>/<code>jawThrust</code>/<code>neckFlex</code>/<code>browLowerer</code>
+deformations that drag the scalp — no fine lip morphs). When the animation system
+sets an action unit, <strong>every part with that key deforms by its own authored delta</strong>,
+which is how hair/brows/eyelashes stay glued to the moving face. There are <strong>no
+emotion- or phoneme-named morphs</strong> — moods and visemes are both composed from these
+raw action units by the animation system.</p>
+<h4 id="the-full-expression-au-vocabulary-verified-from-vanilla-performanceheadmorphdat">The full expression-AU vocabulary (verified from vanilla <code>performance/head/morph.dat</code>)</h4>
+<p>The complete facial set is <strong>96 action units on the head</strong> (the female head is the
+superset; the male head has 88 — the 8 extra are all <code>c_…</code> combination morphs, no
+male-only keys). These are the names a custom head's <code>performance/morph.dat</code> must
+reproduce to animate/lip-sync. <strong>75 primary AUs</strong>, grouped by region:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Brow    browLowererL/R  innerBrowRaiseL/R  outerBrowRaiseL/R
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Eye     eyeClosedL/R  eyeOpenL/R  eyeUp  eyeDown  eyeLeft  eyeRight
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>        lidTightenerL/R  squintL/R
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>Cheek   cheekPuffL/R  cheekRaiseL/R  cheekSuckL/R  dimplerL/R
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>Nose    noseWrinkleL/R  noseDepressor  nostrilCompressor  nostrilDilator
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>        nasolabialFurrowL/R
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>Jaw     jawOpen  jawClench  jawLeft  jawRight  jawThrust
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>Upper   upperLipRaiseL/R  upperLipDownL/R  upperLipFunnel  upperLipPuff
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a> lip    upperLipSuck  upperLipThickness
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>Lower   lowerLipDepressL/R  lowerLipUpL/R  lowerLipFunnel  lowerLipPuff
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a> lip    lowerLipSuck  lowerLipThickness
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>Lip     lipCornerPullL/R  lipCornerDepressL/R  lipCornerInL/R  lipStretchL/R
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a> shape  lipPucker  lipPress  lipTighten  lipZipperL/R  sharpLipPullL/R
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>Chin    chinRaise  chinRaiseUpperlipTweak
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>Neck    neckFlexL/R  swallow
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>Ear     HideEar          (collapses the ear region for helmet fit — biped slot 19)
+</code></pre></div>
+<p>Plus <strong>21 combination/corrective <code>c_</code> morphs</strong> that fire when two AUs co-activate
+(<code>c_jawdrop</code>, <code>c_eyeDown_eyeClosedL/R</code>, <code>c_eyeUp_eyeClosedL/R</code>, <code>c_eyeLeft_eyeClosedL/R</code>,
+<code>c_eyeRight_eyeClosedL/R</code>, <code>c_eyesClosed50L/R</code>, <code>c_squintL/R_eyesClosedL/R</code>,
+<code>c_squintL/R_cheekRaiserL/R</code>, <code>c_cheekRaiserL_eyesClosedL/R</code>,
+<code>c_innerBrowRaiserL/R_browLowererL/R</code>, <code>c_puckerer_lowerFunneler</code>,
+<code>c_puckerer_upperFunneler</code>).</p>
+<p>Other parts carry a <strong>subset</strong> of the same names plus their own extras: the <strong>tongue</strong>
+adds <code>tongueIn/Out</code>, <code>tongueUp/Down</code>, <code>tongueLeft/Right</code>, <code>tongueCurlUp/Down</code>,
+<code>tongueThick</code>, <code>tongueThinner</code>; <strong>headgear</strong> (hats/masks) carry <code>Hat</code> / <code>Mask</code> hide
+morphs in a performance file. Every hairstyle, eyebrow (54), eyelash (top 65 / bottom 47),
+teeth (29) and tear (73) mesh carries its own subset so it deforms with the face.</p>
+<blockquote>
+<p><strong>Tooling note.</strong> Splitting authored shape keys into the two output files is a name test:
+a shape key whose name is in this AU vocabulary (+ tongue / <code>Hat</code> / <code>Mask</code>) exports to
+<code>…/performance/&lt;part&gt;/morph.dat</code>; everything else is a creator slider and exports to
+<code>…/chargen/&lt;part&gt;/morph.dat</code>.</p>
+<p><strong>Furry-race implications.</strong>
+- A muzzle/snout head that doesn't share human topology <strong>needs its own
+  <code>performance/morph.dat</code> authoring the action units on the new mesh, matched by
+  name</strong>, or the face is frozen in dialogue and won't lip-sync — a substantial
+  per-head rigging cost, and a big reason shipped beast races have static faces.
+- <strong>Animated ears/appendages via expression</strong> (e.g. "sad → droopy ears") work the
+  same way, keyed to <em>action units</em> rather than named emotions: give the ears
+  their own <code>performance/morph.dat</code> (an ear head part, like <code>eyebrow_01</code>) and
+  author ear-pose deltas onto the AUs that compose each mood — droop on
+  <code>innerBrowRaise</code> + <code>lipCornerDepress</code> (sad), pin back on <code>browLowerer</code> (angry),
+  perk on <code>outerBrowRaise</code>/<code>cheekRaise</code> (happy). Key them to the <strong>emotional</strong>
+  AUs (brow/cheek), not the speech AUs (<code>jawOpen</code>/<code>lipPucker</code>/funnelers double as
+  visemes and would twitch the ears during dialogue).
+- <strong>Eyewear is nearly absent in vanilla</strong> — a full ARMO scan finds only <strong>1 eyepatch</strong>
+  (slot 26) and <strong>10 Neuroamps</strong> (slot 18, temple/ear-mounted AR devices); no glasses/
+  goggles exist as face apparel (eye tech lives in helmet visors). So a muzzle race has
+  almost no human-eye-spaced eyewear to conflict with. The one fit to watch is the
+  <strong>Neuroamp</strong> vs. animal <strong>ears</strong> (slot 18 sits at the temple/ear), not the eyes.
+- The head's performance morphs include a <strong><code>HideEar</code></strong> key — the morph that
+  <strong>collapses the ear region when a helmet is equipped</strong> (apparel on biped slot
+  19, <em>Hide Ear</em>, drives it). A furry head with integrated ears/horns just
+  authors its own <code>HideEar</code> delta that tucks them away; because a race is a
+  HumanRace clone, vanilla helmets drive it automatically. This is HideEar working
+  <strong>as designed</strong> (helmet fit) — not a repurposing.</p>
+</blockquote>
+<h3 id="named-facial-expressions-fxpd-dialogue-driven-bundles-of-action-units">Named facial expressions (<code>FXPD</code>) — dialogue-driven bundles of action units</h3>
+<p>The raw performance morphs above are the <em>primitives</em>; the engine composes named,
+higher-level expressions from them via the <strong><code>FXPD</code> "Facial Expression"</strong> record —
+a flat, weighted bundle:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>FXPD: EDID + FULL(display name) + Morphs[] { MNAM = morph name, MWGT = weight 0..1 }
+</code></pre></div>
+<p><code>Starfield.esm</code> ships ~<strong>31</strong> of these (<code>facialExpression_Afraid</code>, <code>_Angry</code>, <code>_Happy</code>,
+<code>_Depressed</code>, <code>_Disgust</code>, <code>_Flirt</code>, <code>_Pain</code>, <code>_Rage</code>, <code>_Shocked</code>, <code>_Smug</code>, <code>_Yawn</code>, …),
+each listing 2–42 of the <strong>same action-unit names as the performance <code>morph.dat</code></strong>.
+For example <code>facialExpression_Afraid</code> = <code>browLowererL 0.638</code>, <code>innerBrowRaiseR 0.853</code>,
+<code>eyeOpenL/R 1.0</code>, <code>jawOpen 0.155</code>, <code>lipCornerDepressL/R ≈0.3</code>, <code>nostrilDilator 0.621</code>,
+<code>neckFlexL/R</code>, … So an expression is just <em>"set these AUs to these weights."</em> This is the
+moddable successor to Skyrim/FO4's engine-internal <code>Mood&lt;Emotion&gt;</code> expression morph — see
+<a href="../../../file-formats/morphs-shapekeys/">Morphs &amp; Shape Keys → How dialogue drives these morphs</a> for the <code>.tri</code>
+ancestry and the 8-emotion enum it replaced.</p>
+<p><strong>How they're triggered (and what is <em>not</em> a link).</strong> No plugin record references an
+<code>FXPD</code> by FormID — DIAL, INFO, and SCEN have <strong>no <code>FXPD</code> field</strong>, and a full dump of
+those groups contains no reference to a <code>facialExpression_*</code> FormID. What dialogue and
+scenes <em>do</em> reference is the <strong>"Anim (Face) Archetype" keyword</strong> — a <code>KYWD</code> named
+<code>AnimFaceArchetype*</code>, carried in a reusable <em>Animation</em> struct (<code>INFO</code> responses, scene
+phases, packages) via its <code>FLMV</code> "Anim Face Archetype" field. Those archetype keywords
+<strong>name-parallel the <code>FXPD</code> set</strong> (<code>AnimFaceArchetypeAngry</code> ↔ <code>facialExpression_Angry</code>,
+<code>…Afraid</code> ↔ <code>…Afraid</code>, <code>…Shocked</code>, <code>…Depressed</code>, <code>…Disgust</code>, <code>…Smirk</code>, …) and were even
+authored in the <strong>same FormID block</strong> (<code>FXPD facialExpression_Afraid [0020D3A0]</code>,
+<code>KYWD AnimFaceArchetypeAngry [0020D3A2]</code>). So the trigger path is <strong>dialogue/scene →
+<code>AnimFaceArchetype</code> keyword → (in-house animation/behavior layer) → the matching <code>FXPD</code>
+morph bundle</strong> — the keyword↔<code>FXPD</code> binding is by <strong>name/convention in the anim system,
+not an editable plugin reference</strong>. (<code>INFO</code> responses additionally carry a per-line
+<em>Emotion</em> keyword + value in <code>TRDA</code>.)</p>
+<blockquote>
+<p><strong>Unconfirmed:</strong> that editing an <code>FXPD</code> actually changes the in-game performance — the
+anim/behavior layer could source an archetype's morphs from the <code>.agx</code> graph rather than
+the <code>FXPD</code> record, in which case <code>FXPD</code> is data the runtime doesn't read. A one-off test
+(add an obvious morph to <code>facialExpression_Angry</code>, trigger an angry line) would settle
+both this and the ignore-unknown-AU assumption below.</p>
+<p><strong>Furry-race implications.</strong>
+- Because an <code>FXPD</code> references morphs <strong>by name</strong>, and every face part only responds
+  to the AU keys <em>its own</em> <code>performance/morph.dat</code> defines, a muzzle head that authors
+  the vanilla AU names (<code>browLowererL</code>, <code>jawOpen</code>, <code>innerBrowRaise</code>, …) is driven by the
+  <strong>vanilla dialogue expressions automatically</strong> — no behavior-graph authoring, no
+  record edits. This is the cheapest path to dialogue-driven emotion on a non-human head.
+- <strong><code>FXPD</code> records are global, not per-race.</strong> There is no race field and dialogue picks
+  the expression, not the actor's race — so you <em>cannot</em> give an anthro wolf a different
+  <code>_Angry</code> mix from a human by adding a race-specific expression alone.
+- <strong>Work-around (unconfirmed, promising):</strong> add <strong>new, species-specific action units</strong>
+  (e.g. <code>canine_ear_angry</code>, <code>canine_ear_happy</code>) to the canine head/ear <code>performance/
+  morph.dat</code>, then add those AU names to the relevant <strong>global</strong> <code>FXPD</code> records at chosen
+  weights. Humans lack those keys in their morph.dat, so the added entries are <strong>silently
+  ignored on humans</strong> (unknown key = no-op) but deform the canine's ears — one shared
+  expression, species-appropriate result, no custom dialogue needed. Costs: it's an edit
+  to base-game global records (a compatibility/"dirty edit" consideration), and the
+  ignore-unknown-AU behavior should be confirmed in-game. A few reusable ear AUs
+  (<code>earPinBack</code>/<code>earDroop</code>/<code>earPerk</code>) spread across the emotion <code>FXPD</code>s is tidier than a
+  bespoke morph per emotion. Authoring <em>brand-new</em> <code>FXPD</code>s instead avoids editing vanilla
+  records but then needs custom dialogue/scenes to trigger them.</p>
+</blockquote>
+<h3 id="the-morph-delta-file-morph-morphdat">The morph-delta file (<code>.morph</code> / <code>morph.dat</code>)</h3>
+<p>Stored under <code>Data/meshes/morphs/…/morph.dat</code> — always named <code>morph.dat</code>, only the folder path varies
+(e.g. <code>meshes/morphs/human/female/chargen/body/morph.dat</code>); <strong>not</strong> hash-named like <code>.mesh</code> files.
+Binary layout <strong>verified</strong> against Outfit Studio's <code>SFMorphFile</code> (little-endian):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>char   magic[4] = &quot;MDAT&quot;
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>uint32 numAxis            // always 3
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>uint32 numVertices
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>uint32 numShapeKeys
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>  per shape key:  uint32 nameLen + name bytes (no null terminator)
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>uint32 numMorphData
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>uint32 numOffsets         // == numVertices
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>morphData[numMorphData]   // 16 bytes each:
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    uint16 offset[3]      //   position delta, half-float, in metric (.mesh) units;
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>                          //     × havokScale (69.969) → game units, as with .mesh positions
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>    uint16 targetVertColor//   target vertex colour, RGB565 (5:6:5). Default gray 0xBDF7 (~0.74)
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>    uint32 normal         //   delta normal,  DEC3N signed (axis = (n&gt;&gt;k &amp; 1023)/511.5 − 1.0)
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>    uint32 tangent        //   delta tangent, DEC3N signed
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>offsets[numOffsets]       // 20 bytes each — sparse per-vertex:
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>    uint32 dataStart      //   start index into morphData
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>    uint32 keyMarker[4]   //   128-bit bitfield → which shape keys touch this vertex (max 128 keys)
+</code></pre></div>
+<p>So a morph is <strong>dense over vertices</strong> (one <code>offsets</code> entry each, <code>numOffsets == numVertices</code>) but
+<strong>sparse over keys</strong>: a vertex stores a run of deltas only for the shape keys whose bit is set in its
+<code>keyMarker</code>, and the set bits (ascending) map 1:1 to that vertex's consecutive <code>morphData</code> records.
+Position deltas share the <code>.mesh</code>'s <code>havokScale</code> factor.</p>
+<blockquote>
+<p><strong>Corrections (verified byte-exact against vanilla + the SGB <code>MorphIO.cpp</code> source, 2026-07-14):</strong>
+the normal/tangent are <strong>DEC3N signed</strong> (earlier notes said UDEC3), and the position half-float is
+stored <strong>metric</strong> and multiplied — not divided — by <code>havokScale</code> to reach game units. A round-trip
+reader/writer reproduces a vanilla <code>morph.dat</code> byte-for-byte with this layout.</p>
+</blockquote>
+<p><strong><code>targetVertColor</code> is an RGB565 per-vertex colour</strong>, <strong>constant per vertex across all of that vertex's
+morph keys</strong> (verified: for <code>chargen/coily_mohawk_f</code>, 0 of 10,011 multi-key vertices differ across
+keys; same for the head). SF vertex colour drives <strong>material masks</strong> (hair/clothing use R/G/B channels —
+<code>HairSettingsComponent.AOVertexColorChannel</code> / <code>DepthOffsetMaskVertexColorChannel</code>;
+<code>AlphaBlenderSettings.VertexColorChannel</code>; chromatic values like magenta <code>(1,0,1)</code>; faces use a
+near-gray baked AO <code>0xBDF7</code>). It's a constant on most morphs — of 1194 vanilla <code>morph.dat</code>, only 49
+carry a non-constant colour. It <strong>correlates with the mesh's own vertex colour</strong> but is not byte-equal
+(on the hair sample R/B match, G differs); the exact relationship is <strong>unresolved</strong>.</p>
+<p>Because it's one value per vertex (not per morph), it maps to a Blender <strong>colour attribute</strong>: import
+writes the per-vertex colours there, export RGB565-encodes them back (gray default if absent) — so a
+morph round-trips from mesh + shape keys + one colour attribute, no per-morph colour authoring. (Whether
+the engine reads these colours at all is unconfirmed; the in-game round-trip settles it, and for faces
+the gray default reproduces the real value, so only hair/fur is at risk.)</p>
+<blockquote>
+<p><strong>Note — the base <code>.mesh</code> DOES carry vertex colours</strong> (the hair sample has 1002 distinct raw colours;
+~22% of sampled SF <code>.mesh</code> use non-black colour/alpha). A current NIF ctypes/wrapper layer read them
+as all-black — a vertex-colour <strong>import bug</strong> to fix, since it silently breaks material rendering
+(alpha especially) on every mesh that uses vertex colour, independent of morphs.</p>
+</blockquote>
+<p>Workflow facts (Starfield Geometry Bridge, Blender):
+- Import the <code>.mesh</code> first, then import the <code>.morph</code> onto the active mesh.
+- Model needs a <strong><code>Basis</code></strong> shape key (base look) plus shape keys named to match
+  the morph keys; <strong>all shape-key values range 0.0–1.0</strong>, relative to Basis. The
+  engine does <strong>not</strong> allow "oversliding" past 1.0.
+- Custom chargen sliders are wired up with a <strong>JSON config</strong> whose <code>"Key"</code> must
+  match the morph name in the <code>.morph</code> file, exposed in the creator via the
+  <strong>CharGenMenu</strong> mod (there is no vanilla UI hook to add brand-new sliders).</p>
+<p>Reference implementations: Outfit Studio <code>SFMorphFile.{h,cpp}</code> (reads <strong>and</strong> writes) and
+StarfieldMeshConverter's <code>MorphIO</code>. Both are self-contained (~250 lines) with no NIF-library
+dependency beyond half-float + DEC3N helpers.</p>
+<hr />
+<h2 id="4-tints-complexions-overlays-the-avm-system-avmdavms">4. Tints, complexions &amp; overlays — the AVM system (<code>AVMD</code>/<code>AVMS</code>)</h2>
+<p>For a furry race, <strong>fur color, stripes, spots, and markings live here</strong>, not in
+the mesh. Starfield replaced the fixed <code>[Skyrim]</code> tint-mask layers with a
+generalized <strong>Additive Visual Material (AVM)</strong> system.</p>
+<h3 id="per-npc-tint-application-npc_-avmd-tints">Per-NPC tint application (<code>NPC_</code> → "AVMD Tints")</h3>
+<p><strong>Tints are applied on the <code>NPC_</code> record, not the <code>RACE</code> record</strong> — the race has
+no tint-layer list. Each NPC carries an <code>EDCT</code> <strong>Tint Count</strong> plus an <strong>AVMD
+Tints</strong> array; each entry is one applied layer:
+| Field | Meaning |
+|---|---|
+| <code>MNAM</code> | → the <code>AVMD</code> record this layer comes from |
+| <code>TNAM</code> Tint Group | which group (e.g. skin, cheeks, "muzzle") |
+| <code>QNAM</code> Tint Name | which option in the group |
+| <code>VNAM</code> Tint Texture | the overlay texture path |
+| <code>NNAM</code> Tint Color | RGBA color |
+| <code>INTV</code> Intensity | 1–128 |</p>
+<p>So the chain that hooks a material's tint overlay to a specific character is
+<strong><code>NPC_</code> "AVMD Tints" → <code>MNAM</code> (<code>AVMD</code> group/option) → <code>VNAM</code> texture / <code>NNAM</code>
+color</strong>, composited over the face material at runtime (for the player, driven by
+the creator; for NPCs, authored on the record and baked by FaceGen — §6). The NPC
+also names its per-slot colors directly as strings (<code>HCOL</code> hair, <code>FHCL</code> facial
+hair, <code>BCOL</code> eyebrow, <code>ECOL</code> eye, <code>JCOL</code> jewelry).</p>
+<p><code>AVMD</code> ("AVMS Data") records define the tint/complexion <strong>groups and options</strong>
+themselves, referenced by the race's <code>Skin Tone AVMS Subtype</code> and the head part's
+<code>Color Mapping</code>. This is a <strong>layered, arbitrarily-stackable</strong> compositing system,
+which is why the community can add new "paint" layers (the pattern used by the
+Felid race — stripe patterns are added as tint groups that <em>replace</em> the
+lipstick option in the creator).</p>
+<p><strong>Three AVM group kinds</strong> (from the CharGen Resources tutorial, article 481):</p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Entry =</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Simple Group</strong> (type 1)</td>
+<td><code>name : texturePath</code></td>
+<td>a texture option (skin tone, eye/teeth/hair texture, a face overlay)</td>
+</tr>
+<tr>
+<td><strong>Complex Group</strong> (type 2)</td>
+<td><code>name : SimpleGroupName</code></td>
+<td>exposes a simple group for a head part's <strong>color mapping</strong> (e.g. hair/eyebrow color)</td>
+</tr>
+<tr>
+<td><strong>Modulation Group</strong> (type 3)</td>
+<td><code>name : R:G:B:A</code></td>
+<td>a solid <strong>color</strong> option (e.g. jewelry/lipstick color)</td>
+</tr>
+</tbody>
+</table>
+<p>Face overlays (complexion, dermaesthetic, scars, tattoos, lipstick, eyeshadow,
+cheeks, accents…) are Simple Groups whose textures live under
+<code>textures/actors/human/faces/chargen/postblenddetails/&lt;category&gt;/</code> and apply <strong>only
+to the "Face" head part</strong>. <strong>For a furry race, fur markings/stripes are authored
+here</strong> — as a Face-overlay Simple Group (this is exactly how Felid does stripes via
+the lipstick-accent slot).</p>
+<p>Concrete vanilla AVMD groups a race mod extends (FormIDs from article 431):
+<code>ComplexGroup_HairColor [AVMD:000ECD2E]</code>, <code>ComplexGroup_FacialHairColor [000ECD30]</code>,
+<code>ComplexGroup_EyebrowColor [000ECD2D]</code>, <code>SimpleGroup_EyebrowOpacity [0000EF9F]</code>
+(required, else eyebrows render transparent), <code>SimpleGroup_EyeColor [000377DC]</code>,
+<code>SimpleGroup_TeethCustomization [0006160A]</code>. Skin tones use a <strong>0-based index</strong> (the
+option <em>name</em> doesn't matter); the race's <code>Chargen and Skintones</code> body/hands skin-tone
+must match the AVM group's <code>YNAM</code>. New chargen options can be added either directly in
+xEdit or via the config-driven <strong>RTFP</strong> patcher (<code>[AVMData]</code>/<code>[FormList]</code> <code>add_entr</code>
+directives, <code>minver=115</code>) — the approach the CharGen Resources resource ships.</p>
+<p>Body shape is also stored per-NPC as <strong><code>MRSV</code> Body Morph Region Values</strong>:
+five floats — <strong>Head / Upper Torso / Arms / Lower Torso / Legs</strong> — the runtime
+expression of the body triangle.</p>
+<hr />
+<h2 id="5-the-body-head-mesh-mesh-files-and-bsgeometry">5. The body &amp; head mesh — <code>.mesh</code> files and <code>BSGeometry</code></h2>
+<p><strong>The biggest structural change from <code>[FO4]</code>/<code>[Skyrim]</code>: geometry is no longer
+stored inside the <code>.nif</code>.</strong></p>
+<ul>
+<li>The NIF holds a <strong><code>BSGeometry</code></strong> block (replacing <code>BSTriShape</code> /
+  <code>BSDynamicTriShape</code>). <code>BSGeometry</code> references one or more external
+  <strong><code>.mesh</code></strong> files, one per LOD.</li>
+<li><code>.mesh</code> files live at <code>Data/geometries/&lt;hex1&gt;/&lt;hex2&gt;.mesh</code>. Vanilla names are
+  40 hex chars (split 20/20) that <em>look</em> like a digest, but the name is <strong>not a
+  computed/enforced hash</strong> (nifly/OS write arbitrary names; the game doesn't
+  verify), so human-readable replacement names work. See
+  <a href="../meshes/">meshes.md</a> for the full <code>.mesh</code> byte layout.</li>
+<li>Inside a <code>.mesh</code> (<code>BSGeometryMeshData</code> in nifly): 32-bit vertex count
+  (practical cap <strong>65535</strong> verts per the tooling), triangles, <strong>UDEC3-packed</strong>
+  normals &amp; tangents, vertex colors, UV1/UV2, per-vertex <strong>skin weights</strong>
+  (<code>nWeightsPerVert</code>), <strong>LODs</strong>, <strong>meshlets</strong> (vertOffset/primOffset — the
+  mesh-shader clustering), and <strong>cull data</strong>. Positions are <strong>normalized to
+  metric units</strong> (nifly applies a <code>havokScale ≈ 69.969</code> to match old-game sizes).</li>
+<li><strong>Skinning/bone data stays in the NIF</strong>, not the <code>.mesh</code> (verified against a
+  real body NIF): the bone-name list is in a <strong><code>SkinAttach</code></strong> block (string names
+  — 38 for the vanilla body); per-bone bind transforms/bounding spheres are in
+  <strong><code>BSSkin::BoneData</code></strong>, with <strong><code>BSSkin::Instance</code></strong> as the skin instance. The
+  <code>.mesh</code> carries only per-vertex <code>{boneIndex, weight}</code> pairs indexing that name
+  list. Note the vanilla body uses <strong>6 weights per vertex</strong> (Starfield lifts the
+  old 4-bone cap).</li>
+</ul>
+<p><strong>Practical gotcha:</strong> the community reports "internal geometry" (embedding mesh
+data in the NIF rather than an external <code>.mesh</code>) <strong>causes issues with head
+parts</strong> — head parts should reference external <code>.mesh</code> files.</p>
+<h3 id="body-layout">Body layout</h3>
+<p>The body is delivered by the race's <code>WNAM</code> Skin <code>ARMO</code> and its armor addons, cut
+into biped slots (§7). Community body replacers (e.g. the SFF female body) show
+the division as separate meshes for <strong>body, hands, feet, first-person body/hands,
+head</strong>, each skinned to the shared skeleton, each with its own <code>.mesh</code>, morphs,
+UVs, and skin-tone textures (<code>sk6/sk7/sk8</code> texture variants seen in the wild).
+Head and body are <strong>separate meshes joined at the neck</strong> — the neck seam and
+matching skin-tone/tint at the seam is a classic failure point.</p>
+<p>Tools: <strong>NifSkope (fo76utils fork)</strong> for Starfield NIFs; <strong>Starfield Geometry
+Bridge</strong> / <strong>StarfieldMeshConverter</strong> (Blender) for <code>.mesh</code> and <code>.morph</code> I/O.
+<code>[PyNifly]</code> — nifly's <code>BSGeometry</code> support is the C++ basis for reading these.</p>
+<hr />
+<h2 id="6-skeleton-and-adding-a-tail-ears-digitigrade-legs">6. Skeleton, and adding a tail / ears / digitigrade legs</h2>
+<h3 id="the-skeleton">The skeleton</h3>
+<p>Still a <strong>NIF-based</strong> <code>skeleton.nif</code> referenced by <code>RACE → Skeleton Data →
+ANAM Skeletal Model</code>. Bone naming uses a <strong><code>C_</code> (center) / <code>L_</code> / <code>R_</code></strong> prefix
+convention with a <code>Root</code> and <code>COM</code> (centre-of-mass) at the top, then <code>C_Hips</code>,
+spine, neck, head, and limb chains. (Contrast <code>[Skyrim]</code> <code>NPC Root [Root]</code> /
+<code>NPC COM [COM]</code> and <code>[FO4]</code> <code>Root</code>/<code>COM</code>/<code>Pelvis</code> — same idea, new names.)</p>
+<p><strong>Verified</strong> against the extracted vanilla <code>meshes/actors/human/characterassets/skeleton.nif</code>
+(Gamebryo 20.2.0.7, BSVersion 173): <strong>116 <code>NiNode</code> blocks</strong>. The community <code>HumanRace.json</code>'s
+"92 bones" counts only the <strong>deform</strong> bones and omits the ~24 helper nodes present in the file
+(cameras, <code>AnimObject*</code>, IK/target helpers, physics nodes). The full ordered list, grouped:</p>
+<ul>
+<li><strong>Roots/helpers:</strong> <code>HumanExportRoot, Root, COM, CamTargetParent, CameraTarget, Camera Control, Camera Control FP, Camera, AnimObjectA–D, Eye_Target, DirectAt, WEAPON, WeaponLeft, R_HandIk, L_HandIk, CharacterBumper, CharacterController</code> (+ one unnamed helper node).</li>
+<li><strong>Spine/head:</strong> <code>C_Hips, C_Spine, C_Spine1, C_Spine2, C_Chest, C_Neck, C_Neck1, C_Neck_Twist, C_Head, L_Eye, R_Eye</code>.</li>
+<li><strong>Legs (mirrored L_/R_):</strong> <code>Thigh, Calf, Foot, Toe, CalfMass, Knee, Thigh_Twist, Thigh_Twist1, Butt</code>.</li>
+<li><strong>Arms (mirrored):</strong> <code>Clavicle, Biceps, Forearm, Wrist, Arm, Deltoid, Elbow, ArmMass, Biceps_Twist, Biceps_Twist1, Wrist_Twist, Wrist_Twist1, Wrist_Twist2, AnimObject1–3</code>.</li>
+<li><strong>Hands (mirrored):</strong> <code>Cup, Thumb/1/2, Index/1/2, Middle/1/2, Ring/1/2, Pinky/1/2</code>.</li>
+<li><strong>Misc:</strong> <code>C_BackPack, C_BackPackHose</code>.</li>
+</ul>
+<p>Convention confirmed: <code>C_</code> = centerline, <code>L_</code>/<code>R_</code> = mirrored, suffixes <code>_Twist[N]</code> / <code>…Mass</code> / <code>…Ik</code>.
+The skinned body NIF weights to a <strong>38-bone subset</strong> of these (via <code>SkinAttach</code>, see §5). The community
+<strong>SF Extended Skeleton</strong> mod adds extra bones (tail, ears, breast, belly, genitalia…) on top of this
+base and is the de-facto dependency for body mods that need new bones.</p>
+<h3 id="two-ways-to-add-animated-appendages">Two ways to add animated appendages</h3>
+<p><strong>(a) Bone Modifiers (<code>BMOD</code>) — the Starfield-native, no-behavior-graph path.</strong>
+A race lists <code>BMOD</code> records under <strong>Head Parts and Bone Modifiers → Bone
+Modifiers</strong>. Each <code>BMOD</code> has a <code>DATA</code> struct:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Type    : LookAtChain | MorphDriver | PoseDeformer | SpringBone
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Driver  : source bone/node
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Target  : bone to modify
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Max Anim Distance
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>+ type-dependent data
+</code></pre></div>
+- <strong>SpringBone</strong> — jiggle/physics chain (Strength, Damp, Scale, MaxDist,
+  <code>Look At Parent</code>). <strong>This is how a tail or ears can be made to swing at runtime
+  without authoring a Havok behavior graph.</strong>
+- <strong>LookAtChain</strong> — chain that aims at a target (ears tracking, tail follow).
+- <strong>PoseDeformer</strong> — corrective pose-driven deformation (position/angle/scale +
+  falloff radius + axis).
+- <strong>MorphDriver</strong> — drives a morph from bone motion (vector + falloff radius).</p>
+<p>Because BMODs attach at the RACE level, a furry race can — <em>in principle</em> — add a
+physics tail and mobile ears by (1) adding the bones to <code>skeleton.nif</code>, (2)
+skinning the tail/ear <code>.mesh</code> to those bones, and (3) adding <code>SpringBone</code>/
+<code>LookAtChain</code> BMODs — <strong>all in data</strong>, no behavior-graph compile step. That would
+be the single biggest practical advantage Starfield has over <code>[Skyrim]</code>/<code>[FO4]</code>
+for appendages (which needed XPMSSE + HDT/CBP or custom behavior work).</p>
+<p><strong>Conflicting evidence — verify before relying on this.</strong> The BMOD <code>SpringBone</code>
+mechanism is confirmed to <em>exist</em> in the RACE record definition, but the shipped
+community appendages tell a more cautious story: the <strong>Felid</strong> race's tail is
+driven by <strong>Havok cloth physics</strong> (a low-poly sim mesh weighted to the tail bones,
+baked with <code>BSClothExtraData</code> via the Havok Content Tools), and is widely reported
+as "wonky." Separately, the <strong>SF Extended Skeleton</strong> documentation states its
+added bones "do not have their own collisions" and are intended for cloth physics,
+and one modder resource states plainly that "additional bones cannot be controlled"
+by the game. It is <strong>not yet confirmed</strong> that any shipped mod drives custom
+appendages through vanilla <code>BMOD SpringBone</code> rather than the cloth route. Treat
+"tail/ears via BMOD" as a <strong>promising but unproven</strong> path and settle it with a
+throwaway in-engine test early — the fallback is Havok cloth (proven, imperfect).</p>
+<p><strong>(b) Full behavior graph.</strong> For <em>animated</em> (keyframed, gameplay-reactive)
+appendages you still need the Havok behavior graph (<code>RACE → Subgraph Data →
+SGNM Behaviour Graph</code> + animation paths). There is <strong>no public Starfield behavior
+graph editor</strong> (hkbProject authoring), so extending the behavior graph is a hard
+blocker — most non-human mods <strong>reuse <code>HumanRace</code>'s graph</strong> and rely on BMODs +
+new geometry rather than new locomotion.</p>
+<h3 id="digitigrade-legs">Digitigrade legs</h3>
+<p>Digitigrade legs are the <strong>hard</strong> case: they change the leg bone chain and its
+proportions, which breaks every locomotion animation retargeted for plantigrade
+legs. Options are (i) keep the human leg skeleton and fake digitigrade with mesh
+weighting only (limited), or (ii) add real digitigrade bones and <strong>retarget/redo
+locomotion</strong> — blocked by the behavior-graph tooling gap. <strong>Unverified</strong> that any
+Starfield mod has shipped true digitigrade locomotion.</p>
+<hr />
+<h2 id="7-biped-slots-the-64-slot-layout">7. Biped slots (the 64-slot layout)</h2>
+<p>Starfield uses <strong>64</strong> biped-object slots (indices), split into normal and
+<strong>spacesuit ("SS")</strong> duplicates. Selected slots:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Slot</th>
+<th></th>
+<th>#</th>
+<th>Slot</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Hide Hair</td>
+<td></td>
+<td>17</td>
+<td>Beard</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Morph Hair</td>
+<td></td>
+<td>18</td>
+<td>Neuroamp</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Hide Head</td>
+<td></td>
+<td>19</td>
+<td><strong>Hide Ear</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>BODY</td>
+<td></td>
+<td>20</td>
+<td>AddonRig</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Hat</td>
+<td></td>
+<td>26</td>
+<td>Eyepatch</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Backpack</td>
+<td></td>
+<td>27</td>
+<td>Morph Beard</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Gloves</td>
+<td></td>
+<td>29</td>
+<td>Shield</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Lower Body (Vis Only)</td>
+<td></td>
+<td>30</td>
+<td>BoostPackFX</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Sleeves (Vis Only)</td>
+<td></td>
+<td>32</td>
+<td>SS Hide Hair</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Head (Vis Only)</td>
+<td></td>
+<td>34</td>
+<td>SS Hide Head</td>
+</tr>
+<tr>
+<td>10–15</td>
+<td>Upper Body / Misc (Vis Only)</td>
+<td></td>
+<td>35</td>
+<td>SS BODY</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Eyes</td>
+<td></td>
+<td>36–49</td>
+<td>SS Helmet…Beard</td>
+</tr>
+</tbody>
+</table>
+<p><code>Hide Hair</code> / <code>Hide Head</code> / <code>Hide Ear</code> are toggle slots that let clothing hide
+character parts; <code>Morph Hair</code> / <code>Morph Beard</code> reshape hair to fit helmets. The
+<code>SS</code> block mirrors the whole set for spacesuits, so a race must consider both
+regular and spacesuit rendering.</p>
+<hr />
+<h2 id="8-facegen-baking-npc-faces">8. FaceGen (baking NPC faces)</h2>
+<p><code>[Skyrim]</code>/<code>[FO4]</code> bake a per-NPC head into
+<code>meshes/actors/character/facegendata/facegeom/&lt;Plugin&gt;/&lt;FormID&gt;.nif</code> plus a
+face-tint <code>.dds</code>. Starfield keeps the concept: the Creation Kit bakes each NPC's
+head part + morph-dial values + tint layers into a per-NPC head mesh and tint
+texture written under <code>Data/…</code> (loose, then archived).</p>
+<ul>
+<li><strong>Verified:</strong> the CK regenerates faces per-NPC (community "Regenerating Faces"
+  guides exist); a <strong>NPCs Face Data</strong> Synthesis patcher fixes missing masters so
+  the CK loads the right resources; and failed/mismatched facegen produces the
+  classic <strong>dark-face / neck-seam skin-tone mismatch</strong> and floating eyes/teeth.</li>
+<li><strong>Unverified:</strong> the exact Starfield facegen output subpaths and file naming —
+  the community docs describe the workflow but I did not confirm the literal
+  <code>facegendata/…</code> path for Starfield. Treat as "same idea as FO4, path TBD."</li>
+</ul>
+<p>Implication for a furry race's NPCs: every NPC of the race must be baked in the
+CK with the race's head parts, morphs, and fur tints — a bulk, error-prone step.
+This is exactly the pain point that dedicated facegen tooling (writing the baked
+<code>.nif</code>/<code>.dds</code> directly instead of Ctrl+F4-ing in the CK) aims to eliminate.</p>
+<hr />
+<h2 id="9-what-the-community-has-actually-achieved">9. What the community has actually achieved</h2>
+<ul>
+<li><strong>Felid Race</strong> (Starfield Nexus 17160): playable cat-people (tiger/jaguar/
+  leopard/cougar). Implemented by <strong>customizing the human race</strong> — new head-part
+  meshes + tint groups (stripe patterns occupy the "lipstick" tint slot),
+  vanilla-clothing compatible. Not a from-scratch race. Its tail is driven by
+  <strong>Havok cloth physics</strong> (not BMOD/animation) and is reported as "wonky" — the
+  reference point for the appendage-motion question in §6.</li>
+<li><strong>CP's Menagerie</strong> (7783): WIP "add fur" project; first release a wolf-like
+  mammal.</li>
+<li><strong>SesamePaste "wolf race"</strong> (author of StarfieldMeshConverter): early, buggy,
+  requires manual fixup — a proof of concept.</li>
+<li><strong>SFF Body Replacer</strong>: full female body replacer showing the body-mesh +
+  morph + extended-skeleton pipeline; depends on <strong>SF Extended Skeleton</strong> and
+  <strong>CharGenMenu</strong>.</li>
+<li><strong>CharGenMenu</strong>: in-game framework (SFSE) to expose custom sliders/morphs.</li>
+<li><strong>StarUI-style / body-slider mods</strong>: extend the creator's body sliders.</li>
+</ul>
+<p><strong>Consensus takeaway:</strong> a <em>truly new</em> playable race (own RACE record, own
+skeleton, own behavior graph) is <strong>not a solved problem</strong>. Every shipped
+"anthro/beast" result is a <strong>skinned reworking of <code>HumanRace</code></strong> — new head parts
+(using the Creature-* types), new tint groups, new body/head <code>.mesh</code> + <code>.morph</code>,
+BMOD-driven appendages, reusing the human skeleton and behavior graph.</p>
+<hr />
+<h2 id="10-practical-path-building-a-custom-anthro-race">10. Practical path — building a custom anthro race</h2>
+<p>A realistic ordering, easiest→hardest, with blockers flagged:</p>
+<ol>
+<li><strong>Start by cloning <code>HumanRace</code></strong> (or overriding it), not authoring a new
+   skeleton/behavior graph. You inherit locomotion, facegen wiring, and biped
+   slots for free.</li>
+<li><strong>Body &amp; head meshes.</strong> Model the anthro body/head in Blender; export each
+   part to <code>.mesh</code> via Starfield Geometry Bridge. Keep ≤65535 verts, UV-unwrapped,
+   manifold. Skin to the (human or extended) skeleton — bone list stored in the
+   NIF's SkinAttach.</li>
+<li><strong>Morphs.</strong> Author a <code>Basis</code> + chargen shape keys (0–1) per mesh; export
+   <code>.morph</code>. Create <code>MRPH</code> records; point head parts' <code>MNAM</code> at them. Add
+   expression/viseme morphs too (or the face is static).</li>
+<li><strong>Head parts.</strong> Create <code>HDPT</code> records using <strong>Creature Head / Creature Tail /
+   Creature Wings</strong> etc. Set <code>RNAM Valid Races</code> to your race's <code>FLST</code> so parts
+   appear only for your race. Wire default parts into <code>RACE → Head Parts</code>.</li>
+<li><strong>Fur / markings.</strong> Build <code>AVMD</code> tint groups (stripes, spots, muzzle mask,
+   belly) and skin-tone AVMS subtypes; reference them from <code>RACE → Chargen and
+   Skintones</code> and head parts' <code>Color Mapping</code>. Layers stack, so fur patterns are
+   additive overlays — no hard limit like the old 4-layer tint system.</li>
+<li><strong>Creator sliders.</strong> Expose custom sliders via <strong>CharGenMenu</strong> + JSON whose
+   keys match your <code>.morph</code> keys. Define <strong>Face Dials</strong> and <strong>Face Morph
+   Phenotypes</strong> in the RACE record for presets.</li>
+<li><strong>Tail / ears (animated).</strong> Add bones to <code>skeleton.nif</code>; skin the tail/ear
+   <code>.mesh</code> to them; add <strong><code>BMOD</code> SpringBone / LookAtChain</strong> modifiers to
+   <code>RACE → Bone Modifiers</code>. No behavior-graph work needed for physics-swing.</li>
+<li><strong>FaceGen bake.</strong> Bake every NPC of the race in the CK; verify neck-seam
+   skin-tone match and no floating eyes/teeth. Consider a direct facegen writer
+   to avoid mass Ctrl+F4.</li>
+</ol>
+<h3 id="finishing-fixes-gotchas-verified-article-431">Finishing fixes &amp; gotchas (verified, article 431)</h3>
+<p>Concrete FormIDs/steps that trip up first-time race authors:</p>
+<ul>
+<li><strong>Verify a headpart:</strong> make an NPC of the race, add it to <code>CharGenPresets [FLST:0003F551]</code>, then in-game <code>slm 14</code> and pick the last preset.</li>
+<li><strong>Chargen visibility:</strong> append head parts to <code>HeadPartsChargenOptionsMale [FLST:0003D9AF]</code> / <code>Female [FLST:0003D9B0]</code> (entry = HDPT FormID minus its first three load-order digits). Eye Color needs <strong>both</strong> a left- and right-eye head part.</li>
+<li><strong>Spacesuit not showing:</strong> add your race to <code>HumanRaceORChildRaceORHumanCorpseRace [CNDF:0003D8C1]</code>.</li>
+<li><strong>Dialogue camera too close:</strong> add your race to <code>DC_Race_Human [CPTH:000C1056]</code>.</li>
+<li><strong>Invisible limbs in new-game chargen:</strong> give <code>Clothes_GenWare_01 "Space Undersuit" [ARMO:00165722]</code> a skin ARMA / remodel it to your naked-skin model.</li>
+<li><strong>Become the race:</strong> set the <strong>Player</strong> record (<code>NPC_</code> FormID <strong>7</strong>) to your race; there are <strong>12</strong> player copies to change.</li>
+<li><strong>Toggle-able:</strong> split the player overrides into a separate <code>.esm</code> so disabling it keeps the race available for NPC mods but reverts the player.</li>
+<li>Quirks: <strong>females have no facial hair</strong> (the <code>beard</code> slot / <code>fhclr</code> don't work on female); the <strong>first</strong> eyebrow in a list ignores its assigned texture (engine bug).</li>
+</ul>
+<h3 id="hard-blockers-honest-assessment">Hard blockers (honest assessment)</h3>
+<ul>
+<li><strong>Behavior graph.</strong> No public Starfield behavior-graph editor → no new
+  locomotion → <strong>digitigrade legs and novel gaits are effectively blocked</strong>;
+  reuse human legs.</li>
+<li><strong>Format maturity.</strong> <code>.mesh</code>/<code>.morph</code> are reverse-engineered, not documented
+  by Bethesda; tooling (SGB/StarfieldMeshConverter/nifly) is the source of truth
+  and can lag engine updates.</li>
+<li><strong>FaceGen scale.</strong> Baking many NPCs is slow and fragile (dark-face bug).</li>
+<li><strong>Creator UI.</strong> Radically non-human morphology stresses a UI/morph system
+  designed around a human face; sliders assume human topology.</li>
+<li><strong>True new RACE.</strong> Own skeleton + behavior graph + genome integration is
+  unproven; the safe route is a <code>HumanRace</code> variant.</li>
+</ul>
+<hr />
+<h2 id="what-a-custom-anthro-race-requires-checklist">What a custom anthro race requires — checklist</h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>RACE record</strong> — clone of <code>HumanRace</code>; set <code>Skeleton Data</code> (ANAM/NAM5/
+      NAM6/DNAM), <code>WNAM</code> Skin ARMO, <code>GNAM</code> Body Part Data, FaceGen clamps.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>skeleton.nif</strong> — human skeleton (or SF Extended Skeleton) <strong>+ tail/ear
+      bones</strong> if animated appendages.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Body/head/hands/feet <code>.mesh</code> files</strong> — anthro geometry, skinned; NIFs
+      with <code>BSGeometry</code> + <code>SkinAttach</code>; both normal and <strong>SS (spacesuit)</strong> slots
+      considered.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong><code>.morph</code> files + <code>MRPH</code> records</strong> — chargen morphs (creator sliders),
+      expression/viseme morphs, optional bone-morph definition.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong><code>HDPT</code> records</strong> using <strong>Creature Head / Tail / Wings / Arms / Legs</strong>
+      types — muzzle/snout, ears, tail; <code>RNAM Valid Races</code> = your race FLST;
+      <code>MNAM</code> → MRPH.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong><code>AVMD</code>/AVMS tint groups</strong> — fur color, stripes/spots/markings, muzzle
+      mask; skin-tone subtypes; referenced by RACE Chargen and head-part Color
+      Mapping.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong><code>BMOD</code> Bone Modifiers</strong> — SpringBone (tail/ear jiggle), LookAtChain
+      (ear tracking); attached to <code>RACE → Bone Modifiers</code>.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Chargen wiring</strong> — Face Dials + Face Morph Phenotypes in RACE; custom
+      sliders exposed via <strong>CharGenMenu</strong> + JSON config.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Body Part Data (<code>BPTD</code>)</strong> — dismemberment regions if changing anatomy.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Skin/texture sets (<code>TXST</code>)</strong> — fur diffuse/normal/specular; face custom
+      textures base path.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>FaceGen bake</strong> for every NPC of the race (CK), or a direct facegen
+      writer.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Dependencies for players</strong> — SFSE, CharGenMenu, likely SF Extended
+      Skeleton.</li>
+</ul>
+<hr />
+<h2 id="open-questions-uncertainties">Open questions / uncertainties</h2>
+<ol>
+<li>~~Exact <code>morph.dat</code> binary layout~~ — <strong>RESOLVED</strong> (verified byte-exact against
+   vanilla + Outfit Studio <code>SFMorphFile</code> / StarfieldMeshConverter <code>MorphIO.cpp</code>;
+   corrected the color/normal encodings, see §3).</li>
+<li>~~How a material's tint layers hook to a specific character~~ — <strong>RESOLVED</strong>:
+   they don't sit on the <code>RACE</code>; each <code>NPC_</code> lists its own <strong>AVMD Tints</strong>
+   (<code>MNAM</code> → <code>AVMD</code> group/option → texture/color), see §4.</li>
+<li>~~Vanilla skeleton bone list~~ — <strong>RESOLVED</strong> (116 NiNodes extracted from
+   <code>skeleton.nif</code>, see §6).</li>
+<li><strong>Starfield facegen output paths</strong> — workflow confirmed, literal
+   <code>facegendata/…</code> path not verified for Starfield.</li>
+<li><strong>BMOD limits</strong> — how many SpringBone chains the engine handles gracefully,
+   and whether ear LookAtChain works on first-person, is untested here.</li>
+<li><strong>Can a genuinely new RACE (non-<code>HumanRace</code>-parented) enter the creator?</strong> No
+   confirmed example; all anthro results are HumanRace variants.</li>
+<li><strong>Digitigrade locomotion</strong> — no confirmed shipped example; behavior-graph gap
+   is the suspected blocker.</li>
+</ol>
+<hr />
+<h2 id="sources">Sources</h2>
+<ul>
+<li>SF1Edit (xEdit) Starfield record definitions <code>wbDefinitionsSF1.pas</code> (RACE, HDPT,
+  MRPH, BMOD, AVMD, NPC_, biped-object enum) — local dev tree, cross-checked vs
+  <code>Starfield.esm</code>.</li>
+<li>nifly <code>include/Geometry.hpp</code> — <code>BSGeometry</code>, <code>BSGeometryMesh</code>,
+  <code>BSGeometryMeshData</code> (mesh/morph/skin structure, meshlets, havokScale).</li>
+<li>StarfieldMeshConverter <code>src/MorphIO.cpp</code> / <code>include/MorphIO.h</code> (SesamePaste233) —
+  authoritative <code>morph.dat</code> read/write; layout + DEC3N/half-float helpers verified
+  byte-exact against vanilla <code>chargen</code>/<code>performance</code> morph.dat, 2026-07-14.</li>
+<li>Organization of Starfield's Meshes and Related Assets — https://www.nexusmods.com/starfield/articles/268 (mirror: https://allmods.net/starfield-mods/starfield-miscellaneous/organization-of-starfields-meshes-and-related-assets/)</li>
+<li>"Notes and pitfalls on creating a playable race" (ExoWarlock313), the primary race-build walkthrough — https://www.nexusmods.com/starfield/articles/431</li>
+<li>CharGen Resources Tutorial (AVM group catalog + RTFP config syntax) — https://www.nexusmods.com/starfield/articles/481</li>
+<li>Starfield Geometry Bridge (Blender) — https://www.nexusmods.com/starfield/mods/4360 ; docs https://starfieldgeometrybridge.github.io/ ; mesh tips https://starfieldgeometrybridge.github.io/docs/tips/mesh/ ; nif tips https://starfieldgeometrybridge.github.io/docs/tips/nif/</li>
+<li>StarfieldMeshConverter (SesamePaste233) — https://github.com/SesamePaste233/StarfieldMeshConverter</li>
+<li>SF Extended Skeleton — https://www.nexusmods.com/starfield/mods/16905</li>
+<li>Native Animation Framework SF (NAFSF) — https://www.nexusmods.com/starfield/mods/7360</li>
+<li>CharGenMenu — https://www.nexusmods.com/starfield/mods/6850</li>
+<li>SFF Body Replacer — https://allmods.net/starfield-mods/starfield-characters/sff-body-replacer-v1-0/</li>
+<li>Felid Race — https://www.nexusmods.com/starfield/mods/17160</li>
+<li>CP's Menagerie — https://www.nexusmods.com/starfield/mods/7783</li>
+<li>Character Creation overview — https://starfield.wiki.fextralife.com/Character_Creation ; https://www.starfielddb.com/character-creation/ ; https://www.pcgamesn.com/starfield/character-creation</li>
+<li>Generating/Regenerating FaceGen — https://forums.nexusmods.com/topic/13526765-generating-facegen-data/ ; https://github.com/The-Animonculory/Modding-Resources</li>
+<li>NifSkope (fo76utils fork) for Starfield — https://www.nexusmods.com/starfield/mods/10748</li>
+<li>Companion Library pages: <code>morphs-shapekeys.md</code>, <code>dismemberment.md</code> (TRI/BPTD ancestry).</li>
+</ul>
+<p><em>Draft 2026-07-06 — not yet reviewed</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

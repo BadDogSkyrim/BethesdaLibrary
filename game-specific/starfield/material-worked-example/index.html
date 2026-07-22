@@ -1,0 +1,2229 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Comprehensive reference for Skyrim, Fallout 4, and Starfield modding with PyNifly and esplib">
+      
+      
+        <meta name="author" content="Hugh Russel">
+      
+      
+      
+        <link rel="prev" href="../materials/">
+      
+      
+        <link rel="next" href="../cdb-format/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>↳ .mat worked example - Bethesda Modding Library</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#starfield-mat-annotated-worked-example-a-real-2-layer-skin-material" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Bethesda Modding Library" class="md-header__button md-logo" aria-label="Bethesda Modding Library" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Bethesda Modding Library
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+                ↳ .mat worked example
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../file-formats/overview/" class="md-tabs__link">
+          
+  
+  
+  File Formats
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../skyrim/overview/" class="md-tabs__link">
+          
+  
+  
+  Game-Specific
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../tools/pynifly/overview/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../reference/partition-names/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../CONVENTIONS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Conventions
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Bethesda Modding Library" class="md-nav__button md-logo" aria-label="Bethesda Modding Library" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Bethesda Modding Library
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    File Formats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins (ESP/ESM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/nif-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NIF Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/nif-animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NIF Animations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Animations (HKX)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/physics-collision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Physics & Collision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/morphs-shapekeys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Morphs & Shape Keys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/textures-materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Textures & Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/archives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archives (BSA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/scripts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scripts (PEX)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game-Specific
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game-Specific
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skyrim
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Skyrim
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../skyrim/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fallout 4
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Fallout 4
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fallout4/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fallout4/connect-points/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connect Points
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fallout4/dismemberment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dismemberment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Starfield
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Starfield
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meshes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meshes (NIF + .mesh)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Materials & Textures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+      ↳ .mat worked example
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+      ↳ .mat worked example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-shape-of-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The shape of it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#object-0-the-root-layeredmaterial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object 0 — the root LayeredMaterial
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#object-1-blender1-how-the-two-layers-combine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object 1 — Blender1 (how the two layers combine)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#objects-2-3-the-two-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objects 2 &amp; 3 — the two Layers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#objects-4-6-the-two-materials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objects 4 &amp; 6 — the two Materials
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#objects-5-7-the-two-uv-streams" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objects 5 &amp; 7 — the two UV Streams
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#objects-8-9-the-two-texture-sets-where-the-actual-images-live" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objects 8 &amp; 9 — the two Texture Sets (where the actual images live)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-to-take-away" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What to take away
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cdb-format/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+      ↳ .cdb binary format
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chargen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chargen, Race & Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Archives
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyNifly
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PyNifly
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/pynifly/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/pynifly/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/partition-names/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Partition Names
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/external-resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    External Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CONVENTIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="starfield-mat-annotated-worked-example-a-real-2-layer-skin-material">Starfield <code>.mat</code> — Annotated Worked Example (a real 2-layer skin material)</h1>
+<p>This is a <strong>complete, shipped</strong> Starfield material read straight out of the game's compiled
+material database — <code>Materials\Actors\Human\Naked_Body\Male\Naked_M_Body.mat</code> (the naked male
+body skin). It was reconstructed from <code>materialsbeta.cdb</code> (game build 1.16.244.0) by PyNifly's
+<code>pyn/sf_cdb.py</code> reader, which emits the same loose <code>.mat</code> JSON the Creation Kit and community
+tools produce.</p>
+<p>It's a good teaching example because it exercises most of the layered-material system in one
+file: two material <strong>layers</strong> combined by a <strong>blender</strong>, subsurface scattering, a base-skin
+<strong>texture set</strong> plus a tiled <strong>detail-normal</strong> texture set, per-layer <strong>UV streams</strong>, and the
+template <strong>inheritance</strong> chain. Read <a href="../materials/">materials.md</a> first for
+the format overview; this page walks the file top to bottom.</p>
+<blockquote>
+<p><strong>How to read the JSON.</strong> Every typed value is <code>{ "Type": "...", "Data": {...} }</code>. Numbers and
+booleans are stored as <strong>strings</strong> (<code>"0.5"</code>, <code>"true"</code>) — that's how the database serializes
+them, not a quirk of the extractor. A <code>.mat</code> is a flat list of <strong>objects</strong>, each a bag of
+<strong>components</strong>; objects reference each other by <code>res:DIR:FILE:EXT</code> <strong>resource IDs</strong>, so the
+file is really a small graph. <code>Index</code> disambiguates repeated components (e.g. one
+<code>MRTextureFile</code> per texture slot). <code>Parent</code> names the template material this object derives
+from — anything not overridden here is inherited from that template.</p>
+</blockquote>
+<h2 id="the-shape-of-it">The shape of it</h2>
+<p>Ten objects, wired like this (arrows = a component that references another object by <code>res:</code> ID):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Naked_M_Body                      (root: the LayeredMaterial)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├─ BlenderID  ─────────────▶ Blender1        mask = NakedBodyM_mask, mode = Skin
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├─ LayerID[0] ─────────────▶ Layer1
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│                              ├─ MaterialID ─▶ Material1  (tint) ─ TextureSetID ─▶ TextureSet1
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│                              │                                      color / normal / rough / ao  (base skin)
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│                              └─ UVStreamID ─▶ UVStreamA   (default UVs)
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>├─ LayerID[1] ─────────────▶ Layer2
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│                              ├─ MaterialID ─▶ Material2 ─ TextureSetID ─▶ TextureSet2
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│                              │                                      detail normal (cheek pores)
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│                              └─ UVStreamID ─▶ UVStreamB   (Scale 50×50 → tiles the detail)
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>├─ TranslucencySettings        UseSSS = true                 (skin subsurface)
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>└─ ShaderModel = BodySkin2Layer
+</code></pre></div>
+<p>The engine renders it by starting at the root, walking those references, and blending Layer 2
+over Layer 1 through the blender.</p>
+<hr />
+<h2 id="object-0-the-root-layeredmaterial">Object 0 — the root LayeredMaterial</h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>{
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  &quot;Components&quot;: [
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    { &quot;Type&quot;: &quot;BSComponentDB::CTName&quot;, &quot;Index&quot;: 0,
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>      &quot;Data&quot;: { &quot;Name&quot;: &quot;Naked_M_Body&quot; } },
+</code></pre></div>
+<code>CTName</code> is just the object's human name. Every object has one; it's for tooling, not the engine.</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>    { &quot;Type&quot;: &quot;BSBind::DirectoryComponent&quot;, &quot;Index&quot;: 0,
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>      &quot;Data&quot;: { &quot;upDir&quot;: { &quot;Type&quot;: &quot;&lt;ref&gt;&quot;, &quot;Data&quot;: { &quot;Type&quot;: &quot;BSBind::Directory&quot;,
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>        &quot;Data&quot;: { &quot;Name&quot;: &quot;&quot;, &quot;Children&quot;: { &quot;Type&quot;: &quot;&lt;collection&gt;&quot;,
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>          &quot;ElementType&quot;: &quot;StdMapType::Pair&quot;, &quot;Data&quot;: [] }, &quot;SourceDirectoryHash&quot;: &quot;0&quot; } } } } },
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    { &quot;Type&quot;: &quot;BSBind::ControllerComponent&quot;, &quot;Index&quot;: 0,
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>      &quot;Data&quot;: { &quot;upControllers&quot;: { &quot;Type&quot;: &quot;&lt;ref&gt;&quot;, &quot;Data&quot;: { &quot;Type&quot;: &quot;BSBind::Controllers&quot;,
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        &quot;Data&quot;: { &quot;MappingsA&quot;: { &quot;Type&quot;: &quot;&lt;collection&gt;&quot;, &quot;Data&quot;: [] },
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>          &quot;UseRandomOffset&quot;: &quot;false&quot; } } } } },
+</code></pre></div>
+The two <code>BSBind::*</code> components are the <strong>animation-binding</strong> plumbing — how a material parameter
+could be driven by a controller at runtime. Here both are empty (<code>Children</code> / <code>MappingsA</code> are
+empty collections), i.e. <strong>nothing is animated</strong>. Notes on the encoding:
+- <code>"Type": "&lt;ref&gt;"</code> is a <strong>pointer</strong> to an inline sub-object — read the nested <code>Data</code>.
+- <code>"Type": "&lt;collection&gt;"</code> is a list or map; <code>ElementType: "StdMapType::Pair"</code> marks a map.
+  Empty here, so there's nothing to see, but this is where a driven material would list its
+  bindings.</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>    { &quot;Type&quot;: &quot;BSMaterial::BlenderID&quot;, &quot;Index&quot;: 0,
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>      &quot;Data&quot;: { &quot;ID&quot;: &quot;res:9FD163C7:0005F68E:A52AC310&quot; } },
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    { &quot;Type&quot;: &quot;BSMaterial::LayerID&quot;, &quot;Index&quot;: 0,
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>      &quot;Data&quot;: { &quot;ID&quot;: &quot;res:04C7A198:0005C61C:A2A909D2&quot; } },
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    { &quot;Type&quot;: &quot;BSMaterial::LayerID&quot;, &quot;Index&quot;: 1,
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>      &quot;Data&quot;: { &quot;ID&quot;: &quot;res:9FD163B7:0005F68E:A52AC310&quot; } },
+</code></pre></div>
+The <strong>structure of the layer stack</strong>, by reference:
+- <code>LayerID[0]</code> → <strong>Layer1</strong> (base skin), <code>LayerID[1]</code> → <strong>Layer2</strong> (detail).
+- <code>BlenderID[0]</code> → <strong>Blender1</strong>, which sits <em>between</em> the layers and controls how Layer 2 is
+  combined over Layer 1. (In general <code>Blender_N</code> blends <code>Layer_(N+1)</code> onto everything below.)
+- The <code>Index</code> on the <code>LayerID</code>s (0, 1) is the stack position. These <code>res:</code> IDs are resolved to
+  the objects further down this same file.</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>    { &quot;Type&quot;: &quot;BSMaterial::TranslucencySettingsComponent&quot;, &quot;Index&quot;: 0,
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>      &quot;Data&quot;: { &quot;Enabled&quot;: &quot;true&quot;, &quot;Settings&quot;: { &quot;Type&quot;: &quot;BSMaterial::TranslucencySettings&quot;,
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>        &quot;Data&quot;: { &quot;UseSSS&quot;: &quot;true&quot;,
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>                  &quot;SpecLobe0RoughnessScale&quot;: &quot;0.9300000071525574&quot;,
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>                  &quot;SpecLobe1RoughnessScale&quot;: &quot;1.149999976158142&quot; } } } },
+</code></pre></div>
+<strong>Subsurface scattering</strong> — this is what makes skin read as skin. <code>UseSSS: true</code> turns on SSS;
+the two <code>SpecLobe*RoughnessScale</code> values tune the dual-specular-lobe skin highlight (one tighter,
+one broader). For a furry-race skin/fur material this is the block you'd clone and tune (see the
+fur/skin notes in <a href="../materials/#4-layers-blenders-and-component-blocks">materials.md</a>).</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>    { &quot;Type&quot;: &quot;BSMaterial::ShaderModelComponent&quot;, &quot;Index&quot;: 0,
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>      &quot;Data&quot;: { &quot;FileName&quot;: &quot;BodySkin2Layer&quot; } },
+</code></pre></div>
+The <strong>shader model</strong> (template) this material is built on: <code>BodySkin2Layer</code>. The shader model
+decides <em>which</em> layers/slots/component blocks are even valid — it's the schema this material fills
+in. <code>BodySkin2Layer</code> = two blended skin layers with SSS, which matches everything above.</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>    { &quot;Type&quot;: &quot;BSMaterial::LayeredEmissivityComponent&quot;, &quot;Index&quot;: 0,
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>      &quot;Data&quot;: { &quot;Enabled&quot;: &quot;false&quot;, &quot;FirstLayerIndex&quot;: &quot;MATERIAL_LAYER_0&quot;,
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>                &quot;FirstLayerTint&quot;: { &quot;Type&quot;: &quot;BSMaterial::Color&quot;, &quot;Data&quot;: { &quot;Value&quot;: {
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>                  &quot;Type&quot;: &quot;XMFLOAT4&quot;, &quot;Data&quot;: { &quot;x&quot;: &quot;1.0&quot;,&quot;y&quot;: &quot;1.0&quot;,&quot;z&quot;: &quot;1.0&quot;,&quot;w&quot;: &quot;1.0&quot; } } } },
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>                &quot;FirstLayerMaskIndex&quot;: &quot;None&quot;, &quot;SecondLayerActive&quot;: &quot;false&quot;, … 
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>                &quot;LuminousEmittance&quot;: &quot;432.0&quot;, &quot;ExposureOffset&quot;: &quot;0.0&quot;, … &quot;IgnoresFog&quot;: &quot;false&quot; } }
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>  ],
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>  &quot;Parent&quot;: &quot;materials\\layered\\root\\layeredmaterials.mat&quot;
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>}
+</code></pre></div>
+Emissivity, <strong>disabled</strong> here (<code>Enabled: false</code>) — skin doesn't glow. It's still fully specified
+because the shader model includes the block; note <code>LuminousEmittance: 432.0</code> is a leftover/default
+value that does nothing while <code>Enabled</code> is false. <code>XMFLOAT4 {x,y,z,w}</code> is an RGBA color (here
+white). The enum-like strings (<code>MATERIAL_LAYER_0</code>, <code>BLEND_LAYER_0</code>, <code>Lerp</code>, <code>None</code>) name layers,
+blenders, and blend modes.</p>
+<p><code>"Parent": "…\\root\\layeredmaterials.mat"</code> — the root object inherits from the top-level
+<code>LayeredMaterials</code> template; every field above is an <strong>override</strong> on that template's defaults.</p>
+<hr />
+<h2 id="object-1-blender1-how-the-two-layers-combine">Object 1 — Blender1 (how the two layers combine)</h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>{
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>  &quot;ID&quot;: &quot;res:9FD163C7:0005F68E:A52AC310&quot;,
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>  &quot;Components&quot;: [
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    { &quot;Type&quot;: &quot;BSComponentDB::CTName&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;Name&quot;: &quot;Naked_M_Body_Blender1&quot; } },
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    { &quot;Type&quot;: &quot;BSMaterial::UVStreamID&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;ID&quot;: &quot;&quot; } },
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    { &quot;Type&quot;: &quot;BSMaterial::BlendModeComponent&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;Value&quot;: &quot;Skin&quot; } },
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    { &quot;Type&quot;: &quot;BSMaterial::ParamBool&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;Value&quot;: &quot;false&quot; } },
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>    { &quot;Type&quot;: &quot;BSMaterial::ParamBool&quot;, &quot;Index&quot;: 1, &quot;Data&quot;: { &quot;Value&quot;: &quot;false&quot; } },
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    { &quot;Type&quot;: &quot;BSMaterial::ParamBool&quot;, &quot;Index&quot;: 2, &quot;Data&quot;: { &quot;Value&quot;: &quot;false&quot; } },
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>    { &quot;Type&quot;: &quot;BSMaterial::MRTextureFile&quot;, &quot;Index&quot;: 0,
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>      &quot;Data&quot;: { &quot;FileName&quot;: &quot;Data\\Textures\\Actors\\Human\\naked_body\\NakedBodyM_mask.dds&quot; } },
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>    { &quot;Type&quot;: &quot;BSMaterial::MaterialParamFloat&quot;, &quot;Index&quot;: 4, &quot;Data&quot;: { &quot;Value&quot;: &quot;0.5&quot; } }
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>  ],
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>  &quot;Parent&quot;: &quot;materials\\layered\\root\\blenders.mat&quot;
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>}
+</code></pre></div>
+The blender is its own object (the root pointed here via <code>BlenderID</code>). Note its <code>ID</code> matches the
+root's <code>BlenderID</code> value. Key fields:
+- <code>BlendModeComponent: "Skin"</code> — a skin-specific blend (not a plain Lerp), so the detail layer
+  combines the way the engine expects for skin.
+- <code>MRTextureFile[0]</code> = <strong><code>NakedBodyM_mask.dds</code></strong> — the blend <strong>mask</strong>: where (and how much) Layer 2
+  shows through over Layer 1. On a blender, slot 0 is the mask, <em>not</em> an albedo.
+- <code>MaterialParamFloat[4] = 0.5</code> and the three <code>ParamBool</code>s are blender knobs defined by the shader
+  model (blend strength / per-channel toggles); their exact meaning is shader-model-specific.
+- <code>UVStreamID: ""</code> — empty ID = <strong>inherit</strong> the parent template's UV stream (no per-blender UVs).</p>
+<blockquote>
+<p><strong>This is the texture the naive "first-layer-wins" parser wrongly grabs as the albedo.</strong> It's a
+<em>mask</em>, and it's the very first <code>MRTextureFile</code> (slot 0) in document order, which is why a simple
+importer mislabels it. The real albedo lives in TextureSet1, below.</p>
+</blockquote>
+<hr />
+<h2 id="objects-2-3-the-two-layers">Objects 2 &amp; 3 — the two Layers</h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>{ &quot;ID&quot;: &quot;res:04C7A198:0005C61C:A2A909D2&quot;,
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  &quot;Components&quot;: [
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    { &quot;Type&quot;: &quot;BSComponentDB::CTName&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;Name&quot;: &quot;Naked_M_Body_Layer1&quot; } },
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    { &quot;Type&quot;: &quot;BSMaterial::MaterialID&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;ID&quot;: &quot;res:04C7A1AD:0005C61C:A2A909D2&quot; } },
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    { &quot;Type&quot;: &quot;BSMaterial::UVStreamID&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;ID&quot;: &quot;res:04C7A206:0005C61C:A2A909D2&quot; } } ],
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>  &quot;Parent&quot;: &quot;materials\\layered\\root\\layers.mat&quot; }
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>{ &quot;ID&quot;: &quot;res:9FD163B7:0005F68E:A52AC310&quot;,
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>  &quot;Components&quot;: [
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>    { &quot;Type&quot;: &quot;BSComponentDB::CTName&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;Name&quot;: &quot;Naked_M_Body_Layer2&quot; } },
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    { &quot;Type&quot;: &quot;BSMaterial::MaterialID&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;ID&quot;: &quot;res:9FD163C0:0005F68E:A52AC310&quot; } },
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    { &quot;Type&quot;: &quot;BSMaterial::UVStreamID&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;ID&quot;: &quot;res:9FD163BE:0005F68E:A52AC310&quot; } } ],
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>  &quot;Parent&quot;: &quot;materials\\layered\\root\\layers.mat&quot; }
+</code></pre></div>
+A <strong>layer</strong> is deliberately thin: it just points at a <strong>Material</strong> (the look) and a <strong>UV stream</strong>
+(how that look is mapped onto the mesh). Layer1's <code>MaterialID</code> → Material1, <code>UVStreamID</code> →
+UVStreamA; Layer2's → Material2 / UVStreamB. Both inherit from the <code>layers.mat</code> template.</p>
+<hr />
+<h2 id="objects-4-6-the-two-materials">Objects 4 &amp; 6 — the two Materials</h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>{ &quot;ID&quot;: &quot;res:04C7A1AD:0005C61C:A2A909D2&quot;,
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>  &quot;Components&quot;: [
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    { &quot;Type&quot;: &quot;BSComponentDB::CTName&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;Name&quot;: &quot;Naked_M_Body_Material1&quot; } },
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    { &quot;Type&quot;: &quot;BSMaterial::TextureSetID&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;ID&quot;: &quot;res:04C7A1DF:0005C61C:A2A909D2&quot; } },
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    { &quot;Type&quot;: &quot;BSMaterial::MaterialOverrideColorTypeComponent&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;Value&quot;: &quot;Multiply&quot; } },
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    { &quot;Type&quot;: &quot;BSMaterial::Color&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;Value&quot;: { &quot;Type&quot;: &quot;XMFLOAT4&quot;,
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>        &quot;Data&quot;: { &quot;x&quot;: &quot;0.7372549772262573&quot;, &quot;y&quot;: &quot;0.7372549772262573&quot;,
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>                  &quot;z&quot;: &quot;0.7372549772262573&quot;, &quot;w&quot;: &quot;0.0&quot; } } } } ],
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>  &quot;Parent&quot;: &quot;materials\\layered\\root\\materials.mat&quot; }
+</code></pre></div>
+Material1 (base skin) points at <strong>TextureSet1</strong> and adds a <strong>tint</strong>: <code>MaterialOverrideColorType =
+Multiply</code> with <code>Color = (0.737, 0.737, 0.737, α 0)</code> — the albedo is multiplied by ~0.74 grey
+(darkening it slightly). The <code>w</code>/alpha of <code>0.0</code> here is the tint's blend amount, not opacity.</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>{ &quot;ID&quot;: &quot;res:9FD163C0:0005F68E:A52AC310&quot;,
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  &quot;Components&quot;: [
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    { &quot;Type&quot;: &quot;BSComponentDB::CTName&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;Name&quot;: &quot;Naked_M_Body_Material2&quot; } },
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    { &quot;Type&quot;: &quot;BSMaterial::TextureSetID&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;ID&quot;: &quot;res:9FD163C1:0005F68E:A52AC310&quot; } } ],
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>  &quot;Parent&quot;: &quot;materials\\layered\\root\\materials.mat&quot; }
+</code></pre></div>
+Material2 (detail) is minimal — just its <strong>TextureSet2</strong>; everything else comes from the template.</p>
+<hr />
+<h2 id="objects-5-7-the-two-uv-streams">Objects 5 &amp; 7 — the two UV Streams</h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>{ &quot;ID&quot;: &quot;res:04C7A206:0005C61C:A2A909D2&quot;,
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>  &quot;Components&quot;: [ { &quot;Type&quot;: &quot;BSComponentDB::CTName&quot;, &quot;Index&quot;: 0,
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>                    &quot;Data&quot;: { &quot;Name&quot;: &quot;Naked_M_Body_UVStreamA&quot; } } ],
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>  &quot;Parent&quot;: &quot;materials\\layered\\root\\uvstreams.mat&quot; }
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>{ &quot;ID&quot;: &quot;res:9FD163BE:0005F68E:A52AC310&quot;,
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>  &quot;Components&quot;: [
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    { &quot;Type&quot;: &quot;BSComponentDB::CTName&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;Name&quot;: &quot;Naked_M_Body_UVStreamB&quot; } },
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>    { &quot;Type&quot;: &quot;BSMaterial::Scale&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;Value&quot;: { &quot;Type&quot;: &quot;XMFLOAT2&quot;,
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>        &quot;Data&quot;: { &quot;x&quot;: &quot;50.0&quot;, &quot;y&quot;: &quot;50.0&quot; } } } } ],
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>  &quot;Parent&quot;: &quot;materials\\layered\\root\\uvstreams.mat&quot; }
+</code></pre></div>
+UVStreamA has <strong>only</strong> a name — it fully inherits the default 1:1 UVs from the template (the base
+skin uses the mesh's real UVs). UVStreamB adds <code>Scale = (50, 50)</code>: the detail layer's UVs are
+<strong>tiled 50×</strong>, so the small <code>Young_Cheek_detail_normal</code> texture repeats densely across the body as
+fine skin detail. <code>XMFLOAT2</code> is a 2-component (u,v) value. This is the key trick that turns one
+small detail texture into all-over pore detail.</p>
+<hr />
+<h2 id="objects-8-9-the-two-texture-sets-where-the-actual-images-live">Objects 8 &amp; 9 — the two Texture Sets (where the actual images live)</h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>{ &quot;ID&quot;: &quot;res:04C7A1DF:0005C61C:A2A909D2&quot;,
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>  &quot;Components&quot;: [
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    { &quot;Type&quot;: &quot;BSComponentDB::CTName&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;Name&quot;: &quot;Naked_M_Body_TextureSet1&quot; } },
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>    { &quot;Type&quot;: &quot;BSMaterial::TextureReplacement&quot;, &quot;Index&quot;: 8, &quot;Data&quot;: { &quot;Enabled&quot;: &quot;true&quot; } },
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>    { &quot;Type&quot;: &quot;BSMaterial::MRTextureFile&quot;, &quot;Index&quot;: 0,
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>      &quot;Data&quot;: { &quot;FileName&quot;: &quot;Data\\Textures\\Actors\\human\\Naked_Body\\nakedbodym_sk3_color.dds&quot; } },
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>    { &quot;Type&quot;: &quot;BSMaterial::MRTextureFile&quot;, &quot;Index&quot;: 1,
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>      &quot;Data&quot;: { &quot;FileName&quot;: &quot;Data\\Textures\\Actors\\human\\Naked_Body\\nakedbodym_normal.dds&quot; } },
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>    { &quot;Type&quot;: &quot;BSMaterial::MRTextureFile&quot;, &quot;Index&quot;: 3,
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>      &quot;Data&quot;: { &quot;FileName&quot;: &quot;Data\\Textures\\Actors\\human\\Naked_Body\\nakedbodym_rough.dds&quot; } },
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>    { &quot;Type&quot;: &quot;BSMaterial::MRTextureFile&quot;, &quot;Index&quot;: 5,
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>      &quot;Data&quot;: { &quot;FileName&quot;: &quot;Data\\Textures\\Actors\\human\\Naked_Body\\NakedBodyM_ao.dds&quot; } } ],
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>  &quot;Parent&quot;: &quot;materials\\layered\\root\\texturesets.mat&quot; }
+</code></pre></div>
+<strong>This is the base skin.</strong> Each <code>MRTextureFile.Index</code> is a <strong>texture slot</strong> (see the slot table in
+<a href="../materials/#5-textureset-slots-dds-conventions">materials.md</a>):</p>
+<table>
+<thead>
+<tr>
+<th><code>Index</code></th>
+<th>Slot</th>
+<th>This file</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Albedo (<code>_color</code>, sRGB)</td>
+<td><code>nakedbodym_sk3_color.dds</code></td>
+</tr>
+<tr>
+<td>1</td>
+<td>Normal (<code>_normal</code>, BC5 XY)</td>
+<td><code>nakedbodym_normal.dds</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Roughness (<code>_rough</code>, BC4)</td>
+<td><code>nakedbodym_rough.dds</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Ambient occlusion (<code>_ao</code>, BC4)</td>
+<td><code>NakedBodyM_ao.dds</code></td>
+</tr>
+</tbody>
+</table>
+<p>Slots 2 (opacity) and 4 (metalness) are simply absent — skin isn't transparent or metallic. Note
+Starfield stores <strong>one texture per property</strong> (no packed <code>_s</code> map like <code>[FO4]</code>). The
+<code>TextureReplacement[8] Enabled: true</code> turns on the transmissive slot (index 8) for the SSS pass
+without supplying a texture — it uses the setting/fallback rather than an image.</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>{ &quot;ID&quot;: &quot;res:9FD163C1:0005F68E:A52AC310&quot;,
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>  &quot;Components&quot;: [
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    { &quot;Type&quot;: &quot;BSComponentDB::CTName&quot;, &quot;Index&quot;: 0, &quot;Data&quot;: { &quot;Name&quot;: &quot;Naked_M_Body_TextureSet2&quot; } },
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    { &quot;Type&quot;: &quot;BSMaterial::TextureReplacement&quot;, &quot;Index&quot;: 8, &quot;Data&quot;: { &quot;Enabled&quot;: &quot;true&quot; } },
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    { &quot;Type&quot;: &quot;BSMaterial::TextureReplacement&quot;, &quot;Index&quot;: 3, &quot;Data&quot;: { &quot;Color&quot;: { &quot;Type&quot;: &quot;BSMaterial::Color&quot;,
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>        &quot;Data&quot;: { &quot;Value&quot;: { &quot;Type&quot;: &quot;XMFLOAT4&quot;, &quot;Data&quot;: { &quot;x&quot;: &quot;1.0&quot;,&quot;y&quot;:&quot;1.0&quot;,&quot;z&quot;:&quot;1.0&quot;,&quot;w&quot;:&quot;1.0&quot; } } } } } },
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>    { &quot;Type&quot;: &quot;BSMaterial::MRTextureFile&quot;, &quot;Index&quot;: 1,
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>      &quot;Data&quot;: { &quot;FileName&quot;: &quot;Data\\Textures\\Actors\\human\\faces\\FaceDetails\\Young_Cheek_detail_normal.dds&quot; } } ],
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>  &quot;Parent&quot;: &quot;materials\\layered\\root\\texturesets.mat&quot; }
+</code></pre></div>
+<strong>This is the detail layer</strong>, and it's almost entirely a <strong>normal map</strong>: slot 1 =
+<code>Young_Cheek_detail_normal.dds</code> (fine skin/pore detail, reused from the face-detail set). It has
+<strong>no albedo</strong> — the detail layer only perturbs the surface normal; the base skin's color shows
+through. The two <code>TextureReplacement</code>s stand in for the missing slots: index 8 (transmissive)
+enabled, index 3 (roughness) replaced by a <strong>flat white</strong> color (<code>1,1,1,1</code>) since there's no
+detail-roughness image. <code>TextureReplacement</code> is how a slot is filled by a constant instead of a
+texture.</p>
+<hr />
+<h2 id="what-to-take-away">What to take away</h2>
+<ul>
+<li><strong>A <code>.mat</code> is a graph, not a flat list of slots.</strong> The root LayeredMaterial references Blenders
+  and Layers; each Layer references a Material and a UV stream; each Material references a Texture
+  set. To find "the albedo," you follow <code>LayerID → MaterialID → TextureSetID → MRTextureFile[0]</code> —
+  <strong>not</strong> the first <code>MRTextureFile</code> in the file (that one is the blender mask here).</li>
+<li><strong>Slots are addressed by <code>Index</code>, and gaps are normal.</strong> Missing slots mean "this property is
+  unused," or are filled by a <code>TextureReplacement</code> constant.</li>
+<li><strong><code>Parent</code> + overrides is the whole model.</strong> Each object states only what differs from its
+  root template (<code>…\root\{layeredmaterials,blenders,layers,materials,uvstreams,texturesets}.mat</code>);
+  the rest is inherited. The database stores these as <em>diffs</em>, and the reader composes the parent
+  chain back into the full object you see here.</li>
+<li><strong>This exact structure is the fur/skin blueprint for a custom race:</strong> <code>BodySkin2Layer</code> shader
+  model, SSS via <code>TranslucencySettings</code>, a base-skin texture set on Layer 1, and a tiled
+  detail/pattern layer on Layer 2 blended in <code>Skin</code> mode through a mask. Fur markings can ride the
+  detail layer (or a third layer); the tiling (<code>UVStream.Scale</code>) controls how fine the pattern is.</li>
+</ul>
+<hr />
+<p><em>Source: <code>Materials\Actors\Human\Naked_Body\Male\Naked_M_Body.mat</code>, extracted from <code>materialsbeta.cdb</code>
+(build 1.16.244.0) with PyNifly's <code>pyn/sf_cdb.py</code>. JSON verbatim except for reflow/eliding of
+already-covered repeats.</em></p>
+<p><em>Reviewed 2026-07-10, Bad Dog</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

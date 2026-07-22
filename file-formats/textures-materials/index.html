@@ -1,0 +1,2864 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Comprehensive reference for Skyrim, Fallout 4, and Starfield modding with PyNifly and esplib">
+      
+      
+        <meta name="author" content="Hugh Russel">
+      
+      
+      
+        <link rel="prev" href="../morphs-shapekeys/">
+      
+      
+        <link rel="next" href="../archives/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Textures & Materials - Bethesda Modding Library</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#textures-materials" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Bethesda Modding Library" class="md-header__button md-logo" aria-label="Bethesda Modding Library" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Bethesda Modding Library
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Textures & Materials
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../overview/" class="md-tabs__link">
+          
+  
+  
+  File Formats
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../game-specific/skyrim/overview/" class="md-tabs__link">
+          
+  
+  
+  Game-Specific
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../tools/pynifly/overview/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/partition-names/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../CONVENTIONS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Conventions
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Bethesda Modding Library" class="md-nav__button md-logo" aria-label="Bethesda Modding Library" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Bethesda Modding Library
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    File Formats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins (ESP/ESM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nif-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NIF Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nif-animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NIF Animations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Animations (HKX)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../physics-collision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Physics & Collision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../morphs-shapekeys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Morphs & Shape Keys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Textures & Materials
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Textures & Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dds-textures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DDS Textures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DDS Textures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compression-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compression Types
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compression Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dxt1-bc1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DXT1 (BC1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dxt3-bc2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DXT3 (BC2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dxt5-bc3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DXT5 (BC3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bc5-skyrim-se-fallout-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BC5 (Skyrim SE, Fallout 4)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bc7-skyrim-se-fallout-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BC7 (Skyrim SE, Fallout 4)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uncompressed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uncompressed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mipmaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mipmaps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#normal-maps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normal Maps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#texture-sizes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Texture Sizes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#texture-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Texture Paths
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#materials-skyrim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Materials (Skyrim)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Materials (Skyrim)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bslightingshaderproperty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BSLightingShaderProperty
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BSLightingShaderProperty">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shader-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shader Type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shader-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shader Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#colors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Colors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#glossiness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Glossiness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alpha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alpha
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uv-offsetscale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UV Offset/Scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bsshadertextureset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BSShaderTextureSet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bseffectshaderproperty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BSEffectShaderProperty
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#materials-fallout-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Materials (Fallout 4)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Materials (Fallout 4)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bgsm-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BGSM Files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BGSM Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#textures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Textures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Values
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bgem-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BGEM Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#in-nif-fo4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In NIF (FO4)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-textures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating Textures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating Textures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#photoshop-gimp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Photoshop / GIMP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paintnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paint.NET
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#substance-painter-designer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Substance Painter / Designer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#baking-normal-maps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Baking Normal Maps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purple-textures-missing-textures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purple Textures (Missing Textures)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#textures-too-darkbright" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Textures Too Dark/Bright
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#normal-map-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normal Map Not Working
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#textures-look-blocky" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Textures Look Blocky
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transparency-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transparency Not Working
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#seams-visible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Seams Visible
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tools
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archives (BSA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scripts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scripts (PEX)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game-Specific
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game-Specific
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skyrim
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Skyrim
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/skyrim/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fallout 4
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Fallout 4
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/fallout4/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/fallout4/connect-points/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connect Points
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/fallout4/dismemberment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dismemberment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Starfield
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Starfield
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/starfield/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/starfield/meshes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meshes (NIF + .mesh)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/starfield/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Materials & Textures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/starfield/material-worked-example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+      ↳ .mat worked example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/starfield/cdb-format/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+      ↳ .cdb binary format
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/starfield/chargen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chargen, Race & Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/starfield/plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Archives
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../game-specific/starfield/tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyNifly
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PyNifly
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/pynifly/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/pynifly/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/partition-names/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Partition Names
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/external-resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    External Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CONVENTIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="textures-materials">Textures &amp; Materials</h1>
+<p>Textures provide surface appearance (color, normal maps, specular) while materials define how textures are applied and rendered.</p>
+<h2 id="overview">Overview</h2>
+<p><strong>Texture format:</strong> DDS (DirectDraw Surface)<br />
+<strong>Material systems:</strong>
+- <strong>Skyrim LE/SE:</strong> Material properties embedded in NIF (BSLightingShaderProperty)
+- <strong>Fallout 4:</strong> External material files (BGSM/BGEM)</p>
+<h2 id="dds-textures">DDS Textures</h2>
+<h3 id="format">Format</h3>
+<p><strong>Extension:</strong> <code>.dds</code><br />
+<strong>Type:</strong> DirectX compressed texture format<br />
+<strong>Compression:</strong> Block-based (DXT1/DXT5, BC5, BC7)</p>
+<p><strong>Advantages:</strong>
+- GPU-native format (loads directly to VRAM)
+- Compressed (smaller file size)
+- Mipmaps included (LOD support)
+- Fast to load</p>
+<h3 id="compression-types">Compression Types</h3>
+<h4 id="dxt1-bc1">DXT1 (BC1)</h4>
+<p><strong>Use case:</strong> Opaque textures (no alpha)</p>
+<p><strong>Compression:</strong> 6:1 ratio<br />
+<strong>Quality:</strong> Good for diffuse textures<br />
+<strong>Alpha:</strong> 1-bit alpha (on/off only)</p>
+<p><strong>Best for:</strong>
+- Diffuse maps (base color)
+- Specular maps
+- Environment maps</p>
+<h4 id="dxt3-bc2">DXT3 (BC2)</h4>
+<p><strong>Use case:</strong> Textures with sharp alpha transitions</p>
+<p><strong>Compression:</strong> 4:1 ratio<br />
+<strong>Alpha:</strong> Explicit 4-bit alpha (16 levels)</p>
+<p><strong>Best for:</strong>
+- Billboards with cutouts
+- Decals with hard edges</p>
+<h4 id="dxt5-bc3">DXT5 (BC3)</h4>
+<p><strong>Use case:</strong> Textures with smooth alpha gradients</p>
+<p><strong>Compression:</strong> 4:1 ratio<br />
+<strong>Alpha:</strong> Interpolated alpha (smooth gradients)</p>
+<p><strong>Best for:</strong>
+- Normal maps (compress well)
+- Alpha-blended effects
+- Transparency masks</p>
+<h4 id="bc5-skyrim-se-fallout-4">BC5 (Skyrim SE, Fallout 4)</h4>
+<p><strong>Use case:</strong> Two-channel maps (tangent normals, packed specular/glossiness)</p>
+<p><strong>Also known as:</strong> ATI2 / 3Dc<br />
+<strong>Compression:</strong> 4:1 vs. 32-bit RGBA (2:1 vs. storing two 8-bit channels uncompressed)<br />
+<strong>Channels:</strong> Red and Green only — <strong>blue channel is omitted</strong>. Each of the two stored channels uses the same 8-bit interpolated encoding as DXT5's alpha block, giving far better precision than DXT5's RGB block.</p>
+<p><strong>How the missing blue is handled:</strong>
+- For tangent-space normals, the shader reconstructs Z from X and Y: <code>B = sqrt(1 - R² - G²)</code>. Because the surface normal is unit-length, the blue component is redundant and can be recomputed exactly.</p>
+<p><strong>Best for:</strong>
+- <strong><code>[FO4]</code> Tangent-space normal maps (<code>_n</code>)</strong> - Fallout 4's default normal format. Two high-precision channels with no cross-channel bleeding produce cleaner normals than DXT5.
+- <strong><code>[FO4]</code> Combined specular/glossiness (<code>_s</code>)</strong> - FO4 packs specular into one channel and glossiness/smoothness into the other.</p>
+<p><strong>Requirement:</strong> DX11+ (SE/FO4 only, not LE).</p>
+<p><strong>Note:</strong> Because blue is dropped, a BC5 file opened in an image viewer looks yellow/green rather than the familiar purple of a DXT5 normal map — this is expected, not corruption.</p>
+<h4 id="bc7-skyrim-se-fallout-4">BC7 (Skyrim SE, Fallout 4)</h4>
+<p><strong>Use case:</strong> High-quality diffuse textures</p>
+<p><strong>Compression:</strong> 4:1 ratio<br />
+<strong>Quality:</strong> Better than DXT1/5 (fewer artifacts)</p>
+<p><strong>Best for:</strong>
+- Diffuse maps (SE/FO4)
+- Anything needing high quality</p>
+<p><strong>Requirement:</strong> DX11+ (SE/FO4 only, not LE)</p>
+<h4 id="uncompressed">Uncompressed</h4>
+<p><strong>Use case:</strong> Maximum quality, large file size</p>
+<p><strong>Formats:</strong>
+- A8R8G8B8 (32-bit RGBA)
+- R8G8B8 (24-bit RGB)</p>
+<p><strong>Best for:</strong>
+- UI elements (minimal in-game use)
+- Source files (compress to DXT for game)</p>
+<h3 id="mipmaps">Mipmaps</h3>
+<p><strong>Mipmaps:</strong> Progressively smaller versions of texture for distant objects.</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Mip 0: 2048x2048 (full resolution)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Mip 1: 1024x1024
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Mip 2: 512x512
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>Mip 3: 256x256
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>...
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>Mip 11: 1x1
+</code></pre></div></p>
+<p><strong>Benefits:</strong>
+- Better performance (fewer pixels to sample)
+- Reduces aliasing/shimmering at distance
+- GPU automatically selects appropriate mip level</p>
+<p><strong>Generation:</strong> Most tools auto-generate mipmaps on DDS export.</p>
+<p><strong>Requirement:</strong> Bethesda games expect mipmaps - missing them causes performance issues.</p>
+<h3 id="normal-maps">Normal Maps</h3>
+<p><strong>Purpose:</strong> Store surface detail without additional geometry.</p>
+<p><strong>Format:</strong> DDS (usually DXT5)</p>
+<p><strong>Channels:</strong>
+- <strong>R:</strong> X normal component
+- <strong>G:</strong> Y normal component<br />
+- <strong>B:</strong> Z normal component (up) — omitted entirely in BC5 (reconstructed in-shader)
+- <strong>A:</strong> (varies by use)</p>
+<p><strong>Tangent space:</strong> Normals relative to surface, not world.</p>
+<p><strong>Color interpretation:</strong>
+- Purple/blue = flat surface (normal pointing straight out)
+- Red/green variations = surface bumps/indentations</p>
+<p><strong>Compression:</strong>
+- <strong>Skyrim LE/SE:</strong> DXT5 (good quality for normals).
+- <strong><code>[FO4]</code> Fallout 4:</strong> BC5 (two-channel, blue reconstructed in-shader — see <a href="#bc5-skyrim-se-fallout-4">BC5</a>). Higher-precision than DXT5 and the FO4 default for <code>_n</code> maps.</p>
+<p><strong>Baking:</strong> Generate from high-poly mesh to low-poly mesh + normal map.</p>
+<h3 id="texture-sizes">Texture Sizes</h3>
+<p><strong>Power of 2:</strong> Width and height should be powers of 2 (512, 1024, 2048, 4096).</p>
+<p><strong>Non-power-of-2:</strong> Game supports NPOT, but mipmaps may not generate correctly.</p>
+<p><strong>Aspect ratio:</strong> Don't need to be square (1024x2048 is fine).</p>
+<p><strong>Recommended sizes:</strong>
+- <strong>Armor/clothing:</strong> 2048x2048 (diffuse), 2048x2048 (normal)
+- <strong>Weapons:</strong> 2048x2048 or 1024x2048
+- <strong>Hair:</strong> 512x512 or 1024x1024
+- <strong>Clutter:</strong> 512x512 or 256x256
+- <strong>Landscape:</strong> 2048x2048 or 4096x4096 (repeating tiles)</p>
+<p><strong>Performance:</strong> Larger textures = more VRAM usage. Balance quality vs. performance.</p>
+<h3 id="texture-paths">Texture Paths</h3>
+<p><strong>Relative to Data folder:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Data/textures/actors/character/male/malebody_d.dds
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>             └─────────┬────────────────────────────┘
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>                    Relative path
+</code></pre></div></p>
+<p><strong>In NIF/BGSM:</strong> Store relative path without <code>Data/</code> prefix and without <code>.dds</code> extension (auto-appended).</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>NIF texture path: textures\actors\character\male\malebody
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Actual file: Data\textures\actors\character\male\malebody_d.dds
+</code></pre></div></p>
+<p><strong>Suffixes (convention):</strong>
+- <code>_d.dds</code> - Diffuse (base color)
+- <code>_n.dds</code> - Normal map
+- <code>_s.dds</code> - Specular map (SE)
+- <code>_g.dds</code> - Glow map (emissive)
+- <code>_p.dds</code> - Parallax/height map
+- <code>_e.dds</code> - Environment map (cubemap)
+- <code>_sk.dds</code> - Skin tint
+- <code>_b.dds</code> - Backlight (subsurface)</p>
+<p><strong>Note:</strong> Suffixes are convention only - actual slot determined by shader assignment.</p>
+<h2 id="materials-skyrim">Materials (Skyrim)</h2>
+<h3 id="bslightingshaderproperty">BSLightingShaderProperty</h3>
+<p>Skyrim embeds material properties in NIF files.</p>
+<p><strong>Location:</strong> Attached to BSTriShape/NiTriShape in NIF.</p>
+<p><strong>Properties:</strong></p>
+<h4 id="shader-type">Shader Type</h4>
+<p>Determines rendering mode:
+- <strong>0:</strong> Default lighting
+- <strong>1:</strong> Environment map
+- <strong>5:</strong> Skin tint
+- <strong>6:</strong> Hair
+- <strong>7:</strong> Parallax
+- <strong>11:</strong> Multitexture landscape
+- <strong>14:</strong> Eye environment map</p>
+<h4 id="shader-flags">Shader Flags</h4>
+<p><strong>SLSF1 (Set 1):</strong>
+- <code>SLSF1_Specular</code> (0x00000001) - Enable specular lighting
+- <code>SLSF1_Skinned</code> (0x00000002) - Mesh is skinned to bones
+- <code>SLSF1_Temp_Refraction</code> (0x00000004) - Refraction effect
+- <code>SLSF1_Vertex_Alpha</code> (0x00000008) - Use vertex alpha for transparency
+- <code>SLSF1_Greyscale_To_PaletteColor</code> (0x00000010) - Tint grayscale texture
+- <code>SLSF1_Greyscale_To_PaletteAlpha</code> (0x00000020) - Control alpha via palette
+- <code>SLSF1_Use_Falloff</code> (0x00000040) - Fresnel falloff
+- <code>SLSF1_Environment_Mapping</code> (0x00000080) - Cubemap reflections
+- <code>SLSF1_Recieve_Shadows</code> (0x00000100) - Receive cast shadows
+- <code>SLSF1_Cast_Shadows</code> (0x00000200) - Cast shadows
+- <code>SLSF1_Facegen_Detail_Map</code> (0x00000400) - FaceGen tint
+- <code>SLSF1_Parallax</code> (0x00000800) - Parallax/height mapping
+- <code>SLSF1_Model_Space_Normals</code> (0x00001000) - Model-space normals (not tangent)
+- <code>SLSF1_Non_Projective_Shadows</code> (0x00002000) - Shadow technique
+- <code>SLSF1_Landscape</code> (0x00004000) - Landscape multitexture
+- <code>SLSF1_Refraction</code> (0x00008000) - Refraction effect
+- <code>SLSF1_Fire_Refraction</code> (0x00010000) - Fire effect
+- <code>SLSF1_Eye_Environment_Mapping</code> (0x00020000) - Eye cubemap
+- <code>SLSF1_Hair_Soft_Lighting</code> (0x00040000) - Hair-specific lighting
+- <code>SLSF1_Screendoor_Alpha_Fade</code> (0x00080000) - Dithered alpha fade
+- <code>SLSF1_Localmap_Hide_Secret</code> (0x00100000) - Hide on local map
+- <code>SLSF1_FaceGen_RGB_Tint</code> (0x00200000) - Face tint
+- <code>SLSF1_Own_Emit</code> (0x00400000) - Self-illumination
+- <code>SLSF1_Projected_UV</code> (0x00800000) - Projected UVs
+- <code>SLSF1_Multiple_Textures</code> (0x01000000) - Landscape multi-texture
+- <code>SLSF1_Remappable_Textures</code> (0x02000000) - Texture index remapping
+- <code>SLSF1_Decal</code> (0x04000000) - Decal rendering
+- <code>SLSF1_Dynamic_Decal</code> (0x08000000) - Dynamic decal
+- <code>SLSF1_Parallax_Occlusion</code> (0x10000000) - Parallax occlusion mapping
+- <code>SLSF1_External_Emittance</code> (0x20000000) - External light
+- <code>SLSF1_Soft_Effect</code> (0x40000000) - Soft particle effect
+- <code>SLSF1_ZBuffer_Test</code> (0x80000000) - Z-buffer testing</p>
+<p><strong>SLSF2 (Set 2):</strong>
+- <code>SLSF2_ZBuffer_Write</code> (0x00000001) - Write to Z-buffer
+- <code>SLSF2_LOD_Landscape</code> (0x00000002) - LOD landscape
+- <code>SLSF2_LOD_Objects</code> (0x00000004) - LOD object
+- <code>SLSF2_No_Fade</code> (0x00000008) - Disable distance fade
+- <code>SLSF2_Double_Sided</code> (0x00000010) - Render both sides of faces
+- <code>SLSF2_Vertex_Colors</code> (0x00000020) - Use vertex colors
+- <code>SLSF2_Glow_Map</code> (0x00000040) - Has glow map
+- <code>SLSF2_Assume_Shadowmask</code> (0x00000080) - Shadow optimization
+- <code>SLSF2_Packed_Tangent</code> (0x00000100) - Tangent format
+- <code>SLSF2_Multi_Index_Snow</code> (0x00000200) - Snow shader
+- <code>SLSF2_Vertex_Lighting</code> (0x00000400) - Use vertex lighting
+- <code>SLSF2_Uniform_Scale</code> (0x00000800) - Uniform scale optimization
+- <code>SLSF2_Fit_Slope</code> (0x00001000) - Fit to slope
+- <code>SLSF2_Billboard</code> (0x00002000) - Billboard sprite
+- <code>SLSF2_No_LOD_Land_Blend</code> (0x00004000) - Disable LOD blending
+- <code>SLSF2_EnvMap_Light_Fade</code> (0x00008000) - Env map fades with light
+- <code>SLSF2_Wireframe</code> (0x00010000) - Wireframe rendering
+- <code>SLSF2_Weapon_Blood</code> (0x00020000) - Weapon blood decal
+- <code>SLSF2_Hide_On_Local_Map</code> (0x00040000) - Hide on local map
+- <code>SLSF2_Premult_Alpha</code> (0x00080000) - Premultiplied alpha
+- <code>SLSF2_Cloud_LOD</code> (0x00100000) - Cloud LOD
+- <code>SLSF2_Anisotropic_Lighting</code> (0x00200000) - Anisotropic lighting (hair)
+- <code>SLSF2_No_Transparency_Multisampling</code> (0x00400000) - MSAA control
+- <code>SLSF2_Unused01</code> (0x00800000)
+- <code>SLSF2_Multi_Layer_Parallax</code> (0x01000000) - Multi-layer parallax
+- <code>SLSF2_Soft_Lighting</code> (0x02000000) - Soft lighting
+- <code>SLSF2_Rim_Lighting</code> (0x04000000) - Rim lighting
+- <code>SLSF2_Back_Lighting</code> (0x08000000) - Backlight/subsurface
+- <code>SLSF2_Unused02</code> (0x10000000)
+- <code>SLSF2_Tree_Anim</code> (0x20000000) - Tree wind animation
+- <code>SLSF2_Effect_Lighting</code> (0x40000000) - Effect lighting
+- <code>SLSF2_HD_LOD_Objects</code> (0x80000000) - HD LOD</p>
+<p>See <a href="../reference/shader-flags.md">Shader Flags Reference</a> [TBD] for detailed descriptions.</p>
+<h4 id="colors">Colors</h4>
+<ul>
+<li><strong>Specular Color:</strong> RGB (shininess tint)</li>
+<li><strong>Emissive Color:</strong> RGB (self-illumination)</li>
+<li><strong>Emissive Multiplier:</strong> Float (glow brightness)</li>
+</ul>
+<h4 id="glossiness">Glossiness</h4>
+<ul>
+<li>Float (0.0-1.0+) - Higher = shinier surface</li>
+</ul>
+<h4 id="alpha">Alpha</h4>
+<ul>
+<li>Float (0.0-1.0) - Material transparency (if alpha enabled)</li>
+</ul>
+<h4 id="uv-offsetscale">UV Offset/Scale</h4>
+<ul>
+<li>U Offset, V Offset - Shift texture coordinates</li>
+<li>U Scale, V Scale - Tile texture</li>
+</ul>
+<h3 id="bsshadertextureset">BSShaderTextureSet</h3>
+<p><strong>Contains texture paths</strong> (up to 10 slots):</p>
+<p><strong>Skyrim LE/SE:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>[0] Diffuse         - Base color texture
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>[1] Normal          - Normal map
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>[2] Glow            - Emissive map
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>[3] Parallax        - Height map
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>[4] Cubemap         - Environment map
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>[5] Environment Mask- Controls cubemap strength
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>[6] Tint/Detail     - Skin tint or detail map
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>[7] Backlight       - Subsurface scattering map
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>[8] Specular (SE)   - Specular map (SE only)
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>[9] Lighting (SE)   - (SE only, rarely used)
+</code></pre></div></p>
+<p><strong>Path format:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>textures\actors\character\male\malebody
+</code></pre></div>
+- Relative to Data/
+- No extension (<code>.dds</code> auto-appended)
+- Backslashes or forward slashes both work</p>
+<h3 id="bseffectshaderproperty">BSEffectShaderProperty</h3>
+<p><strong>For special effects</strong> (glows, magic).</p>
+<p><strong>Properties:</strong>
+- Base texture
+- Grayscale texture (modulated by color)
+- Emissive color and multiplier
+- Falloff (Fresnel effect)
+- Soft depth (soft particles)</p>
+<p><strong>Use cases:</strong>
+- Magic effects
+- Fire, water, energy
+- UI elements
+- Glowing objects</p>
+<h2 id="materials-fallout-4">Materials (Fallout 4)</h2>
+<h3 id="bgsm-files">BGSM Files</h3>
+<p><strong>Fallout 4 materials are external files</strong> instead of embedded in NIF.</p>
+<p><strong>Extension:</strong> <code>.bgsm</code> (material)<br />
+<strong>Format:</strong> JSON-like text format<br />
+<strong>Location:</strong> <code>Data/Materials/</code></p>
+<p><strong>Structure:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="nt">&quot;Version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;DiffuseTexture&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Textures\\Actors\\Character\\BaseHumanMale\\BaseHumanMale_d.dds&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="nt">&quot;NormalTexture&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Textures\\Actors\\Character\\BaseHumanMale\\BaseHumanMale_n.dds&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="nt">&quot;SpecularTexture&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Textures\\Actors\\Character\\BaseHumanMale\\BaseHumanMale_s.dds&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="nt">&quot;Tiling&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">        </span><span class="nt">&quot;U&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">        </span><span class="nt">&quot;V&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="nt">&quot;Offset&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">        </span><span class="nt">&quot;U&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">        </span><span class="nt">&quot;V&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span><span class="nt">&quot;bTileU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">    </span><span class="nt">&quot;bTileV&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span><span class="nt">&quot;fAlpha&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">    </span><span class="nt">&quot;bAlphaBlend&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">    </span><span class="nt">&quot;bAlphaTest&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">    </span><span class="nt">&quot;iAlphaTestRef&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">127</span><span class="p">,</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">    </span><span class="nt">&quot;bZBufferWrite&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">    </span><span class="nt">&quot;bZBufferTest&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">    </span><span class="nt">&quot;bScreenSpaceReflections&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="w">    </span><span class="nt">&quot;bWetnessControl_ScreenSpaceReflections&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="w">    </span><span class="nt">&quot;bDecal&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="w">    </span><span class="nt">&quot;bTwoSided&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">    </span><span class="nt">&quot;bDecalNoFade&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="w">    </span><span class="nt">&quot;bNonOccluder&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="w">    </span><span class="nt">&quot;bRefraction&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="w">    </span><span class="nt">&quot;bRefractionFalloff&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="w">    </span><span class="nt">&quot;fRefractionPower&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="w">    </span><span class="nt">&quot;bEnvironmentMapping&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="w">    </span><span class="nt">&quot;fEnvironmentMappingMaskScale&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a><span class="w">    </span><span class="nt">&quot;bGrayscaleToPaletteColor&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="w">    </span><span class="nt">&quot;Shader&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lighting&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a><span class="w">    </span><span class="nt">&quot;SourceTextureFolder&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a><span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Key properties:</strong></p>
+<h4 id="textures">Textures</h4>
+<ul>
+<li><code>DiffuseTexture</code> - Base color</li>
+<li><code>NormalTexture</code> - Normal map</li>
+<li><code>SpecularTexture</code> - Specular/glossiness</li>
+<li><code>GlowTexture</code> - Emissive</li>
+<li><code>GreyscaleTexture</code> - For tinting</li>
+<li><code>EnvmapTexture</code> - Environment/cubemap</li>
+<li><code>SmoothSpecTexture</code> - Specular smoothness</li>
+</ul>
+<h4 id="flags">Flags</h4>
+<ul>
+<li><code>bAlphaBlend</code> - Smooth transparency</li>
+<li><code>bAlphaTest</code> - Hard cutout transparency</li>
+<li><code>iAlphaTestRef</code> - Threshold for alpha test (0-255)</li>
+<li><code>bTwoSided</code> - Render both sides</li>
+<li><code>bDecal</code> - Decal rendering</li>
+<li><code>bEnvironmentMapping</code> - Cubemap reflections</li>
+<li><code>bGrayscaleToPaletteColor</code> - Tint grayscale texture</li>
+<li><code>bScreenSpaceReflections</code> - SSR</li>
+</ul>
+<h4 id="values">Values</h4>
+<ul>
+<li><code>fAlpha</code> - Material alpha (0.0-1.0)</li>
+<li><code>fSpecular</code> - Specularity strength</li>
+<li><code>fGlossiness</code> - Shininess</li>
+<li><code>fEmittanceMultiplier</code> - Glow brightness</li>
+</ul>
+<p><strong>Shader types:</strong>
+- <code>Lighting</code> - Standard PBR shader
+- <code>Effect</code> - Special effects (see BGEM)</p>
+<p><strong>Vertex format control:</strong>
+- Vertex colors: Determined by vertex data in NIF (not a BGSM flag)
+- Vertex alpha: Used if <code>bAlphaBlend</code> true and vertex has alpha channel</p>
+<h3 id="bgem-files">BGEM Files</h3>
+<p><strong>Effect materials</strong> for special effects.</p>
+<p><strong>Extension:</strong> <code>.bgem</code><br />
+<strong>Format:</strong> Similar to BGSM</p>
+<p><strong>Use cases:</strong>
+- Blood decals
+- Magic effects
+- Water surfaces
+- Fire, smoke</p>
+<p><strong>Key differences from BGSM:</strong>
+- <code>Shader: "Effect"</code>
+- Additive/multiply blend modes
+- Soft particle depth
+- Falloff controls</p>
+<h3 id="in-nif-fo4">In NIF (FO4)</h3>
+<p><strong>BSLightingShaderProperty name field</strong> references BGSM/BGEM path.</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>BSLightingShaderProperty
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  Name: &quot;Materials\\Actors\\Character\\BaseHumanMale.bgsm&quot;
+</code></pre></div></p>
+<p><strong>Path:</strong> Relative to Data/, with extension.</p>
+<p><strong>Shader setup:</strong>
+1. NIF has BSLightingShaderProperty
+2. Name field = BGSM path
+3. BGSM has texture paths
+4. Game loads textures and applies material</p>
+<p><strong>Advantage:</strong> Editing BGSM updates all meshes that reference it (no NIF editing).</p>
+<h2 id="creating-textures">Creating Textures</h2>
+<h3 id="photoshop-gimp">Photoshop / GIMP</h3>
+<p><strong>Export DDS:</strong>
+1. Create/edit texture (RGBA, power-of-2 size)
+2. <strong>Save as DDS</strong> (requires plugin)
+   - Photoshop: NVIDIA DDS plugin
+   - GIMP: Built-in DDS support
+3. <strong>Choose compression:</strong>
+   - DXT1 (opaque)
+   - DXT5 (alpha or normals)
+   - BC7 (SE/FO4 high quality)
+4. <strong>Enable mipmaps:</strong> Check "Generate Mipmaps"</p>
+<h3 id="paintnet">Paint.NET</h3>
+<p><strong>Built-in DDS support</strong> (easier than Photoshop).</p>
+<p><strong>Workflow:</strong> File → Save As → DDS file type → Choose compression.</p>
+<h3 id="substance-painter-designer">Substance Painter / Designer</h3>
+<p><strong>PBR workflow</strong> for game assets.</p>
+<p><strong>Export preset:</strong> Fallout 4 / Skyrim SE</p>
+<p><strong>Outputs:</strong>
+- Base Color → <code>_d.dds</code>
+- Normal → <code>_n.dds</code>
+- Roughness/Metallic → <code>_s.dds</code> (packed channels)</p>
+<h3 id="baking-normal-maps">Baking Normal Maps</h3>
+<p><strong>Blender:</strong>
+1. High-poly model (detailed sculpt)
+2. Low-poly model (game mesh)
+3. <strong>Bake:</strong> Select low-poly, then high-poly (Shift+click), Render → Bake → Normal
+4. <strong>Export normal as DDS</strong></p>
+<p><strong>Result:</strong> Low-poly mesh with high-poly detail in normal map.</p>
+<h2 id="common-issues">Common Issues</h2>
+<h3 id="purple-textures-missing-textures">Purple Textures (Missing Textures)</h3>
+<ul>
+<li><strong>Wrong path:</strong> Check MODL/BGSM texture paths</li>
+<li><strong>File doesn't exist:</strong> Texture not installed</li>
+<li><strong>Wrong extension:</strong> <code>.dds</code> missing or wrong</li>
+<li><strong>Fix:</strong> Verify texture path, ensure file exists, check Data folder</li>
+</ul>
+<h3 id="textures-too-darkbright">Textures Too Dark/Bright</h3>
+<ul>
+<li><strong>Wrong color space:</strong> sRGB vs. linear</li>
+<li><strong>Lighting:</strong> In-game lighting affects appearance</li>
+<li><strong>Specular:</strong> Too high glossiness washes out color</li>
+<li><strong>Fix:</strong> Adjust diffuse brightness, tweak specular/glossiness</li>
+</ul>
+<h3 id="normal-map-not-working">Normal Map Not Working</h3>
+<ul>
+<li><strong>Wrong compression:</strong> Use DXT5 for normals</li>
+<li><strong>Wrong format:</strong> R/G/B channel swapped (OpenGL vs. DirectX)</li>
+<li><strong>Not assigned:</strong> Normal texture slot empty</li>
+<li><strong>Tangent/bitangent missing:</strong> Mesh needs tangent data</li>
+<li><strong>Fix:</strong> Re-export with DXT5, check format, verify slot, recalculate tangents</li>
+</ul>
+<h3 id="textures-look-blocky">Textures Look Blocky</h3>
+<ul>
+<li><strong>No mipmaps:</strong> DDS exported without mipmaps</li>
+<li><strong>Too low resolution:</strong> Texture size too small</li>
+<li><strong>Fix:</strong> Re-export with mipmaps, increase texture size</li>
+</ul>
+<h3 id="transparency-not-working">Transparency Not Working</h3>
+<ul>
+<li><strong>Alpha blend/test not enabled:</strong> SLSF1_Vertex_Alpha or bAlphaBlend flag</li>
+<li><strong>Wrong compression:</strong> Use DXT5 (alpha support)</li>
+<li><strong>Vertex alpha wrong:</strong> Mesh vertex alpha all white</li>
+<li><strong>Fix:</strong> Enable alpha flag, use DXT5, check vertex alpha in mesh</li>
+</ul>
+<h3 id="seams-visible">Seams Visible</h3>
+<ul>
+<li><strong>UV seam mismatch:</strong> Vertices split at UV boundaries</li>
+<li><strong>Bleeding:</strong> Mipmaps blend across seams</li>
+<li><strong>Padding:</strong> Need UV padding on texture</li>
+<li><strong>Fix:</strong> Weld UVs where possible, add texture padding, use higher resolution</li>
+</ul>
+<h2 id="tools">Tools</h2>
+<p><strong>Photoshop + NVIDIA DDS Plugin:</strong> Industry standard</p>
+<p><strong>GIMP:</strong> Free, built-in DDS</p>
+<p><strong>Paint.NET:</strong> Easy DDS workflow (Windows only)</p>
+<p><strong>Substance Painter/Designer:</strong> PBR texturing</p>
+<p><strong>NifSkope:</strong> View/edit material properties in NIFs</p>
+<p><code>[FO4]</code> <strong>Material Editor:</strong> Creation Kit tool for BGSM editing</p>
+<p><strong>PyNifly:</strong> Edit shader properties via Python</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">io_scene_nifly</span><span class="w"> </span><span class="kn">import</span> <span class="n">pynifly</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">nif</span> <span class="o">=</span> <span class="n">pynifly</span><span class="o">.</span><span class="n">NifFile</span><span class="p">(</span><span class="s1">&#39;armor.nif&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">shape</span> <span class="o">=</span> <span class="n">nif</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="c1"># Get shader property</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">shader</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">shader</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1"># Set textures</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="n">shader</span><span class="o">.</span><span class="n">textures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;textures</span><span class="se">\\</span><span class="s1">armor</span><span class="se">\\</span><span class="s1">myarmor_d&#39;</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">shader</span><span class="o">.</span><span class="n">textures</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;textures</span><span class="se">\\</span><span class="s1">armor</span><span class="se">\\</span><span class="s1">myarmor_n&#39;</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="c1"># Set flags</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="n">shader</span><span class="o">.</span><span class="n">Shader_Flags_1</span> <span class="o">|=</span> <span class="mh">0x00000001</span>  <span class="c1"># SLSF1_Specular</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="n">shader</span><span class="o">.</span><span class="n">Shader_Flags_2</span> <span class="o">|=</span> <span class="mh">0x00000020</span>  <span class="c1"># SLSF2_Vertex_Colors</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="c1"># Set colors</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="n">shader</span><span class="o">.</span><span class="n">Specular_Color</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="n">shader</span><span class="o">.</span><span class="n">Glossiness</span> <span class="o">=</span> <span class="mf">50.0</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="n">nif</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;armor_updated.nif&#39;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="../nif-files/">NIF Files</a> - BSLightingShaderProperty, BSShaderTextureSet</li>
+<li><a href="../reference/shader-flags.md">Shader Flags Reference</a> [TBD] - Complete flag list and descriptions</li>
+<li><a href="../workflows/textures-materials.md">Texture Workflows</a> [TBD] - Creating and applying textures</li>
+<li><a href="../debugging/mesh-issues.md">Mesh Issues Debugging</a> [TBD] - Texture troubleshooting</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
