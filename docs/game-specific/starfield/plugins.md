@@ -2,7 +2,7 @@
 
 Starfield is still a TES4-family engine: a plugin is a `TES4` header record followed by `GRUP` groups of records, each record a stream of `[SIG:4][SIZE:2][data]` subrecords. The record header is the same 24 bytes as Skyrim/Fallout 4, groups behave the same, and the `XXXX` large-field trick still applies. What is genuinely new is a **component system** layered on top of records, a **new master-tier model** (full / medium / small), and a **new BA2 version** (v2/v3). Geometry also moved out of the `.nif` into external `.mesh` files.
 
-This page assumes familiarity with the generic [plugin](plugins.md) and [archive](archives.md) pages and only documents Starfield deltas. Record-field breakdowns are taken from the xEdit / SF1Edit definition file `wbDefinitionsSF1.pas` (the authoritative community source), cross-checked against `Starfield.esm`. Header layouts are from direct byte dumps of the shipped archives.
+This page assumes familiarity with the generic [plugin](../../file-formats/plugins.md) and [archive](../../file-formats/archives.md) pages and only documents Starfield deltas. Record-field breakdowns are taken from the xEdit / SF1Edit definition file `wbDefinitionsSF1.pas` (the authoritative community source), cross-checked against `Starfield.esm`. Header layouts are from direct byte dumps of the shipped archives.
 
 - **Plugin header version (HEDR):** `0.96` (`[FO4]` was `0.95`; `[SSE]` `0.94`/Form 44).
 - **xEdit game mode:** SF1Edit (`xSFEdit.exe`, or `xEdit.exe -sf1`), build 4.1.4+ for read, 4.1.5+ for most editing.

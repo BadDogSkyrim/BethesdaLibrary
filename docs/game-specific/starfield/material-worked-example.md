@@ -9,7 +9,7 @@ tools produce.
 It's a good teaching example because it exercises most of the layered-material system in one
 file: two material **layers** combined by a **blender**, subsurface scattering, a base-skin
 **texture set** plus a tiled **detail-normal** texture set, per-layer **UV streams**, and the
-template **inheritance** chain. Read [starfield-materials.md](starfield-materials.md) first for
+template **inheritance** chain. Read [materials.md](materials.md) first for
 the format overview; this page walks the file top to bottom.
 
 > **How to read the JSON.** Every typed value is `{ "Type": "...", "Data": {...} }`. Numbers and
@@ -97,7 +97,7 @@ The **structure of the layer stack**, by reference:
 **Subsurface scattering** — this is what makes skin read as skin. `UseSSS: true` turns on SSS;
 the two `SpecLobe*RoughnessScale` values tune the dual-specular-lobe skin highlight (one tighter,
 one broader). For a furry-race skin/fur material this is the block you'd clone and tune (see the
-fur/skin notes in [starfield-materials.md](starfield-materials.md#4-layers-blenders-and-component-blocks)).
+fur/skin notes in [materials.md](materials.md#4-layers-blenders-and-component-blocks)).
 
 ```jsonc
     { "Type": "BSMaterial::ShaderModelComponent", "Index": 0,
@@ -256,7 +256,7 @@ small detail texture into all-over pore detail.
   "Parent": "materials\\layered\\root\\texturesets.mat" }
 ```
 **This is the base skin.** Each `MRTextureFile.Index` is a **texture slot** (see the slot table in
-[starfield-materials.md](starfield-materials.md#5-textureset-slots--dds-conventions)):
+[materials.md](materials.md#5-textureset-slots--dds-conventions)):
 
 | `Index` | Slot | This file |
 |---|---|---|

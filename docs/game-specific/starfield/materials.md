@@ -43,7 +43,7 @@ Key ideas:
   graphs for *every* vanilla material plus precomputed path hashes. A **loose `.mat`** in
   `Data\Materials\…` overrides/extends the database entry with the matching path. Its on-disk binary
   layout — and the v4 change that breaks older readers — is documented in
-  [The `.cdb` binary format](starfield-cdb-format.md).
+  [The `.cdb` binary format](cdb-format.md).
 
 **A loose `.mat` is sufficient — you never need to write the `.cdb`** (verified against fo76utils
 NifSkope, nifly, and Outfit Studio source). The game/CK load loose JSON `.mat` files at runtime, and
@@ -86,7 +86,7 @@ disambiguates repeated components (e.g. texture slot index within a set).
 
 > For a **complete, line-by-line annotated real material** — a shipped 2-layer skin with SSS,
 > a blend mask, and a tiled detail-normal layer — see
-> [**the `.mat` worked example**](starfield-material-worked-example.md).
+> [**the `.mat` worked example**](material-worked-example.md).
 
 ### Real skeleton (abridged from a shipped material)
 

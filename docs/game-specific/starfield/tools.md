@@ -4,9 +4,9 @@ A directory of the tools used to work with Starfield's file formats, grouped by 
 Because Starfield's formats are new (geometry-less NIF + external `.mesh`, layered `.mat`
 materials, component-based plugins, in-house `.agx` animation), most of these are
 community-built and evolve fast — **check each project for its current version/state.**
-This is a landscape map; the format pages ([meshes](starfield-meshes.md),
-[materials](starfield-materials.md), [chargen](starfield-chargen.md),
-[plugins](starfield-plugins.md)) are where the details live.
+This is a landscape map; the format pages ([meshes](meshes.md),
+[materials](materials.md), [chargen](chargen.md),
+[plugins](plugins.md)) are where the details live.
 
 Two ecosystem facts worth knowing up front:
 
@@ -113,7 +113,7 @@ Two ecosystem facts worth knowing up front:
 ## Where PyNifly fits
 
 The dominant Blender mesh tool (Starfield Geometry Bridge) is pinned to Blender 3.5/3.6, so there's
-no maintained path for authoring Starfield geometry in modern Blender. [PyNifly](../tools/pynifly/overview.md)
+no maintained path for authoring Starfield geometry in modern Blender. [PyNifly](../../tools/pynifly/overview.md)
 — which already targets current Blender for Skyrim/Fallout — is adding Starfield `.mesh` import/export
 to fill that gap. It builds on `nifly` (which carries the SF `BSGeometry`/`.mesh` support), so the new
 work is the Blender-side representation plus loose-file `.mesh` resolution, not a from-scratch parser.

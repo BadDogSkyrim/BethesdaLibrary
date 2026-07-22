@@ -28,12 +28,12 @@ Deep dives into Bethesda's binary file formats (shared across Skyrim and Fallout
 
 Where a game diverges from the shared formats above, it gets its own section fronted by a game-overview page:
 
-- **[Starfield](file-formats/starfield-overview.md)** - Creation Engine 2: geometry-less NIF + external `.mesh`, layered `.mat`/`.cdb` materials, component-based plugins, in-house animation. The most complete area right now:
-  - **[Meshes (NIF + .mesh)](file-formats/starfield-meshes.md)** - BSGeometry, external `.mesh` binary format, skinning
-  - **[Materials & Textures](file-formats/starfield-materials.md)** - layered `.mat`/`.cdb`, shader models, DDS conventions ([worked example](file-formats/starfield-material-worked-example.md))
-  - **[Chargen, Race & Skeleton](file-formats/starfield-chargen.md)** - RACE/HDPT/MRPH/BMOD, morphs, custom races
-  - **[Plugins & Archives](file-formats/starfield-plugins.md)** - component records, master tiers, BA2 v2/v3
-  - **[Tools](file-formats/starfield-tools.md)** - the Starfield tooling directory, grouped by task
+- **[Starfield](game-specific/starfield/overview.md)** - Creation Engine 2: geometry-less NIF + external `.mesh`, layered `.mat`/`.cdb` materials, component-based plugins, in-house animation. The most complete area right now:
+  - **[Meshes (NIF + .mesh)](game-specific/starfield/meshes.md)** - BSGeometry, external `.mesh` binary format, skinning
+  - **[Materials & Textures](game-specific/starfield/materials.md)** - layered `.mat`/`.cdb`, shader models, DDS conventions ([worked example](game-specific/starfield/material-worked-example.md))
+  - **[Chargen, Race & Skeleton](game-specific/starfield/chargen.md)** - RACE/HDPT/MRPH/BMOD, morphs, custom races
+  - **[Plugins & Archives](game-specific/starfield/plugins.md)** - component records, master tiers, BA2 v2/v3
+  - **[Tools](game-specific/starfield/tools.md)** - the Starfield tooling directory, grouped by task
 - **[Fallout 4](game-specific/fallout4/overview.md)** - 64-bit Creation Engine: BGSM/BGEM materials, mesh segments, connect points, BA2 archives, ESL plugins:
   - **[Connect Points](game-specific/fallout4/connect-points.md)** - runtime mesh attachment points
   - **[Dismemberment](game-specific/fallout4/dismemberment.md)** - limb severing (BSSubIndexTriShape segments, `.ssf`)
@@ -154,4 +154,4 @@ Found an error? Have additional information? Contributions welcome! See **[CONVE
 
 ---
 
-**Ready to dive in?** Start with [File Formats](file-formats/overview.md) for the shared formats, or jump straight to [Starfield](file-formats/starfield-overview.md) for the most complete section.
+**Ready to dive in?** Start with [File Formats](file-formats/overview.md) for the shared formats, or jump straight to [Starfield](game-specific/starfield/overview.md) for the most complete section.

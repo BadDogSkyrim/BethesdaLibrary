@@ -131,7 +131,7 @@ FaceFX layer — there is no "emotion → morph weights" record.**
 > `AnimFaceArchetype*` keywords, mapped to the `FXPD` by name in the anim system. In effect
 > Starfield turned FO4's monolithic, engine-internal `Mood<Emotion>` morph into a
 > **composable, moddable expression record**. See
-> [Starfield chargen §3](starfield-chargen.md) for the `FXPD` / `morph.dat` details.
+> [Starfield chargen §3](../game-specific/starfield/chargen.md) for the `FXPD` / `morph.dat` details.
 
 ### CharGen Morphs
 

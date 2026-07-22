@@ -58,7 +58,7 @@ This section covers the core binary file formats used in Bethesda games (Skyrim 
 - **Skyrim LE** - 32-bit pointers, NiTriShape, hk_2010.2.0-r1
 - **Skyrim SE** - 64-bit pointers, BSTriShape, hk_2010.2.0-r1
 - **Fallout 4** - 64-bit pointers, BSTriShape, segments, BGSM, hk_2014.1.0-r1
-- **Starfield** - Creation Engine 2; geometry-less NIF (`BSGeometry` → external `.mesh`), layered `.mat` materials, component-based plugins, in-house animation. See the dedicated **[Starfield](starfield-overview.md)** section — its formats differ enough to stand apart from the pages above.
+- **Starfield** - Creation Engine 2; geometry-less NIF (`BSGeometry` → external `.mesh`), layered `.mat` materials, component-based plugins, in-house animation. See the dedicated **[Starfield](../game-specific/starfield/overview.md)** section — its formats differ enough to stand apart from the pages above.
 
 ### File Relationships
 ```

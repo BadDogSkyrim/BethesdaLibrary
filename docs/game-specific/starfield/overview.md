@@ -43,17 +43,17 @@ Assets packed in <Plugin> - Main.ba2 (meshes/geometries/materials) + Textures.ba
 
 ## Pages in this section
 
-- **[Meshes: NIF + external `.mesh`](starfield-meshes.md)** — the geometry-less NIF,
+- **[Meshes: NIF + external `.mesh`](meshes.md)** — the geometry-less NIF,
   the `BSGeometry` block, and the external `.mesh` binary format (int16-SNORM
   metric positions, UDEC3 normals, meshlets, `SkinAttach` skinning). The core of
   any importer/exporter.
-- **[Materials & Textures](starfield-materials.md)** — the layered `.mat`/`.cdb`
+- **[Materials & Textures](materials.md)** — the layered `.mat`/`.cdb`
   system, shader-model templates (incl. skin/hair), texture slots and DDS
   conventions, and how to map it to a Blender shader.
-- **[Chargen, Race & Skeleton](starfield-chargen.md)** — RACE/HDPT/MRPH/BMOD/AVMD,
+- **[Chargen, Race & Skeleton](chargen.md)** — RACE/HDPT/MRPH/BMOD/AVMD,
   morphs, the skeleton, adding a tail/ears, FaceGen, and a realistic assessment of
   what a **custom (e.g. anthropomorphic) playable race** actually requires.
-- **[Plugins & Archives](starfield-plugins.md)** — the component record system,
+- **[Plugins & Archives](plugins.md)** — the component record system,
   master tiers and FormID ranges, the records a body/armor/race mod edits, and the
   BA2 v2/v3 archive format.
 
@@ -66,6 +66,6 @@ Starfield Geometry Bridge** (Blender 3.5–3.6) for `.mesh`/`morph.dat` I/O;
 **SF1Edit** (xEdit) for records; the **Creation Kit** for FaceGen/chargen; and
 **CharGenMenu** (SFSE) for exposing custom character-creator sliders.
 
-See the **[Tools](starfield-tools.md)** page for the full directory, grouped by task.
+See the **[Tools](tools.md)** page for the full directory, grouped by task.
 
 _Draft 2026-07-06 — not yet reviewed_

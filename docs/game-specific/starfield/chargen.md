@@ -441,7 +441,7 @@ For example `facialExpression_Afraid` = `browLowererL 0.638`, `innerBrowRaiseR 0
 `eyeOpenL/R 1.0`, `jawOpen 0.155`, `lipCornerDepressL/R ≈0.3`, `nostrilDilator 0.621`,
 `neckFlexL/R`, … So an expression is just *"set these AUs to these weights."* This is the
 moddable successor to Skyrim/FO4's engine-internal `Mood<Emotion>` expression morph — see
-[Morphs & Shape Keys → How dialogue drives these morphs](morphs-shapekeys.md) for the `.tri`
+[Morphs & Shape Keys → How dialogue drives these morphs](../../file-formats/morphs-shapekeys.md) for the `.tri`
 ancestry and the 8-emotion enum it replaced.
 
 **How they're triggered (and what is *not* a link).** No plugin record references an
@@ -631,7 +631,7 @@ stored inside the `.nif`.**
   40 hex chars (split 20/20) that *look* like a digest, but the name is **not a
   computed/enforced hash** (nifly/OS write arbitrary names; the game doesn't
   verify), so human-readable replacement names work. See
-  [starfield-meshes.md](starfield-meshes.md) for the full `.mesh` byte layout.
+  [meshes.md](meshes.md) for the full `.mesh` byte layout.
 - Inside a `.mesh` (`BSGeometryMeshData` in nifly): 32-bit vertex count
   (practical cap **65535** verts per the tooling), triangles, **UDEC3-packed**
   normals & tangents, vertex colors, UV1/UV2, per-vertex **skin weights**

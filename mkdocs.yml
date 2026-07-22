@@ -85,14 +85,14 @@ nav:
       - Connect Points: game-specific/fallout4/connect-points.md
       - Dismemberment: game-specific/fallout4/dismemberment.md
     - Starfield:
-      - Overview: file-formats/starfield-overview.md
-      - Meshes (NIF + .mesh): file-formats/starfield-meshes.md
-      - Materials & Textures: file-formats/starfield-materials.md
-      - "  ↳ .mat worked example": file-formats/starfield-material-worked-example.md
-      - "  ↳ .cdb binary format": file-formats/starfield-cdb-format.md
-      - Chargen, Race & Skeleton: file-formats/starfield-chargen.md
-      - Plugins & Archives: file-formats/starfield-plugins.md
-      - Tools: file-formats/starfield-tools.md
+      - Overview: game-specific/starfield/overview.md
+      - Meshes (NIF + .mesh): game-specific/starfield/meshes.md
+      - Materials & Textures: game-specific/starfield/materials.md
+      - "  ↳ .mat worked example": game-specific/starfield/material-worked-example.md
+      - "  ↳ .cdb binary format": game-specific/starfield/cdb-format.md
+      - Chargen, Race & Skeleton: game-specific/starfield/chargen.md
+      - Plugins & Archives: game-specific/starfield/plugins.md
+      - Tools: game-specific/starfield/tools.md
 
   - Tools:
     - PyNifly:

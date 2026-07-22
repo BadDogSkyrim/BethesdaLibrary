@@ -317,7 +317,7 @@ Structurally a Starfield bodypart NIF and an armor NIF are the same kind of tree
 
 ## 5. `morph.dat` files (chargen reshape + expression morphs)
 
-Overview here; the [chargen page](starfield-chargen.md) covers morphs and the authoritative binary layout in depth. Starfield stores per-vertex morph/blendshape deltas in **`morph.dat`** files (under `Data/meshes/morphs/…`), parallel to the `.mesh` they morph. The **same format serves two distinct roles** (split by folder — `chargen/` vs `performance/`):
+Overview here; the [chargen page](chargen.md) covers morphs and the authoritative binary layout in depth. Starfield stores per-vertex morph/blendshape deltas in **`morph.dat`** files (under `Data/meshes/morphs/…`), parallel to the `.mesh` they morph. The **same format serves two distinct roles** (split by folder — `chargen/` vs `performance/`):
 
 - **Chargen morphs** — *reshape facial features*: the character-creator sliders and phenotype presets (chin/forehead/nose/…).
 - **Performance morphs** — *expressions + lip-sync*: FACS-style action units driven at runtime in dialogue/emotes.

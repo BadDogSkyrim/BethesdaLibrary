@@ -3,12 +3,12 @@
 `materialsbeta.cdb` (inside `Data\Starfield - Materials.ba2`) is the compiled form of *every*
 vanilla material. It's what the game reads at load time to resolve a material by path. This page
 documents its on-disk binary layout — enough to write a reader that extracts a material as a loose
-`.mat` (the JSON described on the [materials page](starfield-materials.md)). For how the `.mat`
-graph is structured once decoded, see the [worked example](starfield-material-worked-example.md).
+`.mat` (the JSON described on the [materials page](materials.md)). For how the `.mat`
+graph is structured once decoded, see the [worked example](material-worked-example.md).
 
 The format is a **self-describing reflection database** (`BSComponentDB2`): it carries its own class
 schemas, so a single generic reader can decode any component without hardcoding ~100 struct layouts.
-There is no writer anywhere (see the [tools page](starfield-tools.md)); the database is read-only, and
+There is no writer anywhere (see the [tools page](tools.md)); the database is read-only, and
 authoring is done with loose `.mat` files.
 
 > **Version note.** The shipped database is **version 4** (game build ≥ 1.16.244). v4 changed a
@@ -181,7 +181,7 @@ To turn a material **path** into a loose `.mat` graph:
 4. Set each object's `Parent` to the root template path it derives from (the six
    `Materials\Layered\Root\*.mat` graphs).
 
-The result is exactly the `.mat` JSON of the [worked example](starfield-material-worked-example.md).
+The result is exactly the `.mat` JSON of the [worked example](material-worked-example.md).
 
 ## Practical notes
 
@@ -189,7 +189,7 @@ The result is exactly the `.mat` JSON of the [worked example](starfield-material
   a loose `.mat` over the compiled entry with the matching path hash.
 - **v4 compatibility.** A reader must handle the 33-byte `ObjectInfo`. Known-working: PyNifly's
   `pyn/sf_cdb.py`. Older readers (fo76utils, Gibbed.Starfield, the `MaxieStarfieldScripts` engine
-  behind SFME) predate v4 and misalign/OOM until updated — see the [tools page](starfield-tools.md).
+  behind SFME) predate v4 and misalign/OOM until updated — see the [tools page](tools.md).
 - Reference implementation to compare against: `maximusmaxy/MaxieStarfieldScripts` `include/cdb.h`
   and `src/crc.cpp` (the pre-v4 reader; the byte layout matches except for `ObjectInfo`'s size).
 
