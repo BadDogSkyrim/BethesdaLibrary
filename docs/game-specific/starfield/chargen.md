@@ -195,6 +195,22 @@ There is no separate "genes" record type — what players call the "genes"
 system is this combination of **face dials + morph phenotypes + shape-blend
 morphs + skin-tone AVM subtypes**.
 
+#### Field reference (what SF1Edit shows under "Chargen and Skintones")
+
+| Record | Label | Meaning |
+|---|---|---|
+| `MNAM` / `FNAM` | Male Data / Female Data | per-gender marker (the whole block repeats for each sex) |
+| `NAM0` | Chargen | start of the chargen block |
+| `RPRM` / `RPRF` | Race Presets (male/female) → `NPC_` | the preset faces scrolled in the creator; each points to an `NPC_` defining a full face |
+| `MPGN` + `MPGM` | **Morph Groups** | `MPGN` = group name = a **face region** (`Cheeks, Chin, Ears, Eyes, Forehead, Jaw, Mouth, Neck, Nose`); `MPGM` = the list of morph-key names in that region — **one per phenotype** (e.g. `male_af_md1_Cheeks`, `male_eu_md2_Cheeks`, …). These are the creator's per-region sliders; the names are the keys in the chargen `morph.dat` (§3). |
+| `FMRI` + `FMRN`/`FMRU`/`FMRS` | **Face Morph Phenotypes** | the named **base faces**: ethnicity (`af`/`as`/`eu`) × age (`yo`/`md`/`ol`) = **9** (`af_md1`, `eu_md2`, `as_yo1`, …). `FMRI` = morph index, `FMRN` = name. `FMSR` variants are region-level presets (`Head Shapes`, `Neck`, `Eyebrows`…). |
+| `FDDS` | Skin Tone AVMS Subtype | which AVM schema (§4) the skin tones conform to |
+| `FDSI` + `FDSL` | **Face Dials** | the individual named **sliders** in the creator (`FDSI` = skin index, `FDSL` = label text) |
+| `BSTT` / `HSTT` / `FSTT` | Body / Hand / **Face** Skin Tones | the AVM skin-tone group names the race draws its skin from (§4); a custom race points these at its own groups (guide 431, §"Adding skin tones") |
+| `FCTP` | Face Custom Textures Base Path | the directory (under `Data\Textures\`) the **FaceGen bake** reads its base face maps from, by filename convention — `<phenotype>_sk<N>_color/_normal/_rough/_ao.dds` plus `FCT_<region>_mask.dds`. Vanilla `HumanRace` omits it and falls back to `[Facegen] sSkinTexturePath` (default `Actors\Human\Faces\Chargen`); `FelidRace` sets `actors\Felid\faces\chargen`. **A custom race should set this** — see [Creation Kit §3](creation-kit.md#3-where-the-bake-gets-its-source-textures-fctp-and-the-filename-convention). |
+
+**How it composes:** **9 regions × 9 phenotypes = the 81 chargen morphs** (§3). Morph Groups reference those morphs by name per region; Face Morph Phenotypes are the base faces the sliders blend between; Face Dials are extra individual sliders. A custom race authors its own `MPGN`/`MPGM` + `FMRI`/`FMRN` (pointing at *its* morph.dat keys) and its own skin-tone AVM groups (`BSTT`/`HSTT`/`FSTT`).
+
 ### Head Parts and Bone Modifiers (per gender)
 ```
 Head Parts and Bone Modifiers
@@ -288,9 +304,11 @@ Object" record plus external morph-delta files.**
 | `MOBC` Base Vertex Color | base color for the morphed mesh |
 
 Key insight: a `MRPH` separates the **face-animation morphs** (expressions,
-visemes) from the **chargen morphs** (creator sliders), and can additionally
-map morph sliders onto **bone transforms** via the Bone Morph Definition File —
-so a slider can move bones, not just vertices.
+visemes) from the **chargen morphs** (creator sliders). `BMPP` can additionally
+map morph sliders onto **bone transforms** — but note that vanilla head/body
+`MRPH` records and shipped custom races leave `BMPP` empty; the bone-driven face
+shaping actually in use is the FacialBoneRegions system described below, which
+is wired by file-naming convention rather than through `MRPH`.
 
 ### Expressions (performance morphs) — verified from vanilla assets
 
@@ -553,6 +571,51 @@ Reference implementations: Outfit Studio `SFMorphFile.{h,cpp}` (reads **and** wr
 StarfieldMeshConverter's `MorphIO`. Both are self-contained (~250 lines) with no NIF-library
 dependency beyond half-float + DEC3N helpers.
 
+### Two ways to change face shape — bone morphs vs. vertex morphs
+
+Starfield has **two independent systems** that both reshape a face, with very
+different costs. Choosing between them is one of the load-bearing decisions when
+building a custom race.
+
+| | Bone morphs | Vertex morphs |
+|---|---|---|
+| Authored in | `<RaceEDID>FacialBoneRegions<Sex>.txt` (JSON) | `chargen/…/morph.dat` |
+| Wired by | file naming convention off the race EDID | `MRPH` `TCMP` + race `MPGN`/`MPGM` |
+| Selected per NPC by | face-morph phenotype (`FMRI`/`FMRU`) and creator sliders | `BMPN` "Blend Name" + `BMPV` "Intensity" |
+| Can express | translate / rotate / scale of existing face bones | arbitrary per-vertex displacement |
+| **Propagates to attached parts** | **yes, automatically** — anything skinned to `faceBone_*` follows | **no** — each part must re-author the same named keys |
+
+The propagation difference is the big one. A vertex morph only deforms the mesh
+it was authored for, so every eyebrow, beard, hair, teeth and eyelash mesh needs
+its own `morph.dat` carrying **the same key names** — the identical tax the
+performance/expression AUs pay (see above). A bone morph moves the skeleton, so
+every part weighted to those bones follows for free, including headgear.
+
+The tradeoff is expressive range: bones can only move, rotate and scale what is
+already in the rig. Skull proportions, muzzle length, ear size and set are well
+within reach; fine surface detail that has no bone under it is not.
+
+**What shipped custom races actually do.** The published felid race puts its
+per-species head shapes in the **chargen `morph.dat`** — its head chargen morph
+carries 29 keys including `Tiger_Cheeks`, `Jaguar_Jaw`, `SnowLeopard_Nose`,
+`PointedEars_Ears`, matching the race's `MPGM` morph-group members one-for-one,
+and NPCs select them via `BMPN`/`BMPV`. Its `FacialBoneRegions` files are a
+renamed copy of the vanilla human ones, phenotype names and all. The cost shows
+up exactly where the table predicts: its eyebrow chargen morph re-authors seven
+of the same keys (`Tiger_Forehead`, `Jaguar_Forehead`, `SnowLeopard_Nose`, …) so
+brows track the species head shape.
+
+Putting per-species shapes in the **bone region file instead**, as additional
+`SculptRegion: false` phenotype regions with matching race `FMRU` entries, gets
+that propagation for free — at the price of being limited to bone transforms.
+For a race whose sub-species differ mainly in skull proportion this is the
+cheaper architecture; for one that needs genuinely different surface topology it
+is not sufficient on its own. The two systems compose, so a hybrid (bones for
+proportion, a few vertex morphs for detail) is available.
+
+See the Creation Kit page, §8, for the FacialBoneRegions file schema, locations
+and the vanilla sculpt-region/slider inventory.
+
 ---
 
 ## 4. Tints, complexions & overlays — the AVM system (`AVMD`/`AVMS`)
@@ -787,9 +850,17 @@ texture written under `Data/…` (loose, then archived).
   guides exist); a **NPCs Face Data** Synthesis patcher fixes missing masters so
   the CK loads the right resources; and failed/mismatched facegen produces the
   classic **dark-face / neck-seam skin-tone mismatch** and floating eyes/teeth.
-- **Unverified:** the exact Starfield facegen output subpaths and file naming —
-  the community docs describe the workflow but I did not confirm the literal
-  `facegendata/…` path for Starfield. Treat as "same idea as FO4, path TBD."
+- **Resolved (2026-07):** the Starfield output layout is **not** FO4's `facegendata/facegeom`. The
+  per-race **base head** is baked to a texture set at
+  `Data\Textures\actors\Character\FaceCustomization\<Plugin>.esp\BaseHead<RaceEDID><Sex>_<map>.dds`,
+  keyed by the race EDID — or `…\<NPC FormID>_<map>.dds` once the NPC has at least one tint layer.
+  Full details, formats, and the CK/CKPE baking workflow are on the
+  [Creation Kit & FaceGen page](creation-kit.md).
+- **The bake ignores the head part's material.** Its four maps come from the race's `FCTP` directory
+  by filename convention (§1, `FCTP`), with the albedo optionally redirected per skin tone through
+  the `FSTT` → `AVMD` chain (§4). Normal, roughness and AO have **no** AVMD route — they are
+  filename-convention only. Verified by pixel comparison; see
+  [Creation Kit §2–3](creation-kit.md#2-facegen-output-what-it-bakes-and-where-verified).
 
 Implication for a furry race's NPCs: every NPC of the race must be baked in the
 CK with the race's head parts, morphs, and fur tints — a bulk, error-prone step.
