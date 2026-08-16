@@ -264,22 +264,75 @@ padded to 16 bytes with 0xFF. Useful hashes:
 
 ##### Data section
 
-Begins with an `hknpPhysicsSystemData` (PSD, 0x80 bytes) — six `hkArray` slots + pad:
+Begins with an `hknpPhysicsSystemData` (PSD, 0x80 bytes) — six `hkArray` slots + pad.
+The member names below are the Havok SDK's; older notes called these `body_props`,
+`dyn_motion`, `dyn_inertia` and `ShapeEntry`, which obscures what they do:
 
-| Slot @ | Array | Count |
-|--------|-------|-------|
-| 0x10 | body_props | num_bodies |
-| 0x20 | dyn_motion | 1 if any dynamic body, else 0 |
-| 0x30 | dyn_inertia | 1 if dynamic, else 0 |
-| 0x40 | BodyCInfo | num_bodies |
-| 0x60 | ShapeEntry | num_bodies |
+| Slot @ | Array | Element | Count |
+|--------|-------|---------|-------|
+| 0x10 | `materials` | `hknpMaterial`, **0x50** | num_bodies |
+| 0x20 | `motionProperties` | `hknpMotionProperties`, **0x40** | see below |
+| 0x30 | `motionCinfos` | `hknpMotionCinfo`, **0x70** | number of *dynamic* bodies |
+| 0x40 | `bodyCinfos` | `hknpBodyCinfo`, **0x60** | num_bodies |
+| 0x50 | `constraintCinfos` | | 0 in static collision |
+| 0x60 | `referencedObjects` | **pointer, 0x08** | num_bodies |
+| 0x70 | `name` | `hkStringPtr` | |
 
-Then `body_props[N]`, `BodyCInfo[N]` (0x60 each; `+0x00` = shape pointer, `+0x10` =
-body transform), `ShapeEntry[N]` (0x10 each; `+0x00` = shape pointer), then the shape
-objects. A body's ShapeEntry and BodyCInfo both point at its shape.
+> **`referencedObjects` has an 8-byte stride, not 16.** It is
+> `hkArray<Ptr<hkReferencedObject>>` — one bare pointer per entry, not the 16 bytes an
+> `hkArray` element usually takes. Writing it at 16 leaves every entry after the first
+> null, and the engine then reads a null shape for bodies 1..N-1 and stores through it
+> in `bhkNPCollisionObject::CreateInstance` while loading the cell. Body 0 sits at
+> offset 0 either way, so single-body collision works and multi-body collision does not.
 
-Material/simulation params in `body_props` use **truncated float16** — the upper 16
-bits of a float32 as a `uint16`:
+Rules measured across 1500 vanilla systems, all holding 1500/1500:
+
+- `materials` count **equals** the body count, and body *i* uses material *i*.
+- `motionCinfos` count **equals the number of dynamic bodies**, and their `motionId`s
+  are `0 .. n-1` in body order.
+- `referencedObjects` count equals the body count. Body *i*'s `bodyCinfos[i].shape` and
+  `referencedObjects[i]` point at the **same** shape.
+
+**`hknpBodyCinfo` (0x60):**
+
+| Offset | Field |
+|--------|-------|
+| 0x00 | `shape` pointer (global fixup) |
+| 0x08 | `reservedBodyId` (`0x7FFFFFFF`) |
+| 0x0C | **`motionId`** — index into `motionCinfos`, or `0x7FFFFFFF` for a static body |
+| 0x10 | `qualityId` (u8, `0xFF`) |
+| 0x12 | **`materialId`** (u16) — index into `materials`; vanilla always uses the body's own index |
+| 0x14 | **`collisionFilterInfo`** (u32) — the layer this body collides on |
+| 0x18 | `flags` (i32) / 0x1C `collisionLookAheadDistance` |
+| 0x20 | `name` / 0x28 `userData` |
+| **0x30** | **`position`** (`hkVector4`) |
+| **0x40** | **`orientation`** (`hkQuaternionf`, x y z w) |
+
+> **`position` places the body**, it is not only centre-of-mass metadata. Over 400
+> vanilla bodies carrying a transform: 288 are zero, 27 sit near the vertex centroid,
+> and **84 are a genuine placement unrelated to the geometry**. Several bodies commonly
+> share one local mesh sitting at the origin and are separated by this field alone, so
+> discarding it stacks them all in one spot.
+
+A body is **dynamic exactly when it references a motionCinfo**. Writing a dynamic
+`motionId` without also writing that record — or the reverse — produces a body the
+engine cannot instantiate.
+
+**`hknpMotionCinfo` is 112 bytes (0x70)**, not 64: `motionPropertiesId` (u16) at 0x00,
+`inverseMass` 0x04, `massFactor` 0x08, `inverseInertiaLocal` 0x20,
+`centerOfMassWorld` 0x30, **`orientation` 0x40, `linearVelocity` 0x50,
+`angularVelocity` 0x60**. Truncating it at 0x40 makes the engine read the next record
+as this one's velocities.
+
+**`motionPropertiesId`** indexes the system's own `motionProperties` array, or is
+`0xFFFF` for "none" — which is what every vanilla record holds when the array is absent
+(131/131 measured), leaving the engine to apply defaults. Note the FO4 runtime *also*
+defines `hknpMotionPropertiesId::Preset` — `STATIC=0, DYNAMIC=1, KEYFRAMED=2,
+FROZEN=3, DEBRIS=4` — but those are ids in the runtime `hknpMotionPropertiesLibrary`
+after registration, **not** values found in a packfile. Don't conflate the two.
+
+Material/simulation params in `hknpMaterial` use **truncated float16** — the upper 16
+bits of a float32 as a `uint16` (`dynamicFriction` at +0x12, `restitution` at +0x16):
 
 ```python
 decode = struct.unpack('<f', struct.pack('<I', u16 << 16))[0]
@@ -288,8 +341,31 @@ encode = struct.unpack('<I', struct.pack('<f', value))[0] >> 16
 
 ##### Shape objects
 
-All `hknp` shapes share a 0x30 base header: `+0x10` type/quality flags, `+0x14`
-convex radius (float), **`+0x18` `m_userData` (u64)**. `m_userData` holds one value
+All `hknp` shapes share a base header from `hknpShape`: `+0x10` flags (u16),
+**`+0x12` `numShapeKeyBits` (u8)**, `+0x13` `dispatchType`, `+0x14` convex radius
+(float), **`+0x18` `m_userData` (u64)**, `+0x20` `properties`.
+
+> **`numShapeKeyBits` is per shape and must be right.** It tells the engine how many
+> bits of a shape key belong to this shape. For a compressed mesh it equals the shape
+> data's `bitsPerKey` (700/700 vanilla shapes); for an `hknpDynamicCompoundShape` it is
+> `numInstances.bit_length()` (1200/1200). Both are the same rule — enough bits to
+> cover the largest key the shape can hand out, plus one. A fixed value makes the engine
+> resolve a primitive the shape never wrote, and it then walks off the end of it inside
+> `hknpCompressedMeshShape::getLeafShapes` — a *query-time* crash, so the cell loads and
+> the game dies a minute later when something comes near.
+
+A composite shape (`hknpCompositeShape`, the base of both the compressed mesh and the
+compound) adds:
+
+| Offset | Field |
+|--------|-------|
+| 0x30 | `edgeWeldingMap.secondaryKeyMask` = `0xFFFFFFFF` |
+| 0x34 | `edgeWeldingMap.secondaryKeyBits` = 0 |
+| 0x38 | `edgeWeldingMap.primaryKeyToIndex` — `hkArray<u16>`, empty; capacity word at 0x44 still carries `DONT_DEALLOCATE` (0x80000000) |
+| 0x48 | `edgeWeldingMap.valueAndSecondaryKeys` — `hkArray<u16>`, empty; capacity word at 0x54 = 0x80000000 |
+| 0x58 | `shapeTagCodecInfo` (u32) = **`0xFFFFFFFF`** in 500/500 vanilla shapes |
+
+`m_userData` holds one value
 **shared by a compound and all its child shapes** in a file, differing per file
 (armor bench `0x064003D4`, weapons bench `0x2A1A6690`, stove `0xB26A84C5`); the engine
 seems to ignore it but a compound and its children must agree.
@@ -302,8 +378,98 @@ seems to ignore it but a compound and its children must agree.
 - **`hknpSphereShape`** (0x50): `+0x14` radius (float, Havok space). Centre is in the
   body's BodyCInfo, not the shape.
 - **`hknpCompressedMeshShape`** (0xC0) + a ShapeData object: quantized triangle mesh.
-  Vertices are 11-11-10-bit packed: `qx=(v>>0)&0x7FF, qy=(v>>11)&0x7FF, qz=(v>>22)&0x3FF`,
-  then `x = section.base_x + qx*section.scale_x` (etc.).
+  See the section below — it needs more than its geometry to load.
+
+##### hknpCompressedMeshShape + ShapeData
+
+The shape object (0xC0) carries the composite header above plus a pointer to its data
+at `+0x60` and **two `hkBitField`s the engine reads while querying the shape**:
+`quadIsFlat` at `+0x68` (count `ceil(u78/32)` words, `u78` at `+0x78` = `(maxKey+2)/2`)
+and `triangleIsInterior` at `+0x80` (count `ceil(u90/32)`, `u90` at `+0x90` =
+`maxKey+1`). Leaving either empty is an access violation in `getLeafShapes`. Vanilla
+clears `quadIsFlat` for all 16448 degenerate quads it ships and leaves
+`triangleIsInterior` clear ~87% of the time. Words past the declared bit count are
+uninitialised garbage — don't read meaning into them.
+
+**`hknpCompressedMeshShapeData` is 0xD0 bytes.** `meshTree` starts at 0x10:
+
+| Offset | Field |
+|--------|-------|
+| 0x10 | `meshTree.nodes` — `hkArray<Codec3Axis5>`, the **top-level BVH over sections** (2N-1 nodes for N sections) |
+| 0x20 / 0x30 | `domain` AABB min / max |
+| 0x40 | `numPrimitiveKeys` (i32) = triangle count |
+| 0x44 | `bitsPerKey` (i32) = `(maxKeyValue + 1).bit_length()` |
+| 0x48 | `maxKeyValue` (u32) |
+| 0x50 | `sections` — `hkArray`, **0x60** each |
+| 0x60 | `primitives` — the quads, 4×u8 indices |
+| 0x70 | `sharedVerticesIndex` — `hkArray<u16>` |
+| 0x80 | `packedVertices` — `hkArray<u32>` |
+| 0x90 | `sharedVertices` — `hkArray<u64>` |
+| 0xA0 | `primitiveDataRuns` |
+| 0xB0 | `simdTree` (`hkcdSimdTree`; its `nodes` array is at 0xB8, count at 0xC0) |
+
+**Section (0x60):** `nodes` `hkArray<Codec3Axis4>` at 0x00 (this section's own BVH),
+`domain` AABB at 0x10/0x20, `codecParms` at 0x30 (base xyz then scale xyz),
+`firstPackedVertex` 0x48, `(firstSharedIndex << 8) | numPackedVertices` at 0x4C,
+`(firstQuad << 8) | numQuads` at 0x50, `numPackedVertices` 0x58, `numSharedIndices`
+0x59, `leafIndex` (u16, into the top-level tree) 0x5A, `flags` 0x5D.
+
+Vertices are 11-11-10-bit packed against the **section's own** AABB:
+`qx=(v>>0)&0x7FF, qy=(v>>11)&0x7FF, qz=(v>>22)&0x3FF`, then
+`x = section.base_x + qx*section.scale_x`. Primitives are **quads**, not triangles:
+`(a,b,c,d)` is one triangle when `d == c`, otherwise two. Shared vertices (indices
+`>= numPackedVertices`) are 21-21-22-bit packed against the **shape's** AABB.
+
+**Per-section limits:** at most **127 quads** — a tree leaf stores its primitive as
+`index * 2` in a byte — and 255 vertices. A mesh larger than that is split across
+sections, each quantized against its own bounding box.
+
+**Primitive keys** are `(sectionIndex << 8) | (localQuadIndex << 1) | triangleInQuad`.
+So `maxKeyValue` comes from the **last section's last quad**, not from a global quad
+count: `((numSections-1) << 8) | ((lastSectionQuads-1) << 1) | lastTriFlag`. Computing
+it globally is identical for one section and badly wrong for many — it truncates
+`bitsPerKey`, the engine decodes a bogus section index, and you get an access violation
+while moving around (the file still *loads*).
+
+**The BVH is required.** Writing the tree arrays empty makes `hkNativePackfileUtils::load`
+walk a null pointer inside `hkcdStaticMeshTree`. Both levels quantize a node's AABB
+against its **parent's decompressed** box, 4 bits per bound per axis, on a square curve:
+
+```
+min[i] = (hi_nibble^2 / 226) * parent_span + parent_min
+max[i] = parent_max - (lo_nibble^2 / 226) * parent_span
+```
+
+Compression floors the nibbles, so a decoded box always *contains* the true box. Re-decompress
+after compressing each node and use that as the child's reference, or drift accumulates.
+
+- **`Codec3Axis4`** (4 bytes, per-section trees): three axis bytes then a data byte.
+  Even → leaf, `primitive = data >> 1`. Odd → internal, `left = i + 1`,
+  **`right = i + (data & 0xFE)`** — the offset is stored directly, not shifted.
+- **`Codec3Axis5`** (5 bytes, the top-level tree): three axis bytes, then `hiData`,
+  `loData`. Bit 7 of `hiData` set → internal and `(hiData<<8 | loData) & 0x7FFF` is
+  *half* the offset to the right child; clear → leaf holding the section index. The
+  **root node's axis bytes are zeroed**.
+
+**`simdTree`** is a fixed constant, not something to build: every vanilla compressed mesh
+— a one-quad floor through the 123-section Diamond City ground — carries exactly **two
+empty `hkcdSimdTreeNode`s**. A node is **112 bytes** (an `hkcdFourAabb`: lo/hi bounds as
+six 4-wide vectors, plus four link words); empty means lo lanes `0x7F7FFFEE` (+FLT_MAX),
+hi lanes `0xFF7FFFEE` (-FLT_MAX), links zero. Declaring two nodes with less than 224
+bytes behind them sends `hkcdSimdTree::rayCast` off the buffer.
+
+##### Double-sided collision
+
+A collision surface is made solid from **both** sides by carrying the same triangle
+twice, wound opposite ways — `(0,1,2)` and `(2,1,0)`. 41 of 920 sampled vanilla
+collision shapes do this; 12 also carry genuine same-winding repeats.
+
+This matters for any tool that round-trips collision through a mesh editor. Blender
+cannot hold two faces on one set of vertex indices *whatever their winding*
+(`mesh.validate()` deletes the second regardless), so a naive importer that
+deduplicates on the sorted indices treats a back face as a duplicate and silently makes
+the wall one-sided. The fix is to give the repeat its own copy of the vertices; the
+sharing is only Havok's space optimization.
 
 ##### hknpDynamicCompoundShape (0xD0) + instances + BVH tree
 
