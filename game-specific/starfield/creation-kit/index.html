@@ -1,0 +1,2567 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Comprehensive reference for Skyrim, Fallout 4, and Starfield modding with PyNifly and esplib">
+      
+      
+        <meta name="author" content="Hugh Russel">
+      
+      
+      
+        <link rel="prev" href="../chargen/">
+      
+      
+        <link rel="next" href="../plugins/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Creation Kit & FaceGen - Bethesda Modding Library</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#starfield-the-creation-kit-facegen" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Bethesda Modding Library" class="md-header__button md-logo" aria-label="Bethesda Modding Library" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Bethesda Modding Library
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Creation Kit & FaceGen
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../file-formats/file-format-overview/" class="md-tabs__link">
+          
+  
+  
+  File Formats
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../skyrim/skyrim-overview/" class="md-tabs__link">
+          
+  
+  
+  Game-Specific
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../tools/pynifly/overview/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../reference/partition-names/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../CONVENTIONS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Conventions
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Bethesda Modding Library" class="md-nav__button md-logo" aria-label="Bethesda Modding Library" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Bethesda Modding Library
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    File Formats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/file-format-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins (ESP/ESM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/nif-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NIF Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/nif-animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NIF Animations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Animations (HKX)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/physics-collision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Physics & Collision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/morphs-shapekeys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Morphs & Shape Keys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/textures-materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Textures & Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/archives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archives (BSA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file-formats/scripts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scripts (PEX)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game-Specific
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game-Specific
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skyrim
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Skyrim
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../skyrim/skyrim-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fallout 4
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Fallout 4
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fallout4/fo4-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fallout4/connect-points/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connect Points
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fallout4/dismemberment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dismemberment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Starfield
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Starfield
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../starfield-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meshes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meshes (NIF + .mesh)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Materials & Textures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../material-worked-example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+      ↳ .mat worked example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cdb-format/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+      ↳ .cdb binary format
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chargen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chargen, Race & Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creation Kit & FaceGen
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creation Kit & FaceGen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-ckpe-is-effectively-required-and-its-version-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. CKPE is effectively required (and its version matters)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. CKPE is effectively required (and its version matters)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-ckpe-loads-and-how-to-run-the-ck-without-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How CKPE loads (and how to run the CK without it)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-facegen-output-what-it-bakes-and-where-verified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. FaceGen output — what it bakes and where (verified)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. FaceGen output — what it bakes and where (verified)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#two-output-filenames-per-race-vs-per-npc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two output filenames: per-race vs per-NPC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-the-bake-actually-composites-verified-by-pixel-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the bake actually composites (verified by pixel comparison)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-where-the-bake-gets-its-source-textures-fctp-and-the-filename-convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Where the bake gets its source textures — FCTP and the filename convention
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Where the bake gets its source textures — FCTP and the filename convention">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-filenames" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The filenames
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#albedo-has-a-second-route-the-other-three-do-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Albedo has a second route; the other three do not
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-a-custom-race-needs-a-body-before-the-head-resolves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. A custom race needs a body before the head resolves
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-chargen-morphs-must-match-the-meshs-render-vertex-count" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Chargen morphs must match the .mesh's render-vertex count
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-the-facegen-crash-null-head-geometry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. The FaceGen crash (null head geometry)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-diagnosing-editorwarningstxt-is-the-key-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Diagnosing: EditorWarnings.txt is the key file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-the-facialboneregions-files-schema-verified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. The FacialBoneRegions files (schema verified)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. The FacialBoneRegions files (schema verified)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#where-they-live" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where they live
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mappingcsv-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        …Mapping.csv schema
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#facialboneregionssextxt-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        …FacialBoneRegions&lt;Sex&gt;.txt schema
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Archives
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyNifly
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PyNifly
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/pynifly/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/pynifly/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/partition-names/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Partition Names
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/external-resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    External Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CONVENTIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="starfield-the-creation-kit-facegen">Starfield: The Creation Kit &amp; FaceGen</h1>
+<p>Practical, hard-won notes on getting the Starfield Creation Kit (CK) to <strong>bake a custom NPC/race
+head</strong> — the fragile last mile after the mesh, material, and morphs are correct. Most of this was
+verified the painful way (custom "Lykaios" anthro head via PyNifly), and it fills in the gaps the
+<a href="../chargen/">chargen page</a> flagged as unverified — most importantly <strong>where FaceGen actually writes
+its output</strong>.</p>
+<p>If your head renders in NifSkope and in the CK's head-part preview but is <strong>black, invisible, or
+human-textured in the actor preview / in-game</strong>, the cause is almost always on this page, not in the
+asset.</p>
+<hr />
+<h2 id="1-ckpe-is-effectively-required-and-its-version-matters">1. CKPE is effectively required (and its version matters)</h2>
+<p><strong><a href="https://www.nexusmods.com/starfield/mods/11802">Creation Kit Platform Extended (CKPE)</a></strong> is not
+just a QoL patch for FaceGen work — without it (or with a mismatched build) the CK's FaceGen path
+tends to <strong>silently do nothing or crash</strong>. Observed failure signatures:</p>
+<ul>
+<li><strong>Silent no-op:</strong> Ctrl+F4 shows the confirm dialog → "done" dialog, with <strong>no per-NPC "processing"
+  status line and no output files</strong>. The routine ran over zero NPCs. Reproduces on <em>vanilla</em> NPCs too
+  when the CK/CKPE FaceGen path is broken — so "vanilla also bakes nothing" is a strong signal the
+  problem is the CK environment, not your mod.</li>
+<li><strong>Crash:</strong> the character-dialog "generate" button access-violates. See §6.</li>
+</ul>
+<p><strong>Version sensitivity is real:</strong> a FaceGen bake that worked on one CKPE build stopped working after an
+update (and vice-versa). If FaceGen breaks after a CKPE change, <strong>roll CKPE back</strong> and retest before
+suspecting your data. Turn on CKPE's log (<code>ckpe.log</code> / <code>CreationKitPlatformExtended.log</code>) — but note
+the CK holds it open with an exclusive lock while running, so read it <strong>after</strong> closing the CK.</p>
+<h3 id="how-ckpe-loads-and-how-to-run-the-ck-without-it">How CKPE loads (and how to run the CK without it)</h3>
+<p>CKPE injects via a <strong><code>winhttp.dll</code> DLL-search-order hijack</strong>: a proxy <code>winhttp.dll</code> dropped next to
+<code>CreationKit.exe</code> is loaded before the real <code>System32</code> copy (winhttp is imported by the CK and is not
+a protected "KnownDLL"), and its <code>DllMain</code> boots CKPE. In current builds this proxy <strong>also fronts the
+Steam API</strong> (the CK is a Steam-DRM'd app), so its export table is <code>SteamAPI_*</code> rather than WinHTTP
+forwarders. Files: <code>winhttp.dll</code>, <code>ckpe_loader.exe</code>, <code>CKPE*.dll</code>, <code>CreationKitPlatformExtended.toml</code>.</p>
+<p>To run a <strong>vanilla CK for A/B testing</strong>, close the CK and rename <code>winhttp.dll</code> → <code>winhttp.dll.bak</code>;
+launch <code>CreationKit.exe</code> directly. The other <code>CKPE.*</code> files go inert without the proxy. Rename back to
+restore. (<code>CKPE.Installer.exe</code> also has a proper install/uninstall.)</p>
+<hr />
+<h2 id="2-facegen-output-what-it-bakes-and-where-verified">2. FaceGen output — what it bakes and <strong>where</strong> (verified)</h2>
+<p>The <a href="../chargen/#8-facegen-baking-npc-faces">chargen page</a> noted the literal Starfield FaceGen output
+path was unconfirmed ("same idea as FO4, path TBD"). <strong>Confirmed:</strong> the per-race <strong>base head skin</strong> is
+baked to</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Data\Textures\actors\Character\FaceCustomization\&lt;Plugin&gt;.esp\BaseHead&lt;RaceEDID&gt;&lt;Sex&gt;_&lt;map&gt;.dds
+</code></pre></div>
+<p>e.g. <code>…\FaceCustomization\FSF.esp\BaseHeadFSFLykaiosRaceMale_Color.dds</code>. The map suffixes and formats
+seen (1024×1024, DDS):</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Map</th>
+<th>Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BaseHead&lt;Race&gt;&lt;Sex&gt;_Color</code></td>
+<td>albedo (skin tone + tint layers)</td>
+<td><code>R8G8B8A8_UNORM_SRGB</code>, 5 mips</td>
+</tr>
+<tr>
+<td><code>BaseHead&lt;Race&gt;&lt;Sex&gt;_Normal</code></td>
+<td>normal</td>
+<td><code>BC5_SNORM</code>, 5 mips</td>
+</tr>
+<tr>
+<td><code>BaseHead&lt;Race&gt;&lt;Sex&gt;_ao</code></td>
+<td>ambient occlusion</td>
+<td><code>R8</code> uncompressed, 5 mips</td>
+</tr>
+<tr>
+<td><code>BaseHead&lt;Race&gt;&lt;Sex&gt;_rough</code></td>
+<td>roughness</td>
+<td><code>R8</code> uncompressed, 5 mips</td>
+</tr>
+</tbody>
+</table>
+<p>Note this is <strong>not</strong> FO4's <code>meshes\actors\...\facegendata\facegeom\&lt;plugin&gt;\&lt;FormID&gt;.nif</code> layout — the
+Starfield base head is a <strong>texture set under <code>FaceCustomization</code></strong>.</p>
+<h3 id="two-output-filenames-per-race-vs-per-npc">Two output filenames: per-race vs per-NPC</h3>
+<p>The same four maps are written under <strong>either</strong> of two names in that folder:</p>
+<table>
+<thead>
+<tr>
+<th>Filename</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BaseHead&lt;RaceEDID&gt;&lt;Sex&gt;_&lt;map&gt;.dds</code></td>
+<td>the NPC has <strong>no</strong> tint layers (<code>EDCT</code> = 0)</td>
+</tr>
+<tr>
+<td><code>&lt;NPC local FormID:08X&gt;_&lt;map&gt;.dds</code></td>
+<td>the NPC has <strong>≥ 1</strong> tint layer</td>
+</tr>
+</tbody>
+</table>
+<p><code>BaseHead%s%s</code> is a literal format string in both <code>CreationKit.exe</code> and <code>Starfield.exe</code> (<code>%s%s</code> =
+race EDID + <code>Male</code>/<code>Female</code>). Adding a single tint layer — vanilla NPCs use <code>TNAM='Dermaesthetic'</code> —
+is what promotes the bake to a per-NPC file. If you expect <code>&lt;FormID&gt;_Color.dds</code> and get
+<code>BaseHead…</code>, the NPC has no tints.</p>
+<h3 id="what-the-bake-actually-composites-verified-by-pixel-comparison">What the bake actually composites (verified by pixel comparison)</h3>
+<p>The bake <strong>does not read the head part's material.</strong> Measured against a vanilla male head, with the
+loose <code>male_default.mat</code> deliberately pointed at unrelated textures:</p>
+<table>
+<thead>
+<tr>
+<th>Baked map</th>
+<th>Compared to</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_Color</code></td>
+<td><code>male_default_sk0_color.dds</code> (the skin-tone source)</td>
+<td><strong>identical</strong> across the face; only the hair/scalp overlay and the NPC's tint layers are added</td>
+</tr>
+<tr>
+<td><code>_rough</code></td>
+<td><code>male_default_rough.dds</code></td>
+<td><strong>byte-identical</strong>, 1 048 576 bytes</td>
+</tr>
+<tr>
+<td><code>_ao</code></td>
+<td><code>male_default_ao.dds</code></td>
+<td><strong>byte-identical</strong>, 1 048 576 bytes</td>
+</tr>
+<tr>
+<td><code>_Normal</code></td>
+<td><code>male_default_normal.dds</code></td>
+<td>identical within BC5 quantisation (mean |Δ| 0.58, median 0, p99 4, max 15 on a −127…127 scale)</td>
+</tr>
+</tbody>
+</table>
+<p>So all four channels are straight copies of the <strong>base-layer source maps</strong>, with tint layers
+composited into colour only. The material's own texture paths are never consulted, and the
+material's <strong>upper layers are not baked in</strong> — a vanilla head material carries five detail layers
+(pore, stubble, lips, cheek, skin detail) whose normal/AO contributions are absent from the bake.</p>
+<p>Those four maps correspond exactly to slots 0/1/3/5 of the material's base texture set. Slot 8
+(transmissive) and the flat <code>TextureReplacement</code> entries at slots 2/4 are not baked.</p>
+<div class="admonition note">
+<p class="admonition-title">Inference, not measured</p>
+<p>The natural reading is that the bake <strong>replaces the base layer's four maps</strong> and the material's
+remaining layers still composite at render time — otherwise vanilla faces would show none of
+their pore/stubble/lip/cheek detail, and the bake demonstrably does not carry it. This has not
+been directly confirmed. A clean test: enable <code>LayeredEmissivityComponent</code> on the material's
+root node; nothing in the FaceGen path touches emissive.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">The base-head filename is keyed to the race EDID — rename the race and it orphans</p>
+<p><code>BaseHead&lt;RaceEDID&gt;&lt;Sex&gt;_*</code> is located by <strong>naming convention from the race's Editor ID</strong>, with no
+reference stored in the plugin. If you <strong>rename the race EDID</strong>, the previously-baked textures keep
+the <em>old</em> name and are silently ignored, while the game now looks for the new name and finds
+nothing → <strong>black / invisible / stale-human-textured head</strong>. Delete the orphaned
+<code>BaseHead&lt;OldRace&gt;*</code> files and re-bake. (This is the same race-EDID naming convention as the
+FacialBoneRegions CSV — see §8.)</p>
+</div>
+<hr />
+<h2 id="3-where-the-bake-gets-its-source-textures-fctp-and-the-filename-convention">3. Where the bake gets its source textures — <code>FCTP</code> and the filename convention</h2>
+<p>The FaceGen bake sources its four base maps <strong>by filename convention from a per-race directory</strong>.
+Neither the head part's material nor the plugin stores these paths.</p>
+<h3 id="the-directory">The directory</h3>
+<p>The race's <strong><code>FCTP</code></strong> ("Face Custom Textures Base Path") field, in the <em>male</em> Chargen-and-Skintones
+block, supplies the directory, relative to <code>Data\Textures\</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>FCTP = actors\Felid\faces\chargen          (FelidRace)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>FCTP = &lt;absent&gt;                            (vanilla HumanRace)
+</code></pre></div>
+<p>When <code>FCTP</code> is absent the engine falls back to the ini setting <strong><code>[Facegen] sSkinTexturePath</code></strong>,
+whose built-in default is the literal <code>Actors\Human\Faces\Chargen</code> — which is exactly where the
+vanilla human face textures live. <strong>It does not fall back to the material's texture paths.</strong></p>
+<h3 id="the-filenames">The filenames</h3>
+<p>Hard-coded format strings, present in both <code>CreationKit.exe</code> and <code>Starfield.exe</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Format string</th>
+<th>Resolves to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>%s\%s_sk%u_color.dds</code></td>
+<td><code>&lt;FCTP&gt;\&lt;phenotype&gt;_sk&lt;N&gt;_color.dds</code></td>
+</tr>
+<tr>
+<td><code>%s\%s_normal.dds</code></td>
+<td><code>&lt;FCTP&gt;\&lt;phenotype&gt;_normal.dds</code></td>
+</tr>
+<tr>
+<td><code>%s\%s_rough.dds</code></td>
+<td><code>&lt;FCTP&gt;\&lt;phenotype&gt;_rough.dds</code></td>
+</tr>
+<tr>
+<td><code>%s\%s_ao.dds</code></td>
+<td><code>&lt;FCTP&gt;\&lt;phenotype&gt;_ao.dds</code></td>
+</tr>
+<tr>
+<td><code>%s\FCT_%s_mask.dds</code></td>
+<td><code>&lt;FCTP&gt;\FCT_&lt;region&gt;_mask.dds</code></td>
+</tr>
+<tr>
+<td><code>%s\FCT_null_mask.dds</code></td>
+<td><code>&lt;FCTP&gt;\FCT_null_mask.dds</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong><code>&lt;phenotype&gt;</code></strong> is a chargen phenotype name. <code>male_default</code> and <code>female_default</code> are hard-coded
+  literals in both exes and act as the fallback. Vanilla ships <strong>22</strong> phenotypes (11 per sex: the
+  nine ethnicity×age combinations, plus <code>eu_md2</code>, plus <code>default</code>), and the names are exactly the
+  child keys of <code>ComplexGroup_FaceSkinTones</code> (see <a href="../chargen/#4-tints-complexions-overlays-the-avm-system-avmdavms">chargen §4</a>).</li>
+<li><strong><code>&lt;region&gt;</code></strong> is a face region — the race's <code>MPGN</code> morph-group names:
+  <code>Cheeks, Chin, Ears, Eyes, Forehead, Jaw, Mouth, Neck, Nose</code>.</li>
+</ul>
+<p>The vanilla <code>Actors\Human\Faces\Chargen</code> folder holds exactly <strong>274</strong> files, which is this
+convention exhaustively enumerated: 22 phenotypes × (9 sk-indexed colours + <code>_ao</code> + <code>_normal</code> +
+<code>_rough</code>) = 264, plus the 9 region masks and <code>FCT_null_mask.dds</code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Colour is <code>_sk&lt;N&gt;_color</code>, never a plain <code>_color</code></p>
+<p>There is no <code>&lt;phenotype&gt;_color.dds</code> anywhere in vanilla. The albedo filename always carries the
+skin-tone index. A file named <code>male_default_color.dds</code> will be silently ignored.</p>
+</div>
+<h3 id="albedo-has-a-second-route-the-other-three-do-not">Albedo has a second route; the other three do not</h3>
+<p>The <strong>colour</strong> channel can also be supplied per skin-tone index through the <code>FSTT</code> → <code>AVMD</code> chain
+(race <code>FSTT</code> → kind-2 ComplexGroup → per-phenotype SimpleGroup → nine <code>VNAM</code> texture paths, indexed
+by the NPC's <code>STON</code>). Where that lookup resolves, its path wins over the computed
+<code>_sk&lt;N&gt;_color.dds</code> name — a custom race can point it anywhere.</p>
+<p><strong><code>_normal</code>, <code>_rough</code> and <code>_ao</code> have no such route.</strong> No <code>AVMD</code> record anywhere in <code>Starfield.esm</code>
+supplies a <em>base</em> face normal/rough/AO; the 176 <code>_ao</code>-suffixed AVMD entries are all scar and
+post-blend detail overlays. Those three maps come from the <code>FCTP</code> convention and nowhere else.</p>
+<div class="admonition tip">
+<p class="admonition-title">Minimum viable FCTP folder for a custom race</p>
+<p>Set <code>FCTP</code> on the race, then place under <code>Data\Textures\&lt;FCTP&gt;\</code>:</p>
+<ul>
+<li><code>male_default_ao.dds</code>, <code>male_default_normal.dds</code>, <code>male_default_rough.dds</code></li>
+<li><code>male_default_sk0_color.dds</code> (…<code>_sk8_</code> if you want a tone ramp), <em>or</em> leave colour to <code>FSTT</code></li>
+<li>the ten <code>FCT_*_mask.dds</code> region masks (copy the human or Felid set to start)</li>
+<li>the <code>female_default_*</code> equivalents if the race has a female</li>
+</ul>
+<p>Setting <code>FCTP</code> is strongly preferable to overriding the vanilla
+<code>Actors\Human\Faces\Chargen</code> files, which recolours every human in the game.</p>
+</div>
+<hr />
+<h2 id="4-a-custom-race-needs-a-body-before-the-head-resolves">4. A custom race needs a <strong>body</strong> before the head resolves</h2>
+<p>The single fix that made a custom-race head finally render with its <strong>full texture</strong> was <strong>giving the
+race a working body skin.</strong> Symptom while the body was unresolved (from <code>EditorWarnings.txt</code>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>MODELS: Trying to apply skin [Skin_Naked] to reference [&lt;NPC&gt;] with empty model or
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>        with no model supporting reference race [&lt;CustomRace&gt;]
+</code></pre></div>
+<p>A custom race clones <code>HumanRace</code>, but its <code>WNAM</code> <strong>Skin</strong> <code>ARMO</code> and that armor's <strong>addons</strong> must have
+<strong>valid-races</strong> covering your new race, or the actor has no body — and with no body skin resolved, the
+head's skin/tint compositing fails and the head renders black/untextured even though the head <em>mesh</em>
+is fine. <strong>Add a body (a skin <code>ARMO</code> + <code>ARMA</code> addon whose race list includes your race) first</strong>, then
+the head bakes and shows its texture.</p>
+<hr />
+<h2 id="5-chargen-morphs-must-match-the-meshs-render-vertex-count">5. Chargen morphs must match the <code>.mesh</code>'s render-vertex count</h2>
+<p>FaceGen builds the head by applying the chargen morph to the head geometry. Starfield <code>.mesh</code> files
+store <strong>render (post-split) vertices</strong> — verts are duplicated at UV/normal seams — and the
+<code>chargen</code> <code>morph.dat</code> must be <strong>1:1 with that post-split vertex set</strong>. If it isn't:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>MODELS: ApplyChargenMorph: Vertex count mismatch between geometry and morph data for &lt;head&gt; :
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>        Geometry Vertex Count[5558] ... Morph Data Vertex Count[5405]
+</code></pre></div>
+<p>The morph fails to apply, the head geometry doesn't assemble, and the FaceGen bake <strong>crashes</strong> (null
+head geometry — see §6). A morph authored against the <em>pre-split</em> mesh (e.g. the raw Blender vertex
+count) will mismatch any head with UV seams. <strong>Any exporter must emit the morph at the same split
+vertex count/order the <code>.mesh</code> uses</strong> — duplicating each vertex's delta wherever the mesh splits it.
+(The vanilla morph.dat vertex count equals the vanilla <code>.mesh</code> render-vertex count for the same head.)</p>
+<hr />
+<h2 id="6-the-facegen-crash-null-head-geometry">6. The FaceGen crash (null head geometry)</h2>
+<p>The character-dialog "generate" button (and the head-build path generally) crashes with an
+<strong><code>EXCEPTION_ACCESS_VIOLATION</code> reading address 0</strong> while walking an NPC's head geometry. Decoding a CKPE
+crash dump: the faulting frame dereferences a null where a <strong><code>BSGeometry</code></strong> should be, with <code>TESNPC*</code>,
+<code>BSFadeNode*</code>, and <code>NiTObjectArray&lt;NiPointer&lt;NiAVObject&gt;&gt;*</code> on the stack — i.e. the CK is assembling
+the head's scene graph and one head-part geometry is null.</p>
+<p>Crucially, <strong>the crash persists with CKPE fully disabled</strong> (§1), so it is the <em>engine's</em> head-build,
+not a CKPE bug. Root causes that null the head geometry: the <strong>morph mismatch</strong> (§5), a <strong>missing body
+skin</strong> (§4), or a <strong>missing/failed head part</strong>. Fix those and the crash clears.</p>
+<p>CKPE writes crash dumps to <code>…\Starfield\Logs\CKPE\Crashes\CreationKit.exe_&lt;timestamp&gt;.zip</code>
+(containing <code>CreationKitPlatformExtendedCrash.log</code> with the decoded stack + a <code>.dmp</code>).</p>
+<hr />
+<h2 id="7-diagnosing-editorwarningstxt-is-the-key-file">7. Diagnosing: <code>EditorWarnings.txt</code> is the key file</h2>
+<p>On plugin load / FaceGen the CK writes <code>…\Starfield\EditorWarnings.txt</code>. The <code>&lt;CURRENT&gt;</code> lines are your
+active plugin. The most useful entries seen, and what they mean:</p>
+<table>
+<thead>
+<tr>
+<th>Warning</th>
+<th>Meaning / fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FACEGEN: … RACE '&lt;Race&gt;' Missing FacialBoneRegions file '…\&lt;Race&gt;FacialBoneRegionsMapping.csv'</code></td>
+<td>See §8.</td>
+</tr>
+<tr>
+<td><code>MODELS: ApplyChargenMorph: Vertex count mismatch …</code></td>
+<td>Morph ≠ <code>.mesh</code> render-vert count (§5).</td>
+</tr>
+<tr>
+<td><code>MODELS: Trying to apply skin [Skin_Naked] … no model supporting reference race […]</code></td>
+<td>No body for the race (§4).</td>
+</tr>
+<tr>
+<td><code>FACEGEN: TeethCustomizationNode failed for actor(…) because its scene graph does not have a HeadPartTeeth</code></td>
+<td>The race/NPC has no Teeth head part — add one (Type 9).</td>
+</tr>
+<tr>
+<td><code>SYSTEM: Can't load object res:… referenced by …\Foo.mat (#N)</code></td>
+<td>A loose <code>.mat</code>'s internal object references aren't resolving — usually non-fatal if the material still renders, but a sign of a malformed material graph (see <a href="../materials/">materials</a>).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-the-facialboneregions-files-schema-verified">8. The FacialBoneRegions files (schema verified)</h2>
+<p>A race needs <strong>two</strong> files, both hooked <strong>purely by naming convention from the race EDID</strong> — the
+plugin stores <strong>no</strong> reference to either (verified: a custom race's plugin contains no path string for
+them). Supplying the files under the right names is the entire hookup; there is no record edit.
+(Same race-EDID gotcha as the base-head textures, §2.)</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;RaceEDID&gt;FacialBoneRegionsMapping.csv</code></td>
+<td>bone → face-region influence matrix</td>
+</tr>
+<tr>
+<td><code>&lt;RaceEDID&gt;FacialBoneRegions&lt;Sex&gt;.txt</code></td>
+<td>JSON: the actual bone-morph definitions</td>
+</tr>
+</tbody>
+</table>
+<h3 id="where-they-live">Where they live</h3>
+<p>Vanilla <code>HumanRace</code> ships them in <code>meshes\actors\human\characterassets\</code> (the male <code>.txt</code> and the
+<code>.csv</code>), with the female <code>.txt</code> one level down in <code>…\characterassets\female\</code>. <code>HumanCrowdRace</code> keeps
+its own set under <code>meshes\actors\human_crowd\characterassets\</code>.</p>
+<p>A shipped custom race puts copies in <strong>both</strong> its own <code>meshes\actors\&lt;race&gt;\characterassets\</code> <strong>and</strong>
+<code>meshes\actors\human\characterassets\</code> — the same two files, same race-EDID names, in both folders.
+Since the lookup is name-based rather than record-based, shipping both locations is the low-cost way
+to satisfy whichever path the CK and the runtime each use.</p>
+<h3 id="mappingcsv-schema"><code>…Mapping.csv</code> schema</h3>
+<p>First column is unnamed and holds the bone name; the remaining nine columns are the face regions.
+Values are 0–100 influence.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>                        Cheeks Chin Ears Eyes Forehead Jaw Mouth Neck Nose
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>faceBone_L_CheekBone        80    0    0   20        0   0     0    0    0
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>faceBone_C_NoseRidge         0    0    0   30        0   0     0    0   70
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>faceBone_L_OutterJaw         0   10   20    0        0  70     0    0    0
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>faceBone_C_HeadBack          0    0    0    0        0   0     0    0    0
+</code></pre></div>
+<p>Vanilla human has <strong>48 bone rows</strong>. A bone may split across regions, and a bone may be all-zero
+(present in the rig but not driven by any region slider). Rows do <strong>not</strong> have to sum to 100.</p>
+<h3 id="facialboneregionssextxt-schema"><code>…FacialBoneRegions&lt;Sex&gt;.txt</code> schema</h3>
+<p>UTF-8 JSON with a BOM. Top level is <code>{"Constraints": null, "Regions": [...]}</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">"ID"</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w"> </span><span class="nt">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ears"</span><span class="p">,</span><span class="w"> </span><span class="nt">"SculptRegion"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">"SlidersA"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"ID"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w"> </span><span class="nt">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"down - up"</span><span class="p">,</span><span class="w"> </span><span class="nt">"ZeroToOne"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">      </span><span class="nt">"BonesA"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">"Bone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"faceBone_L_EarMaster"</span><span class="p">,</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">          </span><span class="nt">"Maxima"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"Position"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"x"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"y"</span><span class="p">:</span><span class="mf">0.683</span><span class="p">,</span><span class="nt">"z"</span><span class="p">:</span><span class="mi">0</span><span class="p">},</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">                      </span><span class="nt">"Rotation"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"x"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"y"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"z"</span><span class="p">:</span><span class="mi">0</span><span class="p">},</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">                      </span><span class="nt">"Scale"</span><span class="p">:</span><span class="w">    </span><span class="p">{</span><span class="nt">"x"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"y"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"z"</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">          </span><span class="nt">"Minima"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"Position"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span><span class="w"> </span><span class="nt">"Rotation"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span><span class="w"> </span><span class="nt">"Scale"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>Each slider interpolates every listed bone between its <code>Minima</code> and <code>Maxima</code> transform.
+<code>ZeroToOne</code> distinguishes a one-directional 0→1 blend from a bipolar min↔max slider.</p>
+<p>Vanilla human male has <strong>20 regions</strong>, split by the <code>SculptRegion</code> flag:</p>
+<ul>
+<li><strong>9 phenotype regions</strong> (<code>SculptRegion: false</code>) named <code>male_af_md1</code>, <code>male_as_ol1</code>, … — the same
+  strings as the race's <code>FMRU</code> phenotype keys. Each drives all 48 bones.</li>
+<li><strong>11 sculpt regions</strong> (<code>SculptRegion: true</code>) — the creator's face sliders:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Region</th>
+<th>Bone refs</th>
+<th>Sliders</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Head Shapes</td>
+<td>192</td>
+<td>Square, Narrow, Wide, Round <em>(all <code>ZeroToOne</code>)</em></td>
+</tr>
+<tr>
+<td>Eyes</td>
+<td>37</td>
+<td>down–up, narrow–wide, scale down–up, back–forward</td>
+</tr>
+<tr>
+<td>Nose</td>
+<td>32</td>
+<td>down–up, back–forward, narrow–wide, tip down–up, short–long, nostrils up–down, nostrils in–out, ridge narrow–wide, ridge in–out</td>
+</tr>
+<tr>
+<td>Jaw</td>
+<td>18</td>
+<td>back–forward, narrow–wide, down–up</td>
+</tr>
+<tr>
+<td>Cheeks</td>
+<td>17</td>
+<td>narrow–wide, scale down–up, down–up</td>
+</tr>
+<tr>
+<td>Neck</td>
+<td>16</td>
+<td>Wattle In–Out, narrow–wide</td>
+</tr>
+<tr>
+<td>Mouth</td>
+<td>15</td>
+<td>down–up, Left–Right, scale down–up, underbite–overbite</td>
+</tr>
+<tr>
+<td>Forehead</td>
+<td>14</td>
+<td>narrow–wide, back–forward</td>
+</tr>
+<tr>
+<td>Ears</td>
+<td>12</td>
+<td>down–up, back–forward, narrow–wide</td>
+</tr>
+<tr>
+<td>Eyebrows</td>
+<td>12</td>
+<td>down–up, back–forward, narrow–wide</td>
+</tr>
+<tr>
+<td>Chin</td>
+<td>9</td>
+<td>down–up, back–forward, narrow–wide</td>
+</tr>
+</tbody>
+</table>
+<p>For a HumanRace clone on the human skeleton, a renamed copy of the vanilla pair is the correct
+starting point — both files key on bone names, which are unchanged. The vanilla files <strong>have real
+content</strong>; an extract that looks empty means a faulty BA2 extractor, not an empty source. Don't ship
+an empty one.</p>
+<p><strong>Still unverified:</strong> whether the files are strictly <em>required</em> or merely advisory. The same
+"missing" warning fires for vanilla <code>ChildRace</code>, so the CK warns even when a bake can proceed.</p>
+<blockquote>
+<p><strong>Note — "FCT" the CK button ≠ these files.</strong> The character-dialog <strong>"Bake FCT"</strong> button bakes the
+<strong>Face Customization Texture</strong> (the per-NPC baked face texture set); it is unrelated to
+FacialBoneRegions. See §2 for the FaceGen texture output.</p>
+</blockquote>
+<p>A region's <code>ID</code> is what the race record's <code>FMRI</code>/<code>FMSR</code> entries and an NPC's Face Morphs / Face
+Dial Positions arrays point at — the plugin side is an index into these files. See the chargen
+page, §3, for how these bone-driven regions relate to the vertex-morph (<code>morph.dat</code>) system,
+which of the three NPC arrays drives which, and which one to reach for.</p>
+<hr />
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Direct investigation of a custom Starfield race/head via PyNifly (2026-07): CK behavior,
+  <code>EditorWarnings.txt</code>, CKPE crash-dump decode, on-disk FaceGen output.</li>
+<li><a href="https://www.nexusmods.com/starfield/mods/11802">Creation Kit Platform Extended (CKPE)</a>.</li>
+<li>Nexus — "Notes and pitfalls on creating a playable race" (article 431).</li>
+<li>Cross-refs: <a href="../chargen/">chargen page</a> (race/HDPT/MRPH records, §8 FaceGen concept),
+  <a href="../materials/">materials</a> (loose <code>.mat</code> structure), <a href="../tools/">tools</a> (CK, CKPE, BSArch).</li>
+</ul>
+<p><em>Draft 2026-07-24 — not yet reviewed</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/BadDogSkyrim/BethesdaLibrary" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
