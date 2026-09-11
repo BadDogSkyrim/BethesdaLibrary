@@ -66,7 +66,7 @@ nav:
   - Home: index.md
 
   - File Formats:
-    - Overview: file-formats/overview.md
+    - Overview: file-formats/file-format-overview.md
     - Plugins (ESP/ESM): file-formats/plugins.md
     - NIF Files: file-formats/nif-files.md
     - NIF Animations: file-formats/nif-animations.md
@@ -79,13 +79,13 @@ nav:
 
   - Game-Specific:
     - Skyrim:
-      - Overview: game-specific/skyrim/overview.md
+      - Overview: game-specific/skyrim/skyrim-overview.md
     - Fallout 4:
-      - Overview: game-specific/fallout4/overview.md
+      - Overview: game-specific/fallout4/fo4-overview.md
       - Connect Points: game-specific/fallout4/connect-points.md
       - Dismemberment: game-specific/fallout4/dismemberment.md
     - Starfield:
-      - Overview: game-specific/starfield/overview.md
+      - Overview: game-specific/starfield/starfield-overview.md
       - Meshes (NIF + .mesh): game-specific/starfield/meshes.md
       - Materials & Textures: game-specific/starfield/materials.md
       - "  ↳ .mat worked example": game-specific/starfield/material-worked-example.md
