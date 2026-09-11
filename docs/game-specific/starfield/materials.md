@@ -361,8 +361,12 @@ Starfield does **not** pack roughness+metal+AO into a single texture the way `[F
 Skyrim's specular did. Each scalar PBR property is its own **single-channel BC4** DDS. Rules of thumb:
 
 - `_color`, `_emissive`, overlays → **BC7 (or BC1) `_SRGB`**.
-- `_normal` → **BC5_SNORM**, storing X/Y only; Z is reconstructed in-shader (so a "flat" pixel is
-  `(0.5, 0.5)` in R/G). No blue/alpha channel to rely on.
+- `_normal` → **BC5_SNORM**, storing X/Y only; Z is reconstructed in-shader. No blue/alpha channel
+  to rely on. Green is **DirectX-style (Y-down)** — see [below](#green-channel-convention).
+  Because the format is **signed**, a "flat" pixel is **`(0, 0)`**, *not* `(0.5, 0.5)`: read a
+  shipped `_normal` as unsigned bytes and its R/G histogram piles up at both `0` **and** `255`,
+  which is small signed values either side of zero, not corruption. The `(0.5, 0.5)` flat value
+  applies to the UNORM **PNG** you work in (see the warning below), not to the shipped DDS.
 - `_rough`, `_metal`, `_ao`, `_opacity`, `_height`, `_mask`, `_transmissive`, `_curvature`,
   `_zoffset`, `_id` → **BC4_UNORM** grayscale, **linear**.
 - All textures ship with mipmaps (same requirement as `[FO4]`/`[Skyrim]`).
@@ -406,9 +410,37 @@ A faithful **import** for the common `Standard1Layer` case (Principled BSDF v2 i
 
 Because `_normal` is **XY-only BC5**, the importer must **reconstruct Z**
 (`z = sqrt(1 - x² - y²)`) with a small node group before the Normal Map node — a plain image → Normal
-Map will read blue≈0 and give wrong lighting. Also handle the **green-channel convention**: Starfield
-normals are DirectX-style (Y-down); Blender expects OpenGL (Y-up), so **invert green** on import (and
-re-invert on export).
+Map will read blue≈0 and give wrong lighting.
+
+### Green-channel convention
+
+Starfield normals are **DirectX-style (Y-down)**; Blender expects OpenGL (Y-up), so **invert green**
+on import, and invert it again on anything you **bake** in Blender. There is **no channel swizzle**
+otherwise — X→R, Y→G, and none of the DXT5nm-style X-in-alpha packing older engines used. Note that
+if a tool writes only the `.mat`'s texture *paths* on export (as most do) rather than resampling
+pixels, there is nothing to re-invert on the way out.
+
+!!! note "Measured, not inferred"
+    A genuine normal map comes from a height field, so its slope field
+    `(p, q) = (−Nx/Nz, −Ny/Nz)` must be **curl-free**: `∂p/∂v − ∂q/∂u ≈ 0`. Inverting green negates
+    `q`, which turns that residual into `≈ 2·∂²h/∂u∂v`. So of the two hypotheses, **the one with the
+    smaller curl residual is the real convention** — no reference image and no eyeballing required.
+
+    Calibrated on synthetic maps built under each convention by construction (they separate
+    cleanly), then run on two shipped files, masking to textured pixels, discarding the top 2% of
+    slope magnitude (UV seams are real discontinuities and integrable nowhere), and taking the
+    median `|curl|`:
+
+    | map | green as stored | green inverted | verdict |
+    |---|---|---|---|
+    | `male_default_normal.dds` | 0.01575 | **0.00787** | inverted, 2.00× |
+    | a Creation Kit FaceGen bake (`<FormID>_Normal.dds`) | 0.01069 | **0.00506** | inverted, 2.11× |
+
+    The CK bake is the decisive one — that is the toolchain's own output, not an authoring choice.
+
+    The same test settles this question for any game, and is worth running before trusting a
+    convention: the failure mode is silent, and a tool that inverts on both import *and* export
+    round-trips perfectly while being wrong against the engine.
 
 For **multi-layer** materials, no single Principled node suffices: build one Principled per layer and
 composite with Mix nodes driven by each `Blender_N`'s mask/vertex-color channel, honoring the

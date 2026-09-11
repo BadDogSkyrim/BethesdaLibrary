@@ -347,8 +347,10 @@ an empty one.
 > **Face Customization Texture** (the per-NPC baked face texture set); it is unrelated to
 > FacialBoneRegions. See §2 for the FaceGen texture output.
 
-See the chargen page, §3, for how these bone-driven regions relate to the vertex-morph
-(`morph.dat`) system, and which one to reach for.
+A region's `ID` is what the race record's `FMRI`/`FMSR` entries and an NPC's Face Morphs / Face
+Dial Positions arrays point at — the plugin side is an index into these files. See the chargen
+page, §3, for how these bone-driven regions relate to the vertex-morph (`morph.dat`) system,
+which of the three NPC arrays drives which, and which one to reach for.
 
 ---
 
