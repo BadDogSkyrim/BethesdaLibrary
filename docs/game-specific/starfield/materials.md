@@ -328,7 +328,7 @@ Each `BSMaterial::MRTextureFile` in a TextureSet carries an `Index` selecting th
 
 | Index | Map | Native suffix | DDS format | Color space |
 |---:|---|---|---|---|
-| 0 | Albedo / base color | `_color` (`_d`) | BC7_UNORM_SRGB (or BC1) | **sRGB** |
+| 0 | Albedo / base color | `_color` (`_d`) | BC1_UNORM_SRGB (vanilla) or BC7_UNORM_SRGB | **sRGB** |
 | 1 | Normal (tangent) | `_normal` (`_n`) | BC5_SNORM (2-ch XY) | linear |
 | 2 | Opacity / alpha | `_opacity` | BC4_UNORM | linear |
 | 3 | Roughness | `_rough` (`_s`*) | BC4_UNORM | linear |
@@ -370,6 +370,38 @@ Skyrim's specular did. Each scalar PBR property is its own **single-channel BC4*
 - `_rough`, `_metal`, `_ao`, `_opacity`, `_height`, `_mask`, `_transmissive`, `_curvature`,
   `_zoffset`, `_id` → **BC4_UNORM** grayscale, **linear**.
 - All textures ship with mipmaps (same requirement as `[FO4]`/`[Skyrim]`).
+
+**What vanilla actually ships**, counted over 31,000 unpacked vanilla textures:
+
+| suffix | format | files |
+|---|---|---|
+| `_color` | BC1_UNORM_SRGB | 11,861 |
+| | R8G8B8A8_UNORM_SRGB | 346 |
+| | BC7_UNORM | 258 |
+| | BC7_UNORM_SRGB | 1 |
+| `_normal` | BC5_SNORM | 7,235 |
+| `_rough` | BC4_UNORM | 6,226 |
+| `_ao` | BC4_UNORM | 4,885 |
+
+About 60 per suffix are uncompressed, mip-less legacy-header files. Colour is overwhelmingly BC1
+with the sRGB flag; the few BC7 colour maps mostly are *not* flagged sRGB. Whether the engine honours
+that flag has not been tested.
+
+!!! tip "Converting PNG sources with `texconv`"
+    Measured with DirectXTex `texconv` 2021.11:
+
+    - **Pass `-srgb`.** texconv reads a PNG's embedded sRGB chunk and gamma-converts whenever input
+      and output disagree: an sRGB-tagged grey 128 came out as **55** in BC4_UNORM, and an untagged
+      128 as **189** in an `_SRGB` format. `-srgb` marks both sides sRGB, so nothing is converted and
+      values pass through for colour and linear maps alike. `-srgbi` on its own still darkens grey
+      maps.
+    - **Pass `-dx10`.** Without it texconv writes a legacy FourCC (`BC5S` for BC5_SNORM); shipped
+      files use the DX10 header.
+    - **BC5_SNORM needs no bias flag.** From a UNORM PNG, texconv remaps 128 → 0 and 255 → 127
+      itself. It does not flip green; `-inverty` does, if the source is OpenGL-convention (see
+      [below](#green-channel-convention)).
+    - **Use backslash paths.** texconv takes the output filename after the last `\` only, so
+      `-o out a/b.png` tries to write `out\a/b.dds` and fails.
 - Texture paths in the `.mat` are stored **with** `Data\` prefix and **with** the `.DDS` extension —
   unlike NIF texture-set paths in older games, which omitted both. (Community tools accept either.)
 

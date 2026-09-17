@@ -97,6 +97,10 @@ composited into colour only. The material's own texture paths are never consulte
 material's **upper layers are not baked in** — a vanilla head material carries five detail layers
 (pore, stubble, lips, cheek, skin detail) whose normal/AO contributions are absent from the bake.
 
+Tint layers are composited from the paths **stored on the NPC record**, not re-resolved through the
+`AVMD` groups — an entry whose stored texture no longer exists is silently dropped. See
+[chargen §4.1](chargen.md#41-per-npc-tint-application-npc_-avmd-tints).
+
 Those four maps correspond exactly to slots 0/1/3/5 of the material's base texture set. Slot 8
 (transmissive) and the flat `TextureReplacement` entries at slots 2/4 are not baked.
 
@@ -160,16 +164,38 @@ The vanilla `Actors\Human\Faces\Chargen` folder holds exactly **274** files, whi
 convention exhaustively enumerated: 22 phenotypes × (9 sk-indexed colours + `_ao` + `_normal` +
 `_rough`) = 264, plus the 9 region masks and `FCT_null_mask.dds`.
 
-!!! warning "Colour is `_sk<N>_color`, never a plain `_color`"
-    There is no `<phenotype>_color.dds` anywhere in vanilla. The albedo filename always carries the
-    skin-tone index. A file named `male_default_color.dds` will be silently ignored.
+!!! warning "The *computed* colour name is always `_sk<N>_color`"
+    There is no `<phenotype>_color.dds` anywhere in vanilla, and the format string cannot produce
+    one: a plain `male_default_color.dds` is **never found by the filename route**. It is *not*
+    ignored outright, though — an `AVMD` `VNAM` can name it by full path, and then it is used (see
+    below). So the rule is about what gets *computed*, not about what a file may be called.
 
 ### Albedo has a second route; the other three do not
 
 The **colour** channel can also be supplied per skin-tone index through the `FSTT` → `AVMD` chain
 (race `FSTT` → kind-2 ComplexGroup → per-phenotype SimpleGroup → nine `VNAM` texture paths, indexed
 by the NPC's `STON`). Where that lookup resolves, its path wins over the computed
-`_sk<N>_color.dds` name — a custom race can point it anywhere.
+`_sk<N>_color.dds` name — a custom race can point it anywhere, under any filename.
+
+**In vanilla the two routes are indistinguishable.** Every one of the **198** `VNAM` paths in the
+human `FaceSkinTones` groups is *exactly* the name the format string computes for that phenotype
+and index. Bethesda authored the AVMD records to mirror the filename convention, so vanilla content
+resolves to the same file either way — which is why the precedence is invisible until a mod makes
+the two disagree.
+
+**Verified where they do disagree.** A test NPC with no face-morph blend (so phenotype
+`male_default`) at `STON` 0, on a race whose `FCTP` is set:
+
+| route | would pick |
+|---|---|
+| **AVMD** | `FSFCanineFaceSkinTones_male_default[0]` → `…\chargen\male_default_color.dds` — a wolf image |
+| **filename** | `…\chargen\male_default_sk0_color.dds` — absent, so the human fallback directory: a human face |
+| head part `.mat` | `LykaiosMaleHead02_col.dds` — a UV-unwrapped canine face |
+
+The baked `_Color` is **the wolf image**, with only hair composited over it. The filename route
+cannot produce `male_default_color.dds` at all (it has no `_sk<N>`), and the result matches neither
+the human fallback nor the material's texture — so the AVMD route was taken. It also re-confirms that
+the bake ignores the material.
 
 **`_normal`, `_rough` and `_ao` have no such route.** No `AVMD` record anywhere in `Starfield.esm`
 supplies a *base* face normal/rough/AO; the 176 `_ao`-suffixed AVMD entries are all scar and
