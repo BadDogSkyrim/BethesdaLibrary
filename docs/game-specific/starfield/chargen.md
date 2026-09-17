@@ -860,7 +860,7 @@ keeps the child out of the vanilla name index, and `AVMP` is what still delivers
 options into the vanilla slot.
 
 ⚠️ `AVMP` can only **add**. A race that wants its own options *instead of* vanilla's
-has to change the group the creator reads from — see §4.10.
+has to change the group the creator reads from — see §4.11.
 
 ### 4.3 The layer stack — `ComplexGroup_PostBlendFaceCustomizationLayers`
 
@@ -1026,6 +1026,37 @@ One index keeps body, hands and face on the same tone — which is what makes th
 neck seam match. The face path is two levels: `FSTT` names a **Complex** Group whose
 22 entries are the phenotype names, resolving (via prefixed `VNAM`s) to
 `SimpleGroup_FaceSkinTones_<phenotype>`.
+
+Seen whole, a race's skin tones are a **grid**: one column per list, one row per tone.
+
+```
+                 BSTT                 HSTT                 FSTT  (Complex Group)
+                 Body Skin Tone       Hand Skin Tone       Face Skin Tone
+                     |                    |                    | 
+                     |                    |                    v
+Complex Group        |                    |         per phenotype (sex_ethnicity_age)
+                     |                    |            +---------+---------+
+                     v                    v            v         v         v
+Simple Group       Body                 Hands       female_af_md1  …  male_eu_yo1
+             +------------------+------------------+-------------+---+-------------+
+ STON 0      | SkinTone1        | SkinTone1        | SkinTone1   | … | SkinTone1   |
+ STON 1      | SkinTone2        | SkinTone2        | SkinTone2   | … | SkinTone2   |
+ STON 2      | SkinTone3        | SkinTone3        | SkinTone3   | … | SkinTone3   |
+   …         | …                | …                | …           | … | …           |
+ STON N      | SkinToneN        | SkinToneN        | SkinToneN   | … | SkinToneN   |
+             +------------------+------------------+-------------+---+-------------+
+```
+
+`STON` picks a **row**, and the row has to exist in every column — the body list is
+the master count, and hands, every phenotype's face list, and the dermaesthetic
+filter (§4.11) must all match it. That is the rule the CK validators below state four
+different ways.
+
+**The cost of one extra tone is therefore one texture per column, not one texture.**
+A race with *P* phenotypes pays *P* + 2 albedo textures per tone — one body, one
+hands, and one per phenotype face. Vanilla human runs 22 phenotypes × 9 tones = **198
+face albedos** (plus 9 body and 9 hands), and every phenotype supplies a texture for
+every tone whether it suits that phenotype or not.
 
 ⚠️ **`STON` is stored 0-based and displayed 1-based.** The xEdit definition is
 `wbEnum(['1'..'9'])` over a `uint8`, so raw `0` shows as **"1"**. The raw byte is the
@@ -1262,10 +1293,65 @@ ComplexGroup_Accents1           -> SimpleGroup_Accents1_{color,normal,rough,ao}
 ComplexGroup_ColorlessAccents1  -> SimpleGroup_Accents1_{color,normal,rough,ao}   (identical)
 ```
 
-So **two texture sets serve four slots**. Whatever distinguishes "colorless" is not
-in the data: all four slots have only a Complex definition (no Modulation palette),
-and every vanilla use of all four carries `NNAM = 00000000`. The distinction must
-live in engine code keyed on the slot name.
+So **two texture sets serve four slots**. Nothing in the data distinguishes
+"colorless": all four slots have only a Complex definition (no Modulation palette),
+and every vanilla use of all four carries `NNAM = 00000000`. The distinction is in
+the engine, keyed on the slot name — and it is literal.
+
+#### "Colorless" means the colour channel is discarded (tested)
+
+**`ColorlessAccents1/2` ignore the `_color` texture's RGB and use only its ALPHA**, as
+the coverage mask for the `_normal`/`_rough`/`_ao` detail. `Accents1/2` apply the
+colour.
+
+Isolated in the Creation Kit, where only the slot changes. One vanilla option
+(`Accents_UnderEyeBags_Small`) had its `_color` texture replaced with opaque blue,
+then assigned to one slot and the other on the same NPC:
+
+| slot | baked face |
+|---|---|
+| `Accents1` | **blue** — the colour texture is applied |
+| `ColorlessAccents1` | **no blue** — same texture, same NPC, same bake |
+
+Confirmed a second time with a different option (`Blemish_VeinsMany`): in the CK it
+can be applied with or without colour by choosing the slot, and there is no way to
+apply it with colour from the in-game creator.
+
+In game it behaves the same way: a bright green `_color` texture on a colorless
+accent shows no green at all, and a texture whose alpha is opaque nearly everywhere
+spreads the accent's *detail* across the whole face — the alpha is acting as the
+mask, exactly as the slot name implies.
+
+⚠️ **A player can never wear a coloured accent.** There is no `Chargen_Accents1` or
+`Chargen_Accents2` group, so the character creator reaches only the two Colorless
+slots (via `Chargen_ColorlessAccents1/2`). `Accents1/2` are authoring-only — the CK
+and NPC records can use them, the in-game creator cannot.
+
+**How vanilla works around it: it authors the same motif into several slots.** The
+"many veins" blemish is the clearest case — it exists three times over, and what you
+can do with it depends entirely on which slot you reach it through:
+
+| Offered as | In | A player gets |
+|---|---|---|
+| `Blemish_VeinsMany` — `_color`/`_normal`/`_rough`/`_ao` | `Accents1/2`, `ColorlessAccents1/2` | detail only; the creator reaches it via `ColorlessAccents`, so **no colour** |
+| `Blemish_VeinsMany` — the same four textures | `Scars` (`Chargen_Scars_*`) | colour **and** detail — the scar slot applies both |
+| `Veins`, `Veins_2` — `veins_mask.dds` | `ComplexionMask1/2` ("Complexion Blemishes" in the UI), with dedicated `Vein_Red` and `Vein_BlueGreen` entries in the Modulation palette | colour, tinted per choice, but **no normal/rough/AO** |
+
+So the engine gives you colour *or* surface detail from these slots, not both — and
+the authors bought their way around it by duplicating the artwork into a slot with
+the other half. A custom race that needs both from one mark has the same options:
+duplicate it, or put it in `Scars`, which is the only creator-facing slot carrying
+all four channels.
+
+For a custom race the practical reading is which slots can carry **multi-coloured**
+marks at all:
+
+| creator slot | colour |
+|---|---|
+| `Dermaesthetic`, `Complexion1/2` | full-colour texture |
+| `Scars` | full-colour texture + normal/rough/ao |
+| `Cheeks`, `Lipstick`, `Eyeshadow`, `Eyeliner`, `TattooMask`, `MakeupFullPaint` | greyscale mask × **one** Modulation colour |
+| `ColorlessAccents1/2` | **none** — alpha-masked detail only |
 
 `Scars` shows the other Complex-group idiom — one slot fanning out to four
 same-named Simple groups (`Scars_color/_normal/_rough/_ao`, 25 options each), so a
@@ -1324,7 +1410,31 @@ Body shape is also stored per-NPC as **`MRSV` Body Morph Region Values**:
 five floats — **Head / Upper Torso / Arms / Lower Torso / Legs** — the runtime
 expression of the body triangle.
 
-### 4.10 What the creator offers = filter ∩ master list
+### 4.10 The `Chargen_*` groups decide what the creator shows, and in what order
+
+A slot usually has two groups: the runtime one (`ComplexionMask1`) and a chargen-side
+twin (`CHARGEN_ComplexionMask1`). **The creator reads the chargen-side group, and its
+record order is the order the options appear in the UI.**
+
+Across the 20 slots that have both, 16 hold the same options in the same order —
+which is why the distinction stays invisible until it doesn't. The exceptions:
+
+| | slots | effect |
+|---|---|---|
+| **re-ordered** | `ComplexionMask1`, `ComplexionMask2` (46 options), `TattooMask` | `CHARGEN_ComplexionMask1` opens `Freckles_Nose`, `Freckles_Forehead`, `Freckles_Cheek`…, which sit at #21, #26 and #22 in the runtime group |
+| **subset** | `Eyeliner1`, `Eyeliner2` | the creator offers 6 of the runtime 9 — three options exist but cannot be chosen |
+| **absent** | `Accents1`, `Accents2` | no chargen-side group at all, so the creator cannot reach the slot (§4.7) |
+
+⚠️ The prefix is inconsistent in vanilla — `CHARGEN_Cheeks1` and
+`CHARGEN_ComplexionMask1` shout; `Chargen_Lipstick2` and `Chargen_Dermaesthetic` do
+not. Every lookup here is by name, so a custom group must match the spelling the slot
+already uses.
+
+So the chargen-side group does three jobs: **which** options are offered, in **what
+order**, and — for dermaesthetic — **filtered by skin tone**, which is the next
+section.
+
+### 4.11 What the creator offers = filter ∩ master list
 
 Two different records decide what a slot shows in the character creator, and they
 fail in different ways:
@@ -1356,7 +1466,7 @@ from skin tone filters are valid entries from the main Dermaesthetic reserved
 type"* — so entries left in the filter that the master list no longer defines are a
 reported error.
 
-### 4.11 Which slots vanilla actually uses
+### 4.12 Which slots vanilla actually uses
 
 Picking a slot to repurpose is mostly a question of who else is in it. NPCs in
 `Starfield.esm` carrying each slot (by `TNAM` on their tint blocks; 22 slots appear
@@ -1386,7 +1496,7 @@ Slot *type* is not the constraint: both texture kinds are legal in a slot.
 `Complexion1`'s own options are full-colour `*_color.dds`, while `ComplexionMask1`'s
 are `*_mask.dds` tinted by a Modulation palette.
 
-### 4.12 Overlay texture formats — uncompressed, and the header matters
+### 4.13 Overlay texture formats — uncompressed, and the header matters
 
 Face-customization layers are authored **uncompressed**. Census of all 448 vanilla
 files under `textures/actors/human/faces/chargen/postblenddetails/`, every one
