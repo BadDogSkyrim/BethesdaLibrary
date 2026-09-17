@@ -864,9 +864,10 @@ has to change the group the creator reads from — see §4.10.
 
 ### 4.3 The layer stack — `ComplexGroup_PostBlendFaceCustomizationLayers`
 
-The set of slots and the order they composite in live in **one record**:
-`ComplexGroup_PostBlendFaceCustomizationLayers` (`AVMD:00393D76`). Its 26 entries,
-in record order, are the compositing stack, bottom to top:
+The set of slots lives in **one record**:
+`ComplexGroup_PostBlendFaceCustomizationLayers` (`AVMD:00393D76`). Its 26 entries, in
+record order, **describe** the compositing stack bottom to top — but editing them does
+not change it, which is the subject of the experiment below:
 
 ```
  1 Dermaesthetic          10 ColorlessAccents2      19 Lipstick1
@@ -895,11 +896,50 @@ anywhere holds its FormID, and no RACE mentions it. The string
 the blend-mode literals. So the engine carries a short list of group names it looks
 up directly, and this is one of them.
 
+#### ⚠️ The order is built in — editing it changes nothing (tested)
+
+The record *documents* the order; it does not *define* it. **Neither reordering this
+record nor reordering an NPC's own tint array changes what composites on top.**
+
+The experiment, on `CF_NaevaMora [00009138]`, who ships with both a scar and an
+accent. Two vanilla textures were replaced with full-face opaque colours —
+`scar_nosegouges_color.dds` → red, `accents_undereyebagssmall_color.dds` → blue —
+and both layers set to the same intensity, so whichever composites last wins the
+whole face. The result was read out of the baked
+`facecustomization\Starfield.esm\00009138_Color.dds`, not judged by eye:
+
+| Test | Change | Baked face |
+|---|---|---|
+| 1 | vanilla order; scar only | **red** (control — the layer works) |
+| 2 | vanilla order; scar + accent | **blue** — `Accents1` is above `Scars` |
+| 3 | NPC's stored tint array reversed (`Accents1` before `Scars`) | **blue**, unchanged |
+| 4 | **this record** reordered — `Accents1` moved below `Scars` | **blue**, unchanged |
+
+Test 4's bake measured **99.8% pure blue, 0.1% red**. The Creation Kit was restarted
+between the edit and the bake, so this is not the CK serving a cached load order.
+Test 3 also showed the CK's post-blend list displaying its own canonical order rather
+than the array's stored order — the same fixed sequence showing through in the editor
+UI.
+
+Two useful corollaries: **a mod cannot re-layer the face**, and the order vanilla
+data appears in is reliable *documentation* of the built-in sequence, since the
+built-in order and the record agree everywhere the data can show it (§4.3's
+topological check over 3,020 NPCs).
+
+For a custom race this is a hard constraint, not an inconvenience: a species marking
+that must sit **under** a scar has only the three slots below it — `Dermaesthetic`,
+`Complexion1`, `Complexion2` — and everything else will layer over scars like makeup,
+whatever the marking actually represents.
+
+**Not tested:** the live player composite (the bake is the Creation Kit's), and
+whether *deleting* a slot from this record disables it — a removal would test the
+claim more sharply than a reorder does.
+
 ⚠️ **The stack is global, not per-race.** There is no race-level field pointing at a
 layer list — contrast the skin tones, which the race *does* nominate via
-`BSTT`/`HSTT`/`FSTT`. Every race composites through this one record, so overriding
-it affects every actor in the game. No vanilla DLC overrides it, and neither does
-the shipped Felid race.
+`BSTT`/`HSTT`/`FSTT`. Every race draws on this one record, and a custom race gets no
+variant of its own. No vanilla DLC overrides it, and neither does the shipped Felid
+race — which, given the test above, would have gained them nothing.
 
 **Four of the 26 entries are broken, and the game ships that way:**
 
