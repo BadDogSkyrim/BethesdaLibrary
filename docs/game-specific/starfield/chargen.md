@@ -31,34 +31,37 @@ appearance/morphs on that one race. The only other humanoid races are
 (`QuadrupedA/B/C`, `BipedA`, `FloaterA`, `Terrormorph`…) and machines
 (`AutopilotRace`, `*TurretRace`, `SecurityCameraRace`…).
 
-This is *why* the whole custom-race workflow is "clone HumanRace" — you inherit
-everything the game's race checks rely on. Two design paths follow:
+When generating a custom race, you generally want to start by cloning HumanRace — you
+inherit everything the game's race checks rely on. Two possible design paths:
 
-- **Clone HumanRace → a new race**, assigned to the player and chosen NPCs.
-  Selective, toggleable, mod-compatible (the article-431 route documented below).
+- **Clone HumanRace → a new race**, assigned to the player and chosen NPCs. Selective,
+  toggleable, mod-compatible (the article-431 route documented below), can share the world
+  with humans.
 - **Override `HumanRace` itself** (swap its skin ARMO / default head parts) →
   *everyone* changes, with no per-NPC editing, but it's total, not toggleable, and
   conflicts with other appearance/body mods. Ambient crowds are `HumanCrowdRace`
   (override that too for full coverage); kids are `ChildRace`.
 
+**Where race boundaries should fall**: When you have multiple closely-related races (wolf,
+jackal, fox) you might make each its own race or you might make one "Canid" race with
+these being customizations (using Starfield's ethnicity mechanism, perhaps). HOWEVER,
+texture layers are not race-specific -- there's one texture stack for the entire game. So
+you won't be able to cleanly separate textures for the different species, and you'll have
+to create extra textures just to fill in all the slots. It's likely more convenient to put
+each species in its own race -- possibly sharing a single head with morphs for the
+different head shapes.
+
+**What actually "notices" a race swap**: conditions testing a **keyword**
+(`ActorTypeNPC`/`ActorTypeHuman`, etc.) **pass** — a clone inherits HumanRace's keywords,
+covering most generic AI/quest/dialogue checks. Conditions testing the **specific race
+form** (`GetIsRace HumanRace`) or a **race form-list** **fail** until you add your race —
+which is exactly what the finishing-fix form-lists patch (e.g.
+`HumanRaceORChildRaceORHumanCorpseRace [CNDF:0003D8C1]`; see §10). Changing the race of
+named NPCs also means re-baking **FaceGen** for each NPC.
+
 **Selecting the player's race is done by plugin, not in the creator** (same as `[FO4]`):
 Starfield has no in-chargen race picker, so a mod sets the player's race by **overriding
-the player NPC record (form `7`) + its 12 copies** (article 431). This pairs naturally
-with the chargen topology-lock (above): put the **topology boundary at the race/plugin**
-— one race (and a small player-setting plugin) per distinct head *geometry* (canid,
-felid, …) — and handle all same-topology variety (fur color, markings via AVMD overlays,
-ear/tail head parts, muzzle morphs) *inside* the creator. For a multi-species pack: a
-core master defining all races + shared assets, plus one tiny "player" plugin per race
-that does the player-record override (only one can win — enabling one = the choice).
-
-What actually "notices" a race swap: conditions testing a **keyword**
-(`ActorTypeNPC`/`ActorTypeHuman`, etc.) **pass** — a clone inherits HumanRace's
-keywords, covering most generic AI/quest/dialogue checks. Conditions testing the
-**specific race form** (`GetIsRace HumanRace`) or a **race form-list** **fail** until
-you add your race — which is exactly what the finishing-fix form-lists patch
-(spacesuit `CNDF:0003D8C1`, dialogue camera `CPTH:000C1056`; see §10). Going wide to
-named NPCs also means re-baking **FaceGen** per NPC (the slow, fragile part);
-player-only avoids it.
+the player NPC record (form `7`) + its 12 copies** (article 431). 
 
 ### Ambient crowds (`HumanCrowdRace`) — generated on the fly
 
@@ -104,13 +107,16 @@ leveled list**, so mixed-species furry crowds are a *data-driven* job, not per-N
 not multi-race:
 - Author furry head ARMOs (`CrowdHead_Wolf`, `_Cat`… — ARMO on slot 2 + `AA_CrowdHead_*`
   addon → furry head mesh/material) and **add them to `LL_Crowd_Heads` (+ `_Overweight`/
-  `_Thin`)**. Every crowd NPC then randomly draws a furry head → mixed-species crowds
-  from **one leveled-list edit**. One crowd race hosts all species — no extra races.
+  `_Thin`)**. Every crowd NPC then randomly draws a furry head → mixed-species crowds from
+  **one leveled-list edit**. One crowd race hosts all species — no extra races. (In
+  theory. This is untested.)
 - The **body** is the shared `WNAM` (`Skin_Crowd_Base_Body`); override it to a furry body.
   Head and body vary independently (vanilla reconciles via skin-tone textures), so either
   use one generic fur-textured anthro body and vary only heads (simplest), or tie body to
   head species (bundle a body into each `CrowdHead` set / make species-specific
   actors/outfits) if per-NPC body-species matching is required.
+- **Tails**, if your species has them, are a problem. Possibly they can be included in the
+  head mesh. There needs to be a way to assign skin tone to them.
 - **How much body-matching matters depends on visible skin.** A crowd outfit equips just
   three things: one **slot-3 (BODY) full-body garment** + `LL_Crowd_Heads` + a hair
   leveled list (`LL_Crowd_Hairs_NoHats`). Vanilla crowd clothing is nearly all long-sleeved
@@ -121,8 +127,6 @@ not multi-race:
   short-sleeve fashion show arms/skin), where body markings must match the head species.
   Note hair is *also* a leveled-list item — for animal heads, swap/empty `LL_Crowd_Hairs_*`
   or repurpose it as mane/head-fur.
-- Crowds are a distinct race from a cloned player race → full coverage means handling
-  both (plus `ChildRace` for kids).
 
 ### Record fields
 
@@ -174,6 +178,14 @@ Compare `[FO4]` 32 biped slots / `[Skyrim]` 32 body-part flags — Starfield
 doubles it to 64 and splits armor vs. **spacesuit ("SS")** variants (see §7).
 
 ### Chargen and Skintones (per gender) — the character-creator payload
+
+**Phenotypes**: Much of character customization depends on "phenotypes", a new concept in
+Starfield. A phenotype describes a basic look for a head. Starfield phenotype names follow
+the form `<sex>_<ethnicity>_<age>`, where "sex" = male/female, "ethnicity" = af
+(african)/as (asian)/eu (european), and "age" = md (middle aged)/ol (old)/yo (young).
+That's 18 variants jut to cover the ground; variation *within* phenotype is in addition to
+that. Phenotypes can control both facial morphs and textures.
+
 ```
 Chargen and Skintones
 └─ Male / Female
@@ -204,18 +216,19 @@ morphs + skin-tone AVM subtypes**.
 | `RPRM` / `RPRF` | Race Presets (male/female) → `NPC_` | the preset faces scrolled in the creator; each points to an `NPC_` defining a full face |
 | `MPGN` + `MPGM` | **Morph Groups** | `MPGN` = group name = a **face region** (`Cheeks, Chin, Ears, Eyes, Forehead, Jaw, Mouth, Neck, Nose`); `MPGM` = the list of morph-key names in that region — **one per phenotype** (e.g. `male_af_md1_Cheeks`, `male_eu_md2_Cheeks`, …). These are the creator's per-region sliders; the names are the keys in the chargen `morph.dat` (§3). |
 | `FMRI` + `FMRU`/`FMRN`/`FMRS` | **Face Morph Phenotypes** | the named **base faces**: ethnicity (`af`/`as`/`eu`) × age (`yo`/`md`/`ol`) = **9** (`male_af_md1`, `male_eu_md2`, `female_as_yo1`, …). `FMRU` and `FMRS` are the raw name; `FMRN` is the localized display name (a string ID in `Starfield.esm`, literal text in an unlocalized plugin). **`FMRI` is not a positional index — it is the `ID` of a region in the race's `FacialBoneRegions<Sex>.txt`**, so the values are sparse (male: 1, 9, 12, 14, 16, 40, 42, 44, 46). |
-| `FMSR` + `FMRU`/`FMRN` | **sculpt regions** | interleaved into the *same* numbered table as `FMRI`, these are the 11 `SculptRegion: true` regions — `Head Shapes`, `Cheeks`, `Chin`, `Ears`, `Eyebrows`, `Eyes`, `Forehead`, `Jaw`, `Mouth`, `Neck`, `Nose` (male IDs 22, 26, 30, 34, 38, 50, 56, 62, 66, 72, 82). Both kinds of row are entries in one flat table whose IDs run in increasing order. |
+| `FMSR` + `FMRU`/`FMRN` | **sculpt regions** | interleaved into the *same* numbered table as `FMRI`, these are the 11 `SculptRegion: true` regions — `Head Shapes`, `Cheeks`, `Chin`, `Ears`, `Eyebrows`, `Eyes`, `Forehead`, `Jaw`, `Mouth`, `Neck`, `Nose` (male IDs 22, 26, 30, 34, 38, 50, 56, 62, 66, 72, 82). Both kinds of row are entries in one flat table whose IDs run in increasing order. NOTE, As of this writing, xEdit shows these nested under FMRI -- it's clearer to think of them as at the same level, interleaved. |
 | `FDDS` | Skin Tone AVMS Subtype | presumably names the AVM schema (§4) the skin tones conform to — but **neither `HumanRace` nor any shipped custom race sets it**, so the purpose is unconfirmed. |
 | `FDSI` + `FDSL` | **Face Dials** | the individual named **sliders** in the creator. ⚠ xEdit labels `FDSI` "Skin Index" and it is **nothing to do with skin tones** — it is a **sculpt-slider ID**, the same space the NPC's `FMSI` indexes. `HumanRace` carries **40 dials per sex**, sparse (24, 25, 27, 28, 29, 31, … 85), and 24/25/76/77 are exactly the sliders the Mouth region (ID 22) owns — see §3. `FDSL` is the translatable label (`'down - up'`, `'narrow - wide'`). |
 | `BSTT` / `HSTT` / `FSTT` | Body / Hand / **Face** Skin Tones | the AVM skin-tone group names the race draws its skin from (§4); a custom race points these at its own groups (guide 431, §"Adding skin tones") |
 | `FCTP` | Face Custom Textures Base Path | the directory (under `Data\Textures\`) the **FaceGen bake** reads its base face maps from, by filename convention — `<phenotype>_sk<N>_color/_normal/_rough/_ao.dds` plus `FCT_<region>_mask.dds`. Vanilla `HumanRace` omits it and falls back to `[Facegen] sSkinTexturePath` (default `Actors\Human\Faces\Chargen`); `FelidRace` sets `actors\Felid\faces\chargen`. **A custom race should set this** — see [Creation Kit §3](creation-kit.md#3-where-the-bake-gets-its-source-textures-fctp-and-the-filename-convention). |
 
-**How it composes:** **9 regions × 9 phenotypes = the 81 chargen morphs** (§3), named
-`<phenotype>_<region>` — `male_as_md1_Cheeks`, `female_eu_yo1_Nose`. Morph Groups list those
-names per region; Face Morph Phenotypes name the base faces the sliders blend between; Face
-Dials are extra individual sliders. **The same phenotype vocabulary addresses two different
-deformation systems** — the vertex morphs here, and the bone morphs in the race's
-`FacialBoneRegions` file, which uses the identical names. §3 covers how an NPC drives both.
+**How it composes:** **9 regions × 18 phenotypes = 162 chargen morphs** (§3), named
+`<phenotype>_<region>` — `male_as_md1_Cheeks`, `female_eu_yo1_Nose`. Morph Groups list
+those names per region; Face Morph Phenotypes name the base faces the sliders blend
+between; Face Dials are extra individual sliders. **The same phenotype vocabulary
+addresses two different deformation systems** — the vertex morphs here, and the bone
+morphs in the race's `FacialBoneRegions` file, which uses the identical names. §3 covers
+how an NPC drives both.
 
 A custom race authors its own `MPGN`/`MPGM` + `FMRI`/`FMRU` and its own skin-tone AVM groups
 (`BSTT`/`HSTT`/`FSTT`). Keep the two halves consistent: a phenotype named `X` implies morph keys
@@ -313,7 +326,7 @@ Object" record plus external morph-delta files.**
 | `BMPP` Bone Morph Definition File | drives **bones** from morph values (skeletal morphs) |
 | `MOBC` Base Vertex Color | base color for the morphed mesh |
 
-Key insight: a `MRPH` separates the **face-animation morphs** (expressions,
+Key insight: a `MRPH` separates the **performance morphs** (expressions,
 visemes) from the **chargen morphs** (creator sliders). `BMPP` can additionally
 map morph sliders onto **bone transforms** — but note that vanilla head/body
 `MRPH` records and shipped custom races leave `BMPP` empty; the bone-driven face
@@ -352,8 +365,7 @@ face regions** (verified on the vanilla male & female head morph.dat):
 - **Face presets (81):** `<sex>_<ethnicity>_<age>_<Region>`.
   - **9 phenotype presets** = ethnicity `af`/`as`/`eu` × age `yo`/`md`/`ol`
     (young/mid/old), i.e. `af_md1`, `af_ol1`, `af_yo1`, `as_md1`, `as_ol1`,
-    `as_yo1`, `eu_md2`, `eu_ol1`, `eu_yo1`. (Note the trailing index is a fixed
-    token, not a free axis — `eu` uses `md2` where `af`/`as` use `md1`.)
+    `as_yo1`, `eu_md2`, `eu_ol1`, `eu_yo1`. (Note `eu` uses `md2` where `af`/`as` use `md1` -- it's not clear why.)
   - **9 regions** = `Cheeks`, `Chin`, `Ears`, `Eyes`, `Forehead`, `Jaw`, `Mouth`,
     `Neck`, `Nose`.
 
@@ -430,12 +442,9 @@ teeth (29) and tear (73) mesh carries its own subset so it deforms with the face
 > **Furry-race implications.**
 > - A muzzle/snout head that doesn't share human topology **needs its own
 >   `performance/morph.dat` authoring the action units on the new mesh, matched by
->   name**, or the face is frozen in dialogue and won't lip-sync — a substantial
->   per-head rigging cost, and a big reason shipped beast races have static faces.
+>   name**, or the face is frozen in dialogue and won't lip-sync.
 > - **Animated ears/appendages via expression** (e.g. "sad → droopy ears") work the
->   same way, keyed to *action units* rather than named emotions: give the ears
->   their own `performance/morph.dat` (an ear head part, like `eyebrow_01`) and
->   author ear-pose deltas onto the AUs that compose each mood — droop on
+>   same way, keyed to *action units* rather than named emotions — droop on
 >   `innerBrowRaise` + `lipCornerDepress` (sad), pin back on `browLowerer` (angry),
 >   perk on `outerBrowRaise`/`cheekRaise` (happy). Key them to the **emotional**
 >   AUs (brow/cheek), not the speech AUs (`jawOpen`/`lipPucker`/funnelers double as
@@ -515,9 +524,10 @@ not an editable plugin reference**. (`INFO` responses additionally carry a per-l
 >   records but then needs custom dialogue/scenes to trigger them.
 
 ### The morph-delta file (`.morph` / `morph.dat`)
-Stored under `Data/meshes/morphs/…/morph.dat` — always named `morph.dat`, only the folder path varies
-(e.g. `meshes/morphs/human/female/chargen/body/morph.dat`); **not** hash-named like `.mesh` files.
-Binary layout **verified** against Outfit Studio's `SFMorphFile` (little-endian):
+Stored under `Data/meshes/morphs/…/morph.dat` — always named `morph.dat`. Only the folder
+path varies and is stored in the plugin file (e.g.
+`meshes/morphs/human/female/chargen/body/morph.dat`); **not** hash-named like `.mesh`
+files. Binary layout **verified** against Outfit Studio's `SFMorphFile` (little-endian):
 
 ```
 char   magic[4] = "MDAT"
@@ -538,35 +548,42 @@ offsets[numOffsets]       // 20 bytes each — sparse per-vertex:
     uint32 keyMarker[4]   //   128-bit bitfield → which shape keys touch this vertex (max 128 keys)
 ```
 
-So a morph is **dense over vertices** (one `offsets` entry each, `numOffsets == numVertices`) but
-**sparse over keys**: a vertex stores a run of deltas only for the shape keys whose bit is set in its
-`keyMarker`, and the set bits (ascending) map 1:1 to that vertex's consecutive `morphData` records.
-Position deltas share the `.mesh`'s `havokScale` factor.
+So a morph is **dense over vertices** (one `offsets` entry each, `numOffsets ==
+numVertices`) but **sparse over keys**: a vertex stores a run of deltas only for the shape
+keys whose bit is set in its `keyMarker`, and the set bits (ascending) map 1:1 to that
+vertex's consecutive `morphData` records. Position deltas share the `.mesh`'s `havokScale`
+factor.
 
-> **Corrections (verified byte-exact against vanilla + the SGB `MorphIO.cpp` source, 2026-07-14):**
-> the normal/tangent are **DEC3N signed** (earlier notes said UDEC3), and the position half-float is
-> stored **metric** and multiplied — not divided — by `havokScale` to reach game units. A round-trip
-> reader/writer reproduces a vanilla `morph.dat` byte-for-byte with this layout.
+> **Corrections (verified byte-exact against vanilla + the SGB `MorphIO.cpp` source,
+> 2026-07-14):** the normal/tangent are **DEC3N signed** (earlier notes said UDEC3), and
+> the position half-float is stored **metric** and multiplied — not divided — by
+> `havokScale` to reach game units. A round-trip reader/writer reproduces a vanilla
+> `morph.dat` byte-for-byte with this layout.
 
-**`targetVertColor` is an RGB565 per-vertex colour**, **constant per vertex across all of that vertex's
-morph keys** (verified: for `chargen/coily_mohawk_f`, 0 of 10,011 multi-key vertices differ across
-keys; same for the head). SF vertex colour drives **material masks** (hair/clothing use R/G/B channels —
-`HairSettingsComponent.AOVertexColorChannel` / `DepthOffsetMaskVertexColorChannel`;
-`AlphaBlenderSettings.VertexColorChannel`; chromatic values like magenta `(1,0,1)`; faces use a
-near-gray baked AO `0xBDF7`). It's a constant on most morphs — of 1194 vanilla `morph.dat`, only 49
-carry a non-constant colour. It **correlates with the mesh's own vertex colour** but is not byte-equal
-(on the hair sample R/B match, G differs); the exact relationship is **unresolved**.
+**`targetVertColor` is an RGB565 per-vertex colour**, **constant per vertex across all of
+that vertex's morph keys** (verified: for `chargen/coily_mohawk_f`, 0 of 10,011 multi-key
+vertices differ across keys; same for the head). SF vertex colour drives **material
+masks** (hair/clothing use R/G/B channels — `HairSettingsComponent.AOVertexColorChannel` /
+`DepthOffsetMaskVertexColorChannel`; `AlphaBlenderSettings.VertexColorChannel`; chromatic
+values like magenta `(1,0,1)`; faces use a near-gray baked AO `0xBDF7`). It's a constant
+on most morphs — of 1194 vanilla `morph.dat`, only 49 carry a non-constant colour. It
+**correlates with the mesh's own vertex colour** but is not byte-equal (on the hair sample
+R/B match, G differs); the exact relationship is **unresolved**.
 
-Because it's one value per vertex (not per morph), it maps to a Blender **colour attribute**: import
-writes the per-vertex colours there, export RGB565-encodes them back (gray default if absent) — so a
-morph round-trips from mesh + shape keys + one colour attribute, no per-morph colour authoring. (Whether
-the engine reads these colours at all is unconfirmed; the in-game round-trip settles it, and for faces
-the gray default reproduces the real value, so only hair/fur is at risk.)
+Because it's one value per vertex (not per morph), it maps to a Blender **colour
+attribute**: PyNifly import writes the per-vertex colours there, export RGB565-encodes
+them back (gray default if absent) — so a morph round-trips from mesh + shape keys + one
+colour attribute, no per-morph colour authoring. (Whether the engine reads these colours
+at all is unconfirmed.)
 
-> **Note — the base `.mesh` DOES carry vertex colours** (the hair sample has 1002 distinct raw colours;
-> ~22% of sampled SF `.mesh` use non-black colour/alpha). A current NIF ctypes/wrapper layer read them
-> as all-black — a vertex-colour **import bug** to fix, since it silently breaks material rendering
-> (alpha especially) on every mesh that uses vertex colour, independent of morphs.
+> **Note — the base `.mesh` DOES carry vertex colours** (the hair sample has 1002 distinct
+> raw colours; ~22% of sampled SF `.mesh` use non-black colour/alpha). A reader has to go
+> at them through the `.mesh`: `BSGeometry` keeps its colours in the external mesh data,
+> not in the NIF, so a generic NIF colour accessor returns black for every vertex and
+> silently breaks material rendering — alpha especially — on any mesh that uses them.
+> (PyNifly hit exactly this and fixed it in 28.0.0 by routing through the dedicated
+> `.mesh` colour reader; vanilla `cornrows_hairmesh_f` now reads 34,917 coloured
+> vertices, 2,345 distinct.)
 
 Workflow facts (Starfield Geometry Bridge, Blender):
 - Import the `.mesh` first, then import the `.morph` onto the active mesh.
