@@ -52,8 +52,57 @@ NifSkope's material export (`sfmatexport.cpp`) serializes a `CE2Material` straig
 (the `.cdb` parsers are strictly read-only). So authoring a custom skin/fur material means emitting a
 loose `.mat`; the compiled database is only ever *read*, to resolve vanilla materials by path hash.
 Each loose node carries its own resource IDs and `Parent` links into the shared root templates.
-(The exact loose-vs-`.cdb` *precedence* rule — full replace vs merge — is still undocumented, but
-doesn't block authoring: a complete loose graph works.)
+
+> ⚠️ **But a complete loose graph does NOT work**, and minting fresh resource ids — which is what
+> NifSkope's exporter does — is why. See
+> [Inheritance](#inheritance-a-mat-states-only-what-it-changes) and
+> [Resource ids are a registered space](#resource-ids-are-a-registered-space) below. Both were
+> established by testing in game, and neither is visible to any other check: the file parses, the
+> Creation Kit loads it and previews it correctly, and the mesh is invisible in game.
+
+### Inheritance: a `.mat` states only what it changes
+
+A material is normally a **derivation**. It names one or more parents in its top-level `Import`
+list and restates only the components it overrides; everything else shows through from the
+parent. Measured across the 48,505 authored vanilla materials (the Creation Kit source drop,
+not the `.cdb`):
+
+| | |
+|---|---|
+| carry an `Import` | **99.5%** |
+| carry a `ShaderModelComponent` of their own | **0.3%** |
+| declare a `BlendModeComponent` locally | 996 of the 12,278 with blenders |
+
+The shader model belongs to the **template**, not to the material. So reading a `.mat` without
+walking its chain reads almost none of it — no shader model, no settings the template supplies,
+and components missing whichever fields the author did not repeat.
+
+A chain is typically three levels: the material, a shader-model template under
+`Materials\Layered\ShaderModels\`, and a root template under `Materials\Layered\Root\`. The
+root templates exist in **no loose tree** — they ship only inside `materialsbeta.cdb` — so a
+file-only resolver stops one level short and returns something that looks complete and isn't.
+
+Three rules govern how a child combines with its parents. Each is silent when you get it wrong,
+in the sense that the result is a well-formed material that is not the one you meant:
+
+1. **Components merge field by field, not wholesale.** Authored `left_eye.mat` restates six of
+   `EyeSettingsComponent`'s seven fields and lets `Enabled` show through from the template.
+   Replacing the payload as a unit loses exactly the fields the author chose not to repeat —
+   and the result still looks like a complete component.
+2. **Merging reaches inside typed payloads too.** An `XMFLOAT4` may legally state `x,y,z` and
+   inherit `w`; 24 such partial values ship in a 700-material sample, with the inherited `w`
+   being `1` in one case and `0` in another.
+3. **The root's `LayerID`/`BlenderID` list is a DECLARATION, not a contribution.** The
+   most-derived document that states any of it states all of it, and layers and blenders go
+   together. This is how a derived material **deletes** a layer: it declares a shorter list and
+   never mentions the rest. Verified against the `.cdb`'s composed form over 2,000 materials —
+   a material declaring `LayerID[0]` alone over a chain carrying three layers and two blenders
+   composes to one layer and no blenders, while one declaring `LayerID[0]` + `BlenderID[0]`
+   keeps its blender (47 materials in that sample).
+
+**For authoring:** derive from the template your material is a kind of, and write only your
+delta. Flattening a chain into one self-contained file is legal JSON, loads in the Creation Kit,
+and does not render.
 
 ### Where things live (all paths relative to `Data\`)
 
@@ -73,8 +122,10 @@ by community tools such as the fo76utils NifSkope fork / SFME / Gibbed.Starfield
 
 ## 2. The `.mat` JSON format (worked example)
 
-A `.mat` is a JSON document with a top-level `Filename`, an optional `Import` list (referenced
-external resources by hash), and an `Objects` array. Each object is a graph node with:
+A `.mat` is a JSON document with a top-level `Filename`, an optional `Import` list (the
+materials this one **derives from** — see
+[Inheritance](#inheritance-a-mat-states-only-what-it-changes)), and an `Objects` array. Each
+object is a graph node with:
 
 - `Components` — the typed data payloads (name, IDs, texture files, colors, floats, settings blocks).
 - `Edges` — links to other nodes (`BSComponentDB2::OuterEdge`, with a `To` target and `EdgeIndex`).
@@ -82,7 +133,60 @@ external resources by hash), and an `Objects` array. Each object is a graph node
 - `Parent` — the template/root graph this node derives from (e.g. `…\Root\Layers.mat`).
 
 Every typed payload is `{ "Data": {...}, "Index": n, "Type": "BSMaterial::Xxx" }`. The `Index`
-disambiguates repeated components (e.g. texture slot index within a set).
+disambiguates repeated components (e.g. texture slot index within a set). A component may also
+carry a `Version` — see [Component versions](#component-versions) below.
+
+### Resource ids are a registered space
+
+`res:AAAAAAAA:BBBBBBBB:CCCCCCCC` looks like three free hashes. It is not a free space. Across
+vanilla ids, word **B**'s top 16 bits are `0005` (74.8%) or `0006` (25.2%) — 99.99% between them
+— and word **C** takes only **118 distinct values game-wide**. Words B–C together behave as a
+*namespace*, and one material's objects may legitimately span several of them: objects owned by
+a shader-model template stay in the template's namespace.
+
+**Minting a namespace of your own breaks the material in game.** Tested at one head part's path,
+each variant one step further from the shipped file:
+
+| | change from the vanilla authored `left_eye.mat` | in game |
+|---|---|---|
+| v0 | byte for byte, at a new path | renders |
+| v1 | + one texture repointed | renders |
+| v2 | + its `res:` ids moved to a fresh namespace | **fails — invisible** |
+| v3 | + only the ids' *first* word changed, namespace kept | renders |
+
+v0 also disposes of the reason usually given for re-minting — that a copy would "collide" with
+its source in the database. A byte-for-byte duplicate at a different path renders perfectly.
+
+So: an object you inherit keeps its id exactly; an object you add takes an unused **first** word
+inside a namespace the material already uses. This matters because NifSkope's material exporter
+mints fresh resource ids, so a material round-tripped through it can come out invisible.
+
+### `Edges` are containment, not inheritance
+
+Two different relations, easy to confuse, and a `.mat` uses both:
+
+- **`Parent`** (a field on the object) is *inheritance*: "I override that object", naming a
+  `res:` id in a parent material, or a template path.
+- **`Edges` of type `BSComponentDB2::OuterEdge`** are *containment*: "I belong to that object".
+  `To` names the **containing** object — the one that references this one — or `"<this>"` for an
+  object the material's root owns directly. The index field is spelled **`EdgeIndex`**, not
+  `Index` (3,438 of 3,438 sampled edges).
+
+Containment cannot be recovered from an object's own references: of 21,302 sampled objects,
+**1,138** are contained by something they never reference locally, because the referring object
+lives in a parent material. An object with no components at all carries no `Components` key —
+498 of 3,938 sampled objects are bare like this, and that is the normal shape of an object a
+derived material claims from its parent without changing anything.
+
+### Component versions
+
+A component may carry a `Version` (`MRTextureFile` ships at v1 and v2, `TextureSetID` at v1 and
+v3; 3,054 of 11,934 sampled components have one, while `CTName`, `LayerID`, `ParamBool` and
+`MaterialParamFloat` never do).
+
+It belongs to the **declaration**, not to the material: the compiled `.cdb`, which is the
+engine's own composed form, carries **no `Version` on any component**. A material that restates
+a component without a version does not inherit its parent's.
 
 > For a **complete, line-by-line annotated real material** — a shipped 2-layer skin with SSS,
 > a blend mask, and a tiled detail-normal layer — see
@@ -524,9 +628,19 @@ the numeric component fields — the approach NifSkope's "Clone and Copy to Clip
   Opacity`, `ScatteringDirections/ForwardAlpha`, `Overlay AO`, `AmbientOcclusion`) — the fo76utils
   index list and the CK template names don't fully line up; needs a byte-level check against a real
   character `.mat`.
-- **Loose-vs-`.cdb` override semantics** (full replace vs merge) — undocumented.
-- **Blend-mode enumeration** (Linear/Additive/Skin/PositionContrast and any others) and their exact
-  compositing math — inferred from renderer support, not from official docs.
+- **Loose-vs-`.cdb` override semantics** (full replace vs merge) — undocumented at the document
+  level, but a loose material's `Import` chain does resolve **into** the database: the root
+  templates exist nowhere else, and materials that derive from them render.
+- **Blend-mode enumeration** and their exact compositing math — inferred from renderer support,
+  not from official docs. Population in a 900-material sample (398 blenders): `PositionContrast`
+  221, none 95, `CharacterCombine` 75, `Linear` 6, `Additive` 1; `Skin` is a character-material
+  mode and did not appear in a random sample at all. Note that **the template owns the mode and
+  the material owns the mask texture** — `Skin5Layer.mat` declares all five of the head's blend
+  modes and no masks, while `male_default.mat` declares no modes and 18 `MRTextureFile`s.
+- **What the engine does with a blender that has no mask and no mode.** 134 of those 398
+  blenders have no mask texture, and 83 of those have no mode either — vanilla eyes among them,
+  where the `.cdb`'s own composed form agrees there is nothing. Nothing in the format supplies a
+  fallback value, so the shader model must decide, and how is not recoverable from the data.
 - **How the skin/hair numeric params map to Blender's Principled v2** (SSS radius units, backscatter →
   sheen) — needs perceptual calibration against in-game reference.
 
@@ -549,4 +663,6 @@ the numeric component fields — the approach NifSkope's "Clone and Copy to Clip
 - Real shipped `.mat` example: HelixTechGroup/HTG-Regenesys-Character `…\VaultBoyBobbleheads\VaultBoy.mat`: https://github.com/HelixTechGroup/HTG-Regenesys-Character
 - Local game data: `Data\EditorFiles\RuleTemplates\ShaderModels\*.json` (shader-model templates), `Data\Starfield - Materials.ba2` (`materialsbeta.cdb`)
 
-_Draft 2026-07-06 — not yet reviewed_
+_Draft 2026-07-06 — not yet reviewed. Inheritance, resource-id, edge and version sections
+added 2026-09-24 from measurements over the authored material tree and the compiled database,
+with the resource-id behaviour confirmed by testing in game._
