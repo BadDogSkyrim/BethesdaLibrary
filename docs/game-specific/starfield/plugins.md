@@ -78,6 +78,8 @@ Notes:
 - Local FormIDs for new records in a full master conventionally start at `0x000800` (CK reserves the low range), same as prior games.
 - `.esm` vs `.esp` still only affects **load-order family** (`.esm` before `.esp`); the tier flags drive FormID resolution. In practice Starfield mods ship `.esm` (often small- or medium-flagged). An `.esp` with no flag is a plain full-load-order plugin.
 - **Blueprint master** (`0x800`) is a Starfield-specific master used for ship blueprints; not relevant to a race mod.
+- **Pitfall for tools ported from Fallout 4:** `[FO4]`'s light flag is `0x200`, which in Starfield means **Update**. A script library that sets "light" the Fallout 4 way writes an Update plugin, not a small one. Seen in esplib (2026-10-16); patch the TES4 flags to `0x100` after saving. Shipped small masters carry `0x101` (`FSFPlayer_FOX.esm`) or `0x181` (`Constellation.esm`).
+- **A small master's console form ID** is `FE` + its 3-hex-digit small slot + the 3-hex-digit object ID. The slot counts the small masters that load before it, in load order. New records start at object ID `0x800`, so a plugin's first record is e.g. `FE006800` at slot 6.
 
 **Worked FormID examples:**
 - `0x0000347D` — `HumanRace` in `Starfield.esm` (master index `00`).

@@ -53,6 +53,9 @@ Assets packed in <Plugin> - Main.ba2 (meshes/geometries/materials) + Textures.ba
 - **[Chargen, Race & Skeleton](chargen.md)** — RACE/HDPT/MRPH/BMOD/AVMD,
   morphs, the skeleton, adding a tail/ears, FaceGen, and a realistic assessment of
   what a **custom (e.g. anthropomorphic) playable race** actually requires.
+- **[Crowds](crowds.md)** — how city crowds spawn and dress, the merged crowd head
+  (eyes, arms, `_facebones` copy, `BoneTrn` eye positions), the crowd skeleton, and what a
+  crowd of another species needs.
 - **[Plugins & Archives](plugins.md)** — the component record system,
   master tiers and FormID ranges, the records a body/armor/race mod edits, and the
   BA2 v2/v3 archive format.

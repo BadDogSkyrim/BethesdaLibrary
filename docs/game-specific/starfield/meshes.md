@@ -43,6 +43,15 @@ BSGeometry (: NiAVObject : NiShape)
 
 The **4 mesh slots are the LOD levels** (slot 0 = LOD0/highest detail, slots 1–3 = successively coarser). NifSkope labels the array "Meshes". A shape may populate only slot 0.
 
+**LOD slots in practice** (measured over vanilla, 2026-10-16):
+
+- **Slots often share one `.mesh`.** The commonest patterns, writing each distinct file as a letter: `AB` (549 shapes), `ABCD` (367), `ABC` (250), `ABBC` (232), `AAAB` (122), `AAB` (120), `AABC` (98). Crowd heads are `ABBC`. For `crowd_female_af_md1`: slot 0 is 4,179 verts / 6,970 tris, slots 1 and 2 share one 1,024-vert file, and slot 3 is 803 verts.
+- **One skin serves every slot.** The bone list and binds are in the NIF, once per shape. Each `.mesh` carries its own weights and `weightsPerVertex`.
+- **No switch distances** are stored in the NIF.
+- **Vanilla's coarser slots have scrambled UVs**: decimated straight across UV islands, on crowd heads and props alike (`tool_boltcutter01`, `artifactcase01`). They're presumably only ever seen at a distance. It hasn't been tested in game whether they're shown at all.
+- **A `_facebones.nif` companion lists only slot 0** (crowd heads: the same `.mesh` as the plain NIF's slot 0).
+- The `.mesh` has a **second, separate LOD mechanism**: its own `numLODs` triangle lists (§2). See the note under the `.mesh` layout.
+
 **`bounds` / `boundMinMax` are load-bearing, and the convention differs by shape kind (verified
 in-game 2026-07-11):**
 
@@ -120,6 +129,8 @@ Little-endian throughout. Layout below is cross-verified against **three indepen
 | … | Meshlet[numMeshlets] | meshlets | 4 × `uint32` (see §meshlets) |
 | … | `uint32` | `numCullData` | |
 | … | CullData[numCullData] | cull bounds | see §meshlets |
+
+**Internal LOD lists** (`numLODs`): an alternative to the NIF's LOD slots, not an addition. They re-index the same vertices with fewer triangles. Measured 2026-10-16: present on `hands_3rd_*` and roughly 20% of clothing `.mesh` files, and **never on a shape with more than one NIF slot (0 of 1,681)**. Dumped to OBJ, `hands_3rd_f`'s lists are real auto-decimated LODs of the arms (the last one uncleaned).
 
 **Version/LOD note:** fo76utils only reads the LOD section when `magic != 0` (`if (magic) { read LODs }`). nifly reads LODs unconditionally after weights. In practice shipped meshes are version 1–2. **Unverified:** exact behavioral difference for version-0 meshes; treat the LOD block as present for v1+.
 
@@ -227,7 +238,26 @@ The `.mesh` carries indices only; the **skeleton binding lives in the NIF**. Ver
 - **`BSSkin::Instance`** — the skin-instance block (skeleton-root ref + skin-instance data), the Starfield analog of the FO4 `BSSkin::Instance`.
 - **`BSSkin::BoneData`** — per-bone bind data: `{BoundingSphere bounds, MatTransform skinToBone}` per bone (plus scales). Bounding spheres are culling data recomputed on export.
 
-**There is no `BoneTranslations` block** (an earlier guess) — the per-bone transforms are in `BSSkin::BoneData`.
+The per-bone bind transforms are in `BSSkin::BoneData`. A separate **`BoneTranslations`** block does exist, but it isn't skin data: it moves the actor's eye bones, and only crowd heads carry it (next section).
+
+### `BoneTranslations` — a crowd head's eye positions
+
+A `BoneTranslations` block (`NiExtraData`; nifly `ExtraData.hpp`; nif.xml lists it with no description) holds `uint32 count`, then `count` × {`uint32`-length string bone name, `Vector3` translation}.
+
+Census of every vanilla NIF under `meshes\actors` (2026-10-16): **102 carry one, all of them `human_crowd` heads** (54 male, 48 female, including the `_facebones`, `_thin` and `_overweight` copies). In every one:
+
+- it hangs on the **root `NiNode`'s extra data**, after `BSXFlags`, and is named **`BoneTrn`**;
+- it holds exactly two entries, **`L_Eye`** and **`R_Eye`**;
+- each value is that eye bone's position **relative to `C_Head`, in `C_Head`'s frame, in metres** (the skeleton NIFs' units, not the game units of everything else);
+- each value equals the eye position implied by the head's own skin binds, to within 0.03 mm. Values differ per head: `af_md1`'s left eye is ≈ 5 mm wider and further forward than the skeleton's generic `L_Eye`. Thin and overweight heads share their base head's values.
+
+**What it does (verified in game 2026-10-16, a custom crowd head):** the engine places the actor's eye bones at these offsets for this head. An eye vertex is drawn at the `BoneTrn` position plus its offset from its bind position. So:
+
+- Leave the block out, and a head whose eyes aren't where the skeleton's are draws them in the wrong place (here, half an eye-diameter too high).
+- Move only the `BoneTrn` values, and the eyes shift by that much.
+- The eyes **turn about the eye bones**. The human `skeleton.rig` has no `L_Eye`/`R_Eye`, only `Eye_Target`, so animations can't drive them; the engine aims them procedurally. If the eye bones aren't at the eyeball centres, the eyes visibly wobble as they turn.
+
+**Rule:** put each eye bone at its eyeball's centre (in the skin binds), and set the `BoneTrn` entries to the same positions. Vanilla's are always equal.
 
 #### Authoring requirements for a valid skinned body (all verified in-game 2026-07-11)
 
