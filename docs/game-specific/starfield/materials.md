@@ -335,6 +335,47 @@ them: `Material.alphaBlendMode` (Linear/Additive/PositionContrast/None), `Effect
 (Lerp/Additive/Subtractive/Multiplicative), and `DecalSettings.blendMode` (None/Additive). NifSkope's
 renderer supports up to **6** layers.
 
+### How vanilla uses multiple layers
+
+Census of the root `LayeredMaterial` of all 10,530 named vanilla materials (2026-10-13). 29% have
+more than one layer: 1,501 have two, 729 three, 763 four and 9 five or six.
+
+**What the extra layers carry** depends on the shader family. Counts are textures supplied by
+layers after the first:
+
+| family | most common slots on extra layers |
+|---|---|
+| Standard | Normal 2,667 · **Albedo 1,231** · Rough 1,205 · AO 790 · **Height 519** · Transmissive 119 · Emissive 102 · Opacity 25 |
+| Character | Normal 2,020 · Rough 1,584 · **Albedo 1,478** · overlay rough (slot 15) 975 · overlay colour (slot 14) 699 · AO 567 |
+| Effect | Emissive 82 · **Opacity 66** · Albedo 40 · Normal 33 |
+| Skin | Normal 21 · AO 12 — **never albedo** |
+| Eye | Albedo 8 · Normal 8 (iris over sclera) |
+
+- **Albedo is combined often**: 790 Standard and 683 Character materials have an albedo on two or
+  more layers (dirt, wear, paint, markings over a base). Skin materials never do; their extra
+  layers only add the pore/wrinkle detail normal and AO.
+- **Opacity can come from another layer.** 104 non-base layers carry an opacity texture, and the
+  alpha settings' `OpacitySourceLayer` picks which layer's opacity is the surface's
+  (`MATERIAL_LAYER_1` on 12 materials, the default everywhere else).
+
+**Blend modes by family:**
+
+| family | modes declared on its blenders |
+|---|---|
+| Standard | `PositionContrast` 2,704 · `Linear` 125 |
+| Character | `CharacterCombine` 2,069 (nothing else) |
+| Skin | `Skin` 37 (heads, bodies) · `Additive` 2 (hands) |
+| Effect, Emissive, Eye, Vegetation, Water | mostly none — the template decides |
+
+3,831 of 5,637 blenders have a mask texture, and 1,036 pick one channel of it with
+`ColorChannelTypeComponent` (Green 616, Blue 353, Red 44, Alpha 23), so channel-packed masks are
+common.
+
+**UVs:** compared with layer 0, an extra layer usually differs only in UV **scale** (4,249 —
+tiled detail, like the 50×50 pore normal on a body), uses the same UVs (870), or shifts the
+offset (about 49). The mesh's second UV set (`BSMaterial::Channel = "Two"` on the UV stream) is
+rare: 29 layers and 21 blender masks, on standard, effect and emissive models only.
+
 ### Fur/skin-critical component fields
 
 `TranslucencySettings` (subsurface scattering — the core of believable skin/fur):
@@ -398,6 +439,11 @@ class field sets (verified against the cdb class registry):
   coverage (hair) vs straight blend. The nested `Blender` (`AlphaBlenderSettings` = `Mode,
   UseDetailBlendMask, UseVertexColor, VertexColorChannel, OpacityUVStream, HeightBlendThreshold,
   HeightBlendFactor, Position, Contrast`) governs **layer** alpha-blend, distinct from surface alpha.
+  In vanilla, `VertexColorChannel` is the field most often present (21,845 of 25,355 alpha components:
+  `Red` 21,254, `Alpha` 591); `UseVertexColor` appears on 273. The common decal recipe is
+  `HasOpacity` + `AlphaTestThreshold 0` + `Blender { UseVertexColor true, VertexColorChannel Alpha }`
+  (`Common\Decal\DecalLabels01.mat` and 59 others). See
+  [Transparency on skin materials](#transparency-on-skin-materials) for what this does on a body.
 - **`LayeredEmissivityComponent`** = up to three layers + two blenders + adaptive emittance:
   `Enabled, FirstLayerIndex, FirstLayerTint, FirstLayerMaskIndex, SecondLayerActive/Index/Tint/…,
   FirstBlenderIndex, FirstBlenderMode, ThirdLayer…, SecondBlender…, EmissiveClipThreshold,
@@ -422,6 +468,34 @@ mesh's **geometry normals** + the anisotropic `HairSettings` model + the ID map 
 overlapping hair cards, not to bump the surface. Skin materials, by contrast, do ship a real slot-1
 normal.
 
+### Transparency on skin materials
+
+A body part that has to take the race's skin tone uses the body material. The shipped Felid race's
+tail, for one, points at its body's `Naked_M_Body.mat`. That puts transparency on a skin shader
+model, which vanilla never does: across the 10,613 named vanilla materials, no `BodySkin1Layer`
+(17), `BodySkin2Layer` (4) or `Skin5Layer` (7) material has an `AlphaSettingsComponent` at all.
+Opacity in vanilla lives on the standard, decal, character, hair and vegetation models.
+
+Tested in game on a custom race's `BodySkin2Layer` body and tail (2026-10-12):
+
+| Alpha settings on the skin material | On a character |
+|---|---|
+| `HasOpacity` + `AlphaTestThreshold`, `_opacity` texture in slot 2 | **Works** — the cut-out shows |
+| The same, plus `Blender { UseVertexColor true, VertexColorChannel Alpha }` | **The whole shape is invisible** — including where vertex alpha is 1.0 |
+
+The armor preview in the Creation Kit still draws the vertex-colour version, so it only fails on an
+actor. That matches vanilla: vertex-colour opacity appears only on standard, decal and emissive-decal
+models (`1LayerStandardDecal` 229, `1LayerStandardDecalEmissive` 123, `1LayerStandard` 14, a handful
+of others) and never on a character or skin model.
+
+**So on a skin material, all transparency has to come from the opacity texture.** If two parts of
+a mesh share texels but need different transparency, give one of them its own UV island.
+
+A blender's mask can be sampled through the mesh's **second UV set**: a UV stream with
+`BSMaterial::Channel = "Two"` reads it. 40 vanilla UV streams do this, 21 of them blender masks,
+all on `2/3/4LayerStandard` materials and none on skin. Whether that would carry per-part opacity on
+a skin material is untested.
+
 ---
 
 ## 5. TextureSet slots & DDS conventions
@@ -439,7 +513,7 @@ Each `BSMaterial::MRTextureFile` in a TextureSet carries an `Index` selecting th
 | 4 | Metalness | `_metal` | BC4_UNORM | linear |
 | 5 | Ambient occlusion | `_ao` | BC4_UNORM | linear |
 | 6 | Height / parallax | `_height` | BC4_UNORM | linear |
-| 7 | Emissive / glow | `_emissive` | BC7/BC1 SRGB | **sRGB** |
+| 7 | Emissive / glow | `_emissive` | BC1_UNORM_SRGB (all vanilla) | **sRGB** |
 | 8 | Transmissive (translucency) | `_transmissive` | BC4_UNORM | linear |
 | 9 | Curvature | `_curvature` | BC4_UNORM | linear |
 | 10 | Mask | `_mask` | BC4_UNORM | linear |
@@ -486,6 +560,13 @@ Skyrim's specular did. Each scalar PBR property is its own **single-channel BC4*
 | `_normal` | BC5_SNORM | 7,235 |
 | `_rough` | BC4_UNORM | 6,226 |
 | `_ao` | BC4_UNORM | 4,885 |
+| `_opacity` | BC4_UNORM | 2,756 |
+| | R8G8B8A8_UNORM (effects) | 6 |
+| `_metal` | BC4_UNORM | 2,357 |
+| `_emissive` | BC1_UNORM_SRGB | 434 |
+| `_transmissive` | BC4_UNORM | 313 |
+| `_height` | BC4_UNORM | 295 |
+| `_id` | BC4_UNORM | 10 |
 
 About 60 per suffix are uncompressed, mip-less legacy-header files. Colour is overwhelmingly BC1
 with the sRGB flag; the few BC7 colour maps mostly are *not* flagged sRGB. Whether the engine honours
@@ -543,6 +624,12 @@ A faithful **import** for the common `Standard1Layer` case (Principled BSDF v2 i
 | Emissive `_emissive` (sRGB) | Image → **Emission Color**; strength from emissive params |
 | Transmissive / SSS block | **Subsurface Weight/Radius** driven by `sssStrength`/`sssWidth` (approx.) |
 | Hair block | Anisotropy/sheen approximation, or a dedicated hair node group |
+
+!!! warning "Painting vertex colours: the picker doesn't show what's exported"
+    Blender stores colour attributes as **linear** values, but its colour picker shows them
+    gamma-corrected unless switched to its linear readout. An exporter writes the stored value, so
+    a grey the picker shows as 0.55 reaches the game as **0.26** (measured, 2026-10-12). Switch the
+    picker to linear before painting a value that has to land exactly, such as vertex alpha.
 
 Because `_normal` is **XY-only BC5**, the importer must **reconstruct Z**
 (`z = sqrt(1 - x² - y²)`) with a small node group before the Normal Map node — a plain image → Normal
@@ -632,9 +719,8 @@ the numeric component fields — the approach NifSkope's "Clone and Copy to Clip
   level, but a loose material's `Import` chain does resolve **into** the database: the root
   templates exist nowhere else, and materials that derive from them render.
 - **Blend-mode enumeration** and their exact compositing math — inferred from renderer support,
-  not from official docs. Population in a 900-material sample (398 blenders): `PositionContrast`
-  221, none 95, `CharacterCombine` 75, `Linear` 6, `Additive` 1; `Skin` is a character-material
-  mode and did not appear in a random sample at all. Note that **the template owns the mode and
+  not from official docs. How often each mode is used, by shader family, is in
+  [How vanilla uses multiple layers](#how-vanilla-uses-multiple-layers). Note that **the template owns the mode and
   the material owns the mask texture** — `Skin5Layer.mat` declares all five of the head's blend
   modes and no masks, while `male_default.mat` declares no modes and 18 `MRTextureFile`s.
 - **What the engine does with a blender that has no mask and no mode.** 134 of those 398

@@ -56,7 +56,7 @@ different head shapes.
 covering most generic AI/quest/dialogue checks. Conditions testing the **specific race
 form** (`GetIsRace HumanRace`) or a **race form-list** **fail** until you add your race —
 which is exactly what the finishing-fix form-lists patch (e.g.
-`HumanRaceORChildRaceORHumanCorpseRace [CNDF:0003D8C1]`; see §10). Changing the race of
+`HumanRaceORChildRaceORHumanCorpseRace [CNDF:0003D8C1]`; see §9). Changing the race of
 named NPCs also means re-baking **FaceGen** for each NPC.
 
 **Selecting the player's race is done by plugin, not in the creator** (same as `[FO4]`):
@@ -82,15 +82,17 @@ separate, deliberately lightweight race (`HumanCrowdRace [002BBC09]`) and a
   from scratch; it's a **randomly-equipped head ARMO**. Verified across the 181
   `CrowdActor_*` NPC records: each has `RNAM`=HumanCrowdRace, `WNAM`=crowd body skin, a
   skin-tone index, a **randomized height range** (e.g. 0.98–1.02), an outfit and a voice
-  — but **no `PNAM` head parts, no face morphs, `EDCT` (tint count) = 0**, and `ACBS`
-  template flags of `Factions, Keywords` only (**not `Traits`** → appearance not
-  inherited). The head instead comes from the **outfit**: each `Outfit_Crowds_*` equips
+  — but **no `PNAM` head parts, no face morphs, `EDCT` (tint count) = 0**. Most (95 of 138)
+  inherit only Factions and Keywords, but **24 also inherit Traits** from the voice lists,
+  and Traits carries race ([crowds §2](crowds.md#2-the-crowd-actors)). The head instead
+  comes from the **outfit**: each `Outfit_Crowds_*` equips
   clothing **plus a leveled list `LL_Crowd_Heads [000F4E92]`** (variants
   `_Overweight` / `_Thin`) that draws one of **8 authored `CrowdHead_<phenotype>` ARMOs**
   (`CrowdHead_af_md1`, `_eu_yo1`, … ethnicity×age). A `CrowdHead` ARMO sits on **biped
   slot 2 (Hide Head)** and shows its head mesh via an `AA_CrowdHead_*` addon. So a crowd
-  face = a random head ARMO from a finite pool + random skin tone + random height. No
-  per-NPC FaceGen.
+  face = a random head ARMO from a finite pool + random height. No per-NPC FaceGen, and
+  no skin tone on the head: each crowd head is one mesh (head, eyes and arms) with its own
+  baked textures ([crowds §3](crowds.md#3-the-crowd-head)).
 
 **Full crowd appearance pipeline:**
 ```
@@ -103,30 +105,14 @@ CrowdActor NPC → DOFT: Outfit_Crowds_<location>
 ```
 
 **Modding implication (appearance):** the head is an **equippable ARMO chosen by a
-leveled list**, so mixed-species furry crowds are a *data-driven* job, not per-NPC and
-not multi-race:
-- Author furry head ARMOs (`CrowdHead_Wolf`, `_Cat`… — ARMO on slot 2 + `AA_CrowdHead_*`
-  addon → furry head mesh/material) and **add them to `LL_Crowd_Heads` (+ `_Overweight`/
-  `_Thin`)**. Every crowd NPC then randomly draws a furry head → mixed-species crowds from
-  **one leveled-list edit**. One crowd race hosts all species — no extra races. (In
-  theory. This is untested.)
-- The **body** is the shared `WNAM` (`Skin_Crowd_Base_Body`); override it to a furry body.
-  Head and body vary independently (vanilla reconciles via skin-tone textures), so either
-  use one generic fur-textured anthro body and vary only heads (simplest), or tie body to
-  head species (bundle a body into each `CrowdHead` set / make species-specific
-  actors/outfits) if per-NPC body-species matching is required.
-- **Tails**, if your species has them, are a problem. Possibly they can be included in the
-  head mesh. There needs to be a way to assign skin tone to them.
-- **How much body-matching matters depends on visible skin.** A crowd outfit equips just
-  three things: one **slot-3 (BODY) full-body garment** + `LL_Crowd_Heads` + a hair
-  leveled list (`LL_Crowd_Hairs_NoHats`). Vanilla crowd clothing is nearly all long-sleeved
-  full-body pieces (jackets/sweaters/jumpsuits/fatigues) with boots, so the exposed skin is
-  usually just **head/neck + hands** (sleeves end at the wrist; hands are the shared body
-  skin, not gloved). So outside revealing areas a generic fur body + varied heads reads as
-  seamless — only the head needs to carry species. **Neon is the exception** (catsuits/
-  short-sleeve fashion show arms/skin), where body markings must match the head species.
-  Note hair is *also* a leveled-list item — for animal heads, swap/empty `LL_Crowd_Hairs_*`
-  or repurpose it as mane/head-fur.
+leveled list**, so a crowd of another species is a data job, not per-NPC FaceGen. What
+worked in game for a fox crowd (October 2026): its own crowd race, new NPCs copied from
+crowd actors (with inherited Traits turned off), and fox head armors on a new head list in
+those NPCs' outfits, leaving every vanilla record alone. Because the head carries the arms
+and hands, the head is the only part that needs to show species; a crowd outfit is one
+full-body garment, a head and a hair-or-hat. The details, including the `_facebones` copy,
+the `BoneTrn` eye positions and the open question of tails, are on the
+[crowds page](crowds.md#5-a-crowd-of-another-species).
 
 ### Record fields
 
@@ -220,7 +206,7 @@ morphs + skin-tone AVM subtypes**.
 | `FDDS` | Skin Tone AVMS Subtype | presumably names the AVM schema (§4) the skin tones conform to — but **neither `HumanRace` nor any shipped custom race sets it**, so the purpose is unconfirmed. |
 | `FDSI` + `FDSL` | **Face Dials** | the individual named **sliders** in the creator. ⚠ xEdit labels `FDSI` "Skin Index" and it is **nothing to do with skin tones** — it is a **sculpt-slider ID**, the same space the NPC's `FMSI` indexes. `HumanRace` carries **40 dials per sex**, sparse (24, 25, 27, 28, 29, 31, … 85), and 24/25/76/77 are exactly the sliders the Mouth region (ID 22) owns — see §3. `FDSL` is the translatable label (`'down - up'`, `'narrow - wide'`). |
 | `BSTT` / `HSTT` / `FSTT` | Body / Hand / **Face** Skin Tones | the AVM skin-tone group names the race draws its skin from (§4); a custom race points these at its own groups (guide 431, §"Adding skin tones") |
-| `FCTP` | Face Custom Textures Base Path | the directory (under `Data\Textures\`) the **FaceGen bake** reads its base face maps from, by filename convention — `<phenotype>_sk<N>_color/_normal/_rough/_ao.dds` plus `FCT_<region>_mask.dds`. Vanilla `HumanRace` omits it and falls back to `[Facegen] sSkinTexturePath` (default `Actors\Human\Faces\Chargen`); `FelidRace` sets `actors\Felid\faces\chargen`. **A custom race should set this** — see [Creation Kit §3](creation-kit.md#3-where-the-bake-gets-its-source-textures-fctp-and-the-filename-convention). |
+| `FCTP` | Face Custom Textures Base Path | the directory (under `Data\Textures\`) the **FaceGen bake** reads its base face maps from, by filename convention — `<phenotype>_sk<N>_color/_normal/_rough/_ao.dds` plus the per-region blend masks `FCT_<region>_mask.dds` ([§4.5](#how-the-phenotype-maps-are-chosen-and-blended)). Vanilla `HumanRace` omits it and falls back to `[Facegen] sSkinTexturePath` (default `Actors\Human\Faces\Chargen`); `FelidRace` sets `actors\Felid\faces\chargen`. **A custom race should set this** — see [Creation Kit §3](creation-kit.md#3-where-the-bake-gets-its-source-textures-fctp-and-the-filename-convention). |
 
 **How it composes:** **9 regions × 18 phenotypes = 162 chargen morphs** (§3), named
 `<phenotype>_<region>` — `male_as_md1_Cheeks`, `female_eu_yo1_Nose`. Morph Groups list
@@ -250,6 +236,33 @@ Head Parts and Bone Modifiers
   wiring, normally inherited from `HumanRace`.
 - `VTCK` Voices, `MTNM` Movement Type Names, `WKMV/SWMV/FLMV/SNMV` movement
   defaults, `UNWP` Unarmed Weapon.
+
+### What the RACE record does *not* reach {#records-the-engine-finds-directly}
+
+**A custom race is not self-contained.** Some of what the engine needs it finds by a
+**hardcoded FormID** or by a **naming convention**, never by following a link out of your
+RACE record. Nothing in your plugin points at these, so nothing warns you when they are
+wrong — the failure is always silent, and usually looks like "works in the Creation Kit,
+broken in game".
+
+Consolidated, with the symptom when each is missed:
+
+| What | Reached how | Miss it and… |
+|---|---|---|
+| `HeadPartsChargenOptionsMale [FLST:0003D9AF]` / `…Female [0003D9B0]` | hardcoded FormID | your head parts never appear as creator choices; the creator fits the *human* part to your skull |
+| `CharGenPresets [FLST:0003F551]` | hardcoded FormID | the creator's preset row still offers human faces (each preset's head comes from that NPC's **own** race) |
+| **The player records** (`Player [NPC_:00000007]` + its copies) | hardcoded FormID | you stay human where it matters — see [§9](#9-building-a-custom-race) for the full list |
+| `HumanRaceORChildRaceORHumanCorpseRace [CNDF:0003D8C1]` | hardcoded FormID | spacesuit does not show |
+| `DC_Race_Human [CPTH:000C1056]` | hardcoded FormID | dialogue camera sits too close |
+| `Clothes_GenWare_01 "Space Undersuit" [ARMO:00165722]` | hardcoded FormID | invisible limbs in new-game chargen |
+| `SimpleGroup_EyebrowOpacity [AVMD:0000EF9F]` | by **name** | eyebrows render fully transparent |
+| Every `AVMD` tint slot (`Dermaesthetic`, `EyeColor`, …) | by **name** (§4.4) | a group you invented under a new name is simply never read; you must override the vanilla name or extend it with `AVMP` (§4.11) |
+| `Chargen_*` twin tint groups | by **name** | the Creation Kit looks right and the in-game creator does not — CK reads the runtime group, the creator reads the `Chargen_` twin |
+| `…FacialBoneRegions<Sex>.txt` + `…Mapping.csv` | **race EDID** filename | face morph regions do not resolve |
+| `BaseHead<RaceEDID><Sex>_<map>.dds` | **race EDID** filename | rename the race and the old bake orphans silently → black/stale head (§8) |
+| The four `FCTP` face maps | **filename convention** in the race's `FCTP` directory | a missing normal renders the face black (§1 `FCTP`) |
+
+⚠ **Renaming your race EDID breaks the last three at once**, and none of them will tell you.
 
 ---
 
@@ -488,19 +501,23 @@ scenes *do* reference is the **"Anim (Face) Archetype" keyword** — a `KYWD` na
 `AnimFaceArchetype*`, carried in a reusable *Animation* struct (`INFO` responses, scene
 phases, packages) via its `FLMV` "Anim Face Archetype" field. Those archetype keywords
 **name-parallel the `FXPD` set** (`AnimFaceArchetypeAngry` ↔ `facialExpression_Angry`,
-`…Afraid` ↔ `…Afraid`, `…Shocked`, `…Depressed`, `…Disgust`, `…Smirk`, …) and were even
-authored in the **same FormID block** (`FXPD facialExpression_Afraid [0020D3A0]`,
-`KYWD AnimFaceArchetypeAngry [0020D3A2]`). So the trigger path is **dialogue/scene →
+`…Afraid` ↔ `…Afraid`, `…Shocked`, `…Depressed`, `…Disgust`, `…Smirk`, …), but only by
+name: their FormIDs are unrelated (`KYWD AnimFaceArchetypeAngry [000FA84A]`,
+`FXPD facialExpression_Angry [0020D3A2]`). So the trigger path is **dialogue/scene →
 `AnimFaceArchetype` keyword → (in-house animation/behavior layer) → the matching `FXPD`
 morph bundle** — the keyword↔`FXPD` binding is by **name/convention in the anim system,
 not an editable plugin reference**. (`INFO` responses additionally carry a per-line
 *Emotion* keyword + value in `TRDA`.)
 
-> **Unconfirmed:** that editing an `FXPD` actually changes the in-game performance — the
-> anim/behavior layer could source an archetype's morphs from the `.agx` graph rather than
-> the `FXPD` record, in which case `FXPD` is data the runtime doesn't read. A one-off test
-> (add an obvious morph to `facialExpression_Angry`, trigger an angry line) would settle
-> both this and the ignore-unknown-AU assumption below.
+> **Tested in game (2026-10-08): the runtime reads `FXPD`, but only for the action units
+> it already knows.** Raising `jawOpen` to 1.0 in an override of `facialExpression_Angry`
+> opened the jaw whenever Angry was applied in photo mode. Two morph names added to the
+> same record (`CanineEarBackL`/`R`, defined with real deltas in the head's performance
+> `morph.dat`) did nothing: not in photo mode, not in the CK's character-window
+> expression preview, not on a re-baked NPC. Morphs are matched by name, not by their
+> position in `morph.dat`; the head tested had its keys in a different order from vanilla
+> and every vanilla action unit still worked. Tested through photo mode and the CK, not
+> through a dialogue line.
 
 > **Furry-race implications.**
 > - Because an `FXPD` references morphs **by name**, and every face part only responds
@@ -511,17 +528,15 @@ not an editable plugin reference**. (`INFO` responses additionally carry a per-l
 > - **`FXPD` records are global, not per-race.** There is no race field and dialogue picks
 >   the expression, not the actor's race — so you *cannot* give an anthro wolf a different
 >   `_Angry` mix from a human by adding a race-specific expression alone.
-> - **Work-around (unconfirmed, promising):** add **new, species-specific action units**
->   (e.g. `canine_ear_angry`, `canine_ear_happy`) to the canine head/ear `performance/
->   morph.dat`, then add those AU names to the relevant **global** `FXPD` records at chosen
->   weights. Humans lack those keys in their morph.dat, so the added entries are **silently
->   ignored on humans** (unknown key = no-op) but deform the canine's ears — one shared
->   expression, species-appropriate result, no custom dialogue needed. Costs: it's an edit
->   to base-game global records (a compatibility/"dirty edit" consideration), and the
->   ignore-unknown-AU behavior should be confirmed in-game. A few reusable ear AUs
->   (`earPinBack`/`earDroop`/`earPerk`) spread across the emotion `FXPD`s is tidier than a
->   bespoke morph per emotion. Authoring *brand-new* `FXPD`s instead avoids editing vanilla
->   records but then needs custom dialogue/scenes to trigger them.
+> - **New action units don't work.** Adding species morphs (ear-back, ear-droop) to the
+>   head's `performance/morph.dat` and naming them in the global `FXPD` records does
+>   nothing: the engine ignores action-unit names outside its own set (tested above).
+> - **Fold species motion into vanilla action units instead** (follows from the test; not
+>   itself tested yet). Add the ear-back deltas into the head's own `browLowererL`/`R`,
+>   which `facialExpression_Angry` weights at 0.84, and the ears move wherever those brows
+>   do: every expression and dialogue animation that uses them, with no record edits. The
+>   trade-off is that the ears follow that action unit everywhere, not just in one
+>   expression.
 
 ### The morph-delta file (`.morph` / `morph.dat`)
 Stored under `Data/meshes/morphs/…/morph.dat` — always named `morph.dat`. Only the folder
@@ -574,18 +589,10 @@ Because it's one value per vertex (not per morph), it maps to a Blender **colour
 attribute**: PyNifly import writes the per-vertex colours there, export RGB565-encodes
 them back (gray default if absent) — so a morph round-trips from mesh + shape keys + one
 colour attribute, no per-morph colour authoring. (Whether the engine reads these colours
-at all is unconfirmed.)
+at all is unconfirmed.) Note that the `.mesh` file does carry vertex colors and they are
+used.
 
-> **Note — the base `.mesh` DOES carry vertex colours** (the hair sample has 1002 distinct
-> raw colours; ~22% of sampled SF `.mesh` use non-black colour/alpha). A reader has to go
-> at them through the `.mesh`: `BSGeometry` keeps its colours in the external mesh data,
-> not in the NIF, so a generic NIF colour accessor returns black for every vertex and
-> silently breaks material rendering — alpha especially — on any mesh that uses them.
-> (PyNifly hit exactly this and fixed it in 28.0.0 by routing through the dedicated
-> `.mesh` colour reader; vanilla `cornrows_hairmesh_f` now reads 34,917 coloured
-> vertices, 2,345 distinct.)
-
-Workflow facts (Starfield Geometry Bridge, Blender):
+**Starfield Geometry Bridge** to Blender workflow (as of 09-2026):
 - Import the `.mesh` first, then import the `.morph` onto the active mesh.
 - Model needs a **`Basis`** shape key (base look) plus shape keys named to match
   the morph keys; **all shape-key values range 0.0–1.0**, relative to Basis. The
@@ -598,39 +605,42 @@ Reference implementations: Outfit Studio `SFMorphFile.{h,cpp}` (reads **and** wr
 StarfieldMeshConverter's `MorphIO`. Both are self-contained (~250 lines) with no NIF-library
 dependency beyond half-float + DEC3N helpers.
 
+**PyNifly** to Blender workflow:
+- Import the nif; it will bring the mesh with it even if the mesh is external.
+- Import the `.morph` on the active mesh separately; there's no link between nif and mesh.
+- Any morphs not part of the above "performance" set will be exported to the chagen morph file.
+
 ### Two ways to change face shape — bone morphs vs. vertex morphs
 
 Starfield has **two independent systems** that both reshape a face, with very
-different costs. Choosing between them is one of the load-bearing decisions when
-building a custom race.
+different costs. 
 
 | | Bone morphs | Vertex morphs |
 |---|---|---|
-| Authored in | `<RaceEDID>FacialBoneRegions<Sex>.txt` (JSON) | `chargen/…/morph.dat` |
+| Enabled in | `<RaceEDID>FacialBoneRegions<Sex>.txt` (JSON) | `chargen/…/morph.dat` |
 | Wired by | file naming convention off the race EDID | `MRPH` `TCMP` + race `MPGN`/`MPGM` |
 | Selected per NPC by | the **Face Morphs** array (`FMRI` region + `FMRG` group + `FMRS`) and the **Face Dial Positions** array (`FMSI` + signed `FMRS`) — see below | the **Morph Groups** array (`BMPN` "Blend Name" + `BMPV` "Intensity") |
 | Can express | translate / rotate / scale of existing face bones | arbitrary per-vertex displacement |
 | **Propagates to attached parts** | **yes, automatically** — anything skinned to `faceBone_*` follows | **no** — each part must re-author the same named keys |
 
-The propagation difference is the big one. A vertex morph only deforms the mesh
-it was authored for, so every eyebrow, beard, hair, teeth and eyelash mesh needs
-its own `morph.dat` carrying **the same key names** — the identical tax the
-performance/expression AUs pay (see above). A bone morph moves the skeleton, so
-every part weighted to those bones follows for free, including headgear.
+The propagation difference is the big one. A vertex morph only deforms the mesh it was
+authored for, so every eyebrow, beard, hair, teeth and eyelash mesh needs its own
+`morph.dat` carrying **the same key names** — the identical tax the performance/expression
+AUs pay (see above). A bone morph moves the skeleton, so every part weighted to those
+bones follows for free, including headgear, *as long as the bone weights match*.
 
-The tradeoff is expressive range: bones can only move, rotate and scale what is
-already in the rig. Skull proportions, muzzle length, ear size and set are well
-within reach; fine surface detail that has no bone under it is not.
+The tradeoff is expressive range: bones can only move, rotate and scale what is already in
+the rig. Skull proportions, muzzle length, ear size and set are well within reach; fine
+surface detail that has no bone under it is not.
 
-**What shipped custom races actually do.** The published felid race puts its
-per-species head shapes in the **chargen `morph.dat`** — its head chargen morph
+**What shipped custom races actually do** (as of 09-2026): The published Felid race puts
+its per-species head shapes in the **chargen `morph.dat`** — its head chargen morph
 carries 29 keys including `Tiger_Cheeks`, `Jaguar_Jaw`, `SnowLeopard_Nose`,
-`PointedEars_Ears`, matching the race's `MPGM` morph-group members one-for-one,
-and NPCs select them via `BMPN`/`BMPV`. Its `FacialBoneRegions` files are a
-renamed copy of the vanilla human ones, phenotype names and all. The cost shows
-up exactly where the table predicts: its eyebrow chargen morph re-authors seven
-of the same keys (`Tiger_Forehead`, `Jaguar_Forehead`, `SnowLeopard_Nose`, …) so
-brows track the species head shape.
+`PointedEars_Ears`, matching the race's `MPGM` morph-group members one-for-one, and NPCs
+select them via `BMPN`/`BMPV`. Its `FacialBoneRegions` files are a renamed copy of the
+vanilla human ones, phenotype names and all. The cost shows up exactly where the table
+predicts: its eyebrow chargen morph re-authors seven of the same keys (`Tiger_Forehead`,
+`Jaguar_Forehead`, `SnowLeopard_Nose`, …) so brows track the species head shape.
 
 Putting per-species shapes in the **bone region file instead**, as additional
 `SculptRegion: false` phenotype regions with matching race `FMRU` entries, gets
@@ -710,49 +720,48 @@ well-trodden path.
 
 ## 4. Tints, complexions & overlays — the AVM system (`AVMD`/`AVMS`)
 
-For a furry race, **fur color, stripes, spots, and markings live here**, not in
-the mesh. Starfield replaced the fixed `[Skyrim]` tint-mask layers with a
-generalized **Additive Visual Material (AVM)** system.
+Starfield replaced the fixed `[Skyrim]` tint-mask layers with a generalized **Additive
+Visual Material (AVM)** system. Individual races have no tint layer list -- there's one
+for all races.
 
 ### 4.1 Per-NPC tint application (`NPC_` → "AVMD Tints")
-**Tints are applied on the `NPC_` record, not the `RACE` record** — the race has
-no tint-layer list. Each NPC carries an `EDCT` **Tint Count** plus an **AVMD
-Tints** array; each entry is one applied layer:
+**Tints are applied on the `NPC_` record** — Each NPC carries an `EDCT` **Tint Count**
+plus an **AVMD Tints** array; each entry is one applied layer:
+
 | Field | Meaning |
 |---|---|
-| `MNAM` | the **group type** — `Simple Group` / `Complex Group` / `Modulation`. Not a record reference; it selects which name index the `TNAM` is looked up in |
-| `TNAM` Tint Group | the **slot** — one of the layer names in §4.3 (`Dermaesthetic`, `Accents1`, `Lipstick2`…) |
-| `QNAM` Tint Name | which option in the group |
-| `VNAM` Tint Texture | the overlay texture path |
+| `MNAM` | the **group type** — `Simple Group` / `Complex Group` / `Modulation`. |
+| `TNAM` Tint Group | the **slot** — one of the layer names in §4.3 (`Dermaesthetic`, `Accents1`, `Lipstick2`…). Combines with `MNAM` to give the `EDID` of the target group. |
+| `QNAM` Tint Name | which option within the group |
+| `VNAM` Tint Texture | the texture file path |
 | `NNAM` Tint Color | RGBA color |
 | `INTV` Intensity | 1–128 |
 
-**The entry is self-contained.** It carries the texture path, the color and the
-intensity, so nothing at runtime has to resolve the group in order to find the
-asset. Composited over the face material at runtime: for the player,
-driven by the creator; for NPCs, authored on the record and baked by FaceGen (§6).
-The NPC also names its per-slot colors directly as strings (`HCOL` hair, `FHCL`
-facial hair, `BCOL` eyebrow, `ECOL` eye, `JCOL` jewelry).
+**The entry is self-contained.** It carries the texture path, the color and the intensity,
+so nothing at runtime has to resolve the group in order to find the asset. Composited over
+the face material at runtime or during facegen. The NPC also names its per-slot colors
+directly as strings (`HCOL` hair, `FHCL` facial hair, `BCOL` eyebrow, `ECOL` eye, `JCOL`
+jewelry).
 
-**The FaceGen bake uses the stored `VNAM` literally — it never re-resolves the option through its
-group.** Measured: **577 of 20,751** vanilla NPC tint entries (in `ComplexionMask1`/`2`,
-`Dermaesthetic` and `TattooMask`) store a path that exists in no archive, because the texture was
-renamed or moved after the NPC was authored (`moles_many_small_02.dds` → `…_mask.dds`,
-`…_derm.dds` → `…_derm_color.dds`, `faces\makeup\tattoo_makeup_geometric_mask.dds` →
-`faces\chargen\postblenddetails\tattootint\…`). Their `QNAM` option still resolves through the
-group to a real file. `TattooMask` is the control, since a tattoo is unmistakable in a baked
-`_color`: of the 7 vanilla NPCs carrying one, 5 store a valid path and 2 a stale one. The valid
-tattoos checked (skull, eagle, skull, leaf) are in the baked texture; both stale ones — Valerie
-Mosquera and the `City_AC_FABQ10_Visitor` — are **absent**. A stale `VNAM` silently drops the
-layer, and Bethesda ships hundreds of them. (Also: `NNAM` `(0,0,0,0)` is not invisible — those
-skulls bake black.)
+**The FaceGen bake uses the stored `VNAM` literally** — it never re-resolves the option
+through its group. 
 
-For an author this means renaming or moving a tint texture breaks every NPC already authored
-against it, and fixing the group does not repair them; the records have to be re-saved.
+- Measured: **577 of 20,751** vanilla NPC tint entries (in `ComplexionMask1`/`2`,
+`Dermaesthetic` and `TattooMask`) store a path that exists in no archive, because the
+texture was renamed or moved after the NPC was authored (`moles_many_small_02.dds` →
+`…_mask.dds`, `…_derm.dds` → `…_derm_color.dds`,
+`faces\makeup\tattoo_makeup_geometric_mask.dds` →
+`faces\chargen\postblenddetails\tattootint\…`). Their `QNAM` option resolves through the
+group to a real file but it is *not* used. `TattooMask` is the control, since a tattoo is
+unmistakable in a baked `_color`: of the 7 vanilla NPCs carrying one, 5 store a valid path
+and 2 a stale one. The valid tattoos checked (skull, eagle, skull, leaf) are in the baked
+texture; both stale ones — Valerie Mosquera and the `City_AC_FABQ10_Visitor` — are
+**absent**. A stale `VNAM` silently drops the layer, and Bethesda ships hundreds of them.
+- Also: `NNAM` `(0,0,0,0)` is not invisible — those skulls bake black.
 
-⚠ **Only the NPC bake is measured.** Whether the **player** — composited live from the creator, not
-baked — also uses the stored paths, and whether layer order comes from the NPC's array or from the
-stack in §4.3, has not been tested.
+For an author this means renaming or moving a tint texture breaks every NPC already
+authored against it, and fixing the group does not repair them; the records have to be
+re-saved.
 
 **Colour or opacity — the slots split cleanly.** Measured over every vanilla NPC
 carrying tints: `Dermaesthetic` (2,949 NPCs) and `Complexion1`/`Complexion2` (2,432 /
@@ -771,7 +780,7 @@ The most any vanilla NPC carries is 16 layers; the median is 7–8.
 Two consequences for anyone authoring a race. To show several marks at once you
 either **bake them into one option** — `Burn_AlloverLight` and
 `Burn_LeftCheekManySmall` are pre-composited multi-scar textures — or **spend one
-slot per mark**. And the number of concurrent overlays is capped by the slot list,
+slot per mark**. The number of concurrent overlays is capped by the slot list,
 not by anything per-NPC.
 
 ### 4.2 The `AVMD` record
@@ -784,19 +793,20 @@ themselves. `Starfield.esm` holds **6,154** of them — 2,399 Simple, 2,029 Comp
 |---|---|
 | `EDID` | e.g. `SimpleGroup_Dermaesthetic`, `Modulation_ComplexionMask1` |
 | `MNAM` | group type: `None` / `Simple Group` / `Complex Group` / `Modulation` |
-| `YNAM` / `TNAM` | the group's **name** — this is the lookup key |
+| `YNAM` | the group's name |
+| `TNAM` | the group's identifier — this is the lookup key used in other records |
 | `ITMC` | entry count |
 | entries | `LNAM` option name, plus `VNAM` (texture or typed reference) and/or `NNAM` (color) |
-| `MODT` | texture-type flags — Rough / Opacity / Normal / AO / Metal / Biome Conditions / Emissive |
+| `MODT` | texture-type flags — Rough / Opacity / Normal / AO / Metal / Biome Conditions / Emissive. Not always present; when present not always correct. Left blank for aldebo. |
 | `AVMP` | optional parent `AVMD` |
 
-**Everything in this system resolves by NAME, never by FormID.** Nothing holds an
-`AVMD`'s FormID — not the RACE, not the NPC, not another `AVMD`. Records are found
-through a name index kept per group type, which is why an `AVMD` never shows a
-"referenced by" list in xEdit. It also means **`MNAM` is load-bearing**: 35 names
-are defined under two different group types (`ComplexionMask1` exists as both a
-Modulation of 29 colors and a Simple Group of 46 mask textures), and `MNAM`
-picks which index to search.
+**Everything in this system resolves by NAME, never by FormID.** Nothing holds an `AVMD`'s
+FormID — not the RACE, not the NPC, not another `AVMD`. Records are found by combining the
+group type with the `TNAM` name ID, and possibly other elements. So
+`SimpleGroup_ColorlessAccents1_Color`, `SimpleGroup_ColorlessAccents1_ao`,
+`SimpleGroup_Chargen_ColorlessAccents1` are all found by building the editor ID from the
+parts. Similarly `Modulation_Lipstick1` is associated with `SimpleGroup_Lipstick1` only by
+editor ID. 
 
 **Three AVM group kinds:**
 
@@ -804,16 +814,18 @@ picks which index to search.
 |---|---|---|
 | **Simple Group** (type 1) | `LNAM` name + `VNAM` **texture path** | a texture option (skin tone, eye/teeth/hair texture, a face overlay) |
 | **Complex Group** (type 2) | `LNAM` name + reference to another `AVMD` | bundles channels, or exposes a group for a head part's **color mapping** |
-| **Modulation** (type 3) | `LNAM` name + `NNAM` **color** | a solid color option (lipstick, tattoo ink, jewelry) |
+| **Modulation** (type 3) | `LNAM` name + `NNAM` **color** | a solid color option for another group such as lipstick, tattoo ink, or jewelry |
 
 A **Complex Group entry references another `AVMD` two ways**, and the bare form
 dominates about 50:1:
 
-- **bare `LNAM`** (5,728 uses) — the name alone, tried against the Simple index,
-  then Complex, then Modulation; first hit wins.
+- **bare `LNAM`** (5,728 uses) — the name alone. Presumably tried against the Simple,
+  Complex, and Modulation groups until a hit is found.
 - **`VNAM` = `<Prefix>_<Name>`** (114 uses) — `SimpleGroup_` / `ComplexGroup_` /
-  `Modulation_` selects the index explicitly. Used where a bare name would resolve
-  to the wrong type first.
+  `Modulation_` reference includes the group type explicitly. Used even when more than one
+  group is found and will be used. (E.g. `ComplexGroup_PostBlendFaceCustomizationLayers`
+  references `Modulation_ComplexionMask1` but will access `SimpleGroup_ComplexionMask1` as
+  well.)
 
 ⚠️ The two forms are not interchangeable in a given record — where a Complex Group
 uses `VNAM`, the `LNAM` beside it is only a **label**. `ComplexGroup_FaceSkinTones`
@@ -829,19 +841,65 @@ are reached by name-pairing (§4.4).
 Face overlays (complexion, dermaesthetic, scars, tattoos, lipstick, eyeshadow,
 cheeks, accents…) are Simple Groups whose textures live under
 `textures/actors/human/faces/chargen/postblenddetails/<category>/` and apply **only
-to the "Face" head part**. **For a furry race, fur markings/stripes are authored
-here** — as a Face-overlay Simple Group (this is exactly how Felid does stripes via
-the lipstick-accent slot).
+to the "Face" head part**. 
 
-Concrete vanilla AVMD groups a race mod extends (FormIDs from article 431):
-`ComplexGroup_HairColor [AVMD:000ECD2E]`, `ComplexGroup_FacialHairColor [000ECD30]`,
-`ComplexGroup_EyebrowColor [000ECD2D]`, `SimpleGroup_EyebrowOpacity [0000EF9F]`
-(required, else eyebrows render transparent), `SimpleGroup_EyeColor [000377DC]`,
-`SimpleGroup_TeethCustomization [0006160A]`. Skin tones use a **0-based index** (the
-option *name* doesn't matter); the race's `Chargen and Skintones` body/hands skin-tone
-must match the AVM group's `YNAM`. New chargen options can be added either directly in
-xEdit or via the config-driven **RTFP** patcher (`[AVMData]`/`[FormList]` `add_entr`
-directives, `minver=115`) — the approach the CharGen Resources resource ships.
+#### The groups a custom race usually has to touch
+
+**These groups are global — nothing scopes an `AVMD` to a race.** There is no race
+field naming them (a RACE names only `BSTT`/`HSTT`/`FSTT` and `FCTP`), and lookups go
+through the one game-wide name index. A race reaches them only **through its head
+parts**, one part at a time, so a custom race mixes vanilla and its own freely.
+
+Beyond the face overlays, six vanilla groups cover hair, eyes, brows and teeth. All
+six verified against `Starfield.esm`:
+
+| Group | FormID | Kind | Options | Holds |
+|---|---|---|---|---|
+| `HairColor` | `000ECD2E` | Complex | 8 | the hair colour palettes |
+| `FacialHairColor` | `000ECD30` | Complex | 1 | beard colour |
+| `EyebrowColor` | `000ECD2D` | Complex | 12 | brow colour |
+| `EyebrowOpacity` | `0000EF9F` | Simple | 16 | brow opacity — **a part with no entry renders transparent** |
+| `EyeColor` | `000377DC` | Simple | 12 | iris textures |
+| `TeethCustomization` | `0006160A` | Simple | 4 | teeth textures |
+
+**How they're reached differs by feature, and only hair and brows involve the head
+part at all.** Eye and teeth parts carry no `NAM2`/`NAM3` — `Human_Female_LeftEye` has
+neither — because those groups are flat lists the NPC indexes by name directly:
+
+| Feature | Group | Shape | Branch chosen by | Option chosen by |
+|---|---|---|---|---|
+| eyes | `EyeColor` | Simple, 12 options (`Hazel`, `Iron`, …) | Hardwired lookup in `SimpleGroup_EyeColor` | NPC `ECOL` |
+| teeth | `TeethCustomization` | Simple, 4 options (`Teeth_Clean`, …) | Hardwired lookup in `SimpleGroup_TeethCustomization` | NPC `TETC` |
+| hair | `HairColor` | Complex, 8 entries — one per hair **type** | Simple group identified by head part's `NAM2` (e.g. `Hair_Short`) | NPC `HCOL` |
+| beards | `FacialHairColor` | Complex, 1 entry | head part `NAM2` (`FacialHair_Shared`) | NPC `FHCL` |
+| brows | `EyebrowColor` | Complex, 12 entries — one per brow **type** | head part `NAM2` (`Eyebrows_StandardMale`) | NPC `BCOL` |
+
+So the Complex colour groups are **indexed by the part's `NAM2` value**: the part says
+which kind of hair or brow it is, that picks the branch, and the NPC's colour string
+picks an option inside it. `NAM3` names the colour group itself on the 25 brow parts
+(`EyebrowColor`), and on 109 hair parts it instead names a scalp-mask *option*
+(`FadedAfro_Cap_Mask`) inside `HairFollicleMask` — the field does double duty.
+Vanilla writes the literal `' NONE'` (with a leading space) where a part has no value.
+As everywhere in this system, all of these are name lookups — nothing holds a FormID.
+
+**The shipped Felid race shows the mixing in practice.** Of its 22 head parts carrying
+these fields, `NAM2` names a vanilla branch 17 times (`Hair_Short`, `Hair_Afro`,
+`Eyebrows_Apart`, `FacialHair_Shared`) and its own `Eyebrows_Hair_Short` the other 5 —
+which is why it also ships an `AVMP` child extending `EyebrowColor`, since a new brow
+type needs a branch in the colour group to match. Every brow part names vanilla
+`EyebrowColor` in `NAM3`; its hair and beards carry `' NONE'`.
+
+So a race needs its own group only where its artwork demands one, and `AVMP` (see
+above) is how a new branch or option joins a vanilla group instead of replacing it.
+
+Skin tones work differently again: the race names its groups in `BSTT`/`HSTT`/`FSTT`
+and indexes them positionally with `STON`, so the option *names* there carry no
+meaning. That whole mechanism is §4.5.
+
+**Adding options in bulk.** Either edit the groups directly in xEdit, or generate them
+with the config-driven **RTFP** patcher (`[AVMData]` / `[FormList]` `add_entr`
+directives, `minver=115`), which is how the CharGen Resources resource ships its
+additions.
 
 #### `AVMP` — add options to a vanilla group without overriding it
 
@@ -913,7 +971,7 @@ anywhere holds its FormID, and no RACE mentions it. The string
 the blend-mode literals. So the engine carries a short list of group names it looks
 up directly, and this is one of them.
 
-#### ⚠️ The order is built in — editing it changes nothing (tested)
+#### ⚠️ Skin layer order is built in
 
 The record *documents* the order; it does not *define* it. **Neither reordering this
 record nor reordering an NPC's own tint array changes what composites on top.**
@@ -943,10 +1001,10 @@ data appears in is reliable *documentation* of the built-in sequence, since the
 built-in order and the record agree everywhere the data can show it (§4.3's
 topological check over 3,020 NPCs).
 
-For a custom race this is a hard constraint, not an inconvenience: a species marking
-that must sit **under** a scar has only the three slots below it — `Dermaesthetic`,
-`Complexion1`, `Complexion2` — and everything else will layer over scars like makeup,
-whatever the marking actually represents.
+For a custom race this is a hard constraint, not an inconvenience: a species marking that
+must sit **under** a scar has only the three slots below it available in the game UI —
+`Dermaesthetic`, `Complexion1`, `Complexion2` — and everything else will layer over scars
+like makeup, whatever the marking actually represents.
 
 **Not tested:** the live player composite (the bake is the Creation Kit's), and
 whether *deleting* a slot from this record disables it — a removal would test the
@@ -973,27 +1031,26 @@ plugins. These are the same four slots **no NPC ever uses**, and `TattooColorMap
 signature of a cut feature whose code went away while the data entry stayed. The
 practical lesson: **an unresolvable entry is skipped, not fatal.**
 
-### 4.4 Slot name-pairing — the half the stack doesn't name
+### 4.4 Slot name-pairing 
 
-The `VNAM` in the layer record is **not** the authoritative route to a slot's
-content. **15 of the 26 slots have a same-named `AVMD` of another type that the
-stack never references**, found by the name alone:
+The `VNAM` in the layer record is **not** the only route to a slot's content. **15 of the
+26 slots have a same-named `AVMD` of another type that the stack never references
+directly**, found by the name alone:
 
 | Stack names | Slot also exists as | Slots |
 |---|---|---|
 | Modulation | Simple | `ComplexionMask1/2`, `TattooMask`, `MakeupFullPaintMask1/2` |
 | Simple | Modulation | `Cheeks1/2`, `Lipstick1/2`, `Eyeshadow1/2`, `Eyeliner1/2`, `EnvironmentMask` |
-| Complex | Simple | `Scars` (the Simple half is an empty stub) |
 
-Which half the stack names looks like authoring accident — both resolve, and the
-engine finds the other by name regardless. The division of labour is consistent:
-**the Simple group supplies the mask textures, the same-named Modulation group
-supplies the legal colors.**
+Which half the stack names looks like authoring accident — both resolve, and the engine
+finds the other by name regardless. The division of labour is consistent: **the Simple
+group supplies the mask textures, the same-named Modulation group supplies the legal
+colors.**
 
-Tattoos are the clearest worked example. The stack names
-`Modulation_TattooMask` (9 colors — Black, Brown, Red, Pink, Blue, Teal), while the
-designs live in `SimpleGroup_TattooMask` (13 — Dagger, Leaf, Cat, Circuits01,
-Dragon), which nothing references. All 7 NPCs using the slot address it as `Simple`.
+Tattoos are the clearest worked example. The stack names `Modulation_TattooMask` (9 colors
+— Black, Brown, Red, Pink, Blue, Teal), while the designs live in `SimpleGroup_TattooMask`
+(13 — Dagger, Leaf, Cat, Circuits01, Dragon), which nothing references. All 7 NPCs using
+the slot address it as `Simple`.
 
 Evidence that the pairing is real: of 14,091 NPC tints in a slot that has a
 same-named Modulation group, **75.5% carry a color that appears in that group's
@@ -1006,24 +1063,25 @@ record**; extending its textures does not. This is exactly what the Felid race d
 
 #### What feeds each slot
 
-Four shapes cover all 26 slots. Counts are vanilla option counts, measured per group
-kind:
+The 26 slots have 5 different semantics. Counts are vanilla option counts, measured per
+group kind:
 
 | Fed by | Slots | Shape |
 |---|---|---|
 | **Full-colour texture** | `Dermaesthetic` (84), `Complexion1` (13), `Complexion2` (13) | a Simple group of `*_color.dds`; the texture's own alpha is the strength |
 | **Mask + palette** | `ComplexionMask1`/`2` (46 masks, 29 colors), `TattooMask` (13, 9), `MakeupFullPaintMask1`/`2` (21, 22), `Cheeks1`/`2` (3, 40), `Lipstick1`/`2` (5-6, 40), `Eyeshadow1`/`2` (6, 40), `Eyeliner1`/`2` (9, 40), `EnvironmentMask` (7, 5) | Simple group of greyscale `*_mask.dds` + same-named Modulation palette (§4.4) |
-| **Four coordinated channels** | `Scars`, `Accents1`/`2`, `ColorlessAccents1`/`2` | a Complex group of 4 entries fanning out to `_color` / `_normal` / `_rough` / `_ao` Simple groups |
+| **Four coordinated channels** | `Scars`, `Accents1`/`2` | a Complex group of 4 entries fanning out to `_color` / `_normal` / `_rough` / `_ao` Simple groups |
+| **Four coordinated channels, monochrome** | `ColorlessAccents1`/`2` | same as above *but* only the alpha channel of the "color" texture is used. |
 | **Nothing** | `TattooColorMap`, `TattooTint`, `MakeupFullPaintMask`, `EnvironmentColor` | the four broken slots (§4.3) |
 
-Only the first three slots in the stack — `Dermaesthetic`, `Complexion1`,
-`Complexion2` — paint *below* `Scars`. Everything above is conceived as makeup,
-paint or grime. **That is the constraint for a furry race:** fur markings that should
-sit under a scar have just those three slots, one of which (`Complexion1`/`2`) ships
-as colour-temperature washes. Markings placed in `Cheeks` or `Lipstick` will layer
+Only the first three slots in the stack — `Dermaesthetic`, `Complexion1`, `Complexion2` —
+paint *below* `Scars`. Everything above is conceived as makeup, paint or grime that layes
+over the natural skin. **That is the constraint for a furry race:** fur markings that
+should sit under a scar have just those three slots, one of which (`Complexion1`/`2`)
+ships as colour-temperature washes. Markings placed in `Cheeks` or `Lipstick` will layer
 over scars as though they were blush.
 
-Creator UI labels differ from the record names: `Complexion1` appears as *"Complexion
+The game UI labels differ from the record names: `Complexion1` appears as *"Complexion
 Color Temp"* and `ComplexionMask2` as *"Complexion Blemishes"*.
 
 ### 4.5 Skin tones and `STON`
@@ -1127,12 +1185,12 @@ checked separately from the phenotypes**:
 - *"**default** %s skin tone subtype '%s' on %s contains %d subtypes but should have %d
   subtypes."*
 
-⚠ **Every face skin-tone group needs a `male_default` and a `female_default` label, whether or
-not the race has any phenotypes.** The default is not a phenotype — it has no `FMRI` row (see
-below) — so it is easy to leave out; the CK checks it on its own, both that it exists and that its
-group is as long as the body's. `male_default` and `female_default` are also literal strings in
-`Starfield.exe`, so the game looks them up by name as well. Every vanilla race that has face skin
-tones carries both:
+⚠ **Every face skin-tone group needs a `male_default` and a `female_default` label,
+whether or not the race has any phenotypes.** The default is not a phenotype — it has no
+`FMRI` row (see below) — so it is easy to leave out; the CK checks it on its own, both
+that it exists and that its group is as long as the body's. `male_default` and
+`female_default` are also literal strings in `Starfield.exe`, so the game looks them up by
+name as well. Every vanilla race that has face skin tones carries both:
 
 | race | `FSTT` group | labels | `FMRI` phenotype rows per sex | defaults |
 |---|---|---|---|---|
@@ -1160,10 +1218,11 @@ pattern, species markings — **cannot express that on the body through this mec
 all**, because the body path never sees the phenotype. Lengthening the body ladder does
 not help either, since the phenotype and `STON` are selected independently (below).
 
-**On the body and hands, a skin tone changes only the albedo.** Every entry in a `BSTT`/`HSTT`
-group is a `_color` texture, and nothing in the chain names any other map. Normal, roughness and AO
-are **fixed paths in the `.mat`** — slots 1, 3 and 5 of the base texture set — shared by every
-tone. Vanilla, verified in `Naked_M_Body.mat`, `Naked_F_Body.mat` and `DefaultHandsM.mat`:
+**On the body and hands, a skin tone changes only the albedo.** Every entry in a
+`BSTT`/`HSTT` group is a `_color` texture, and nothing in the chain names any other map.
+Normal, roughness and AO are **fixed paths in the `.mat`** — slots 1, 3 and 5 of the base
+texture set — shared by every tone. Vanilla, verified in `Naked_M_Body.mat`,
+`Naked_F_Body.mat` and `DefaultHandsM.mat`:
 
 | slot | `Naked_M_Body.mat` base texture set |
 |---|---|
@@ -1175,13 +1234,15 @@ tone. Vanilla, verified in `Naked_M_Body.mat`, `Naked_F_Body.mat` and `DefaultHa
 So one body material cannot give different tones different normals or roughness; a
 per-species fur normal needs a different material, which means a different body.
 
-**The `_mask` texture is not a skin-tone mask.** These materials (`BodySkin2Layer` shader) have a
-second layer carrying only a **detail normal** — `faces\FaceDetails\Young_Cheek_detail_normal.dds`,
-tiled 50 × 50 on the body and 15 × 15 on the hands — and `NakedBodyM_mask.dds` /
-`defaulthandsm_mask.dds` is slot 0 of `Blender1`, the blender that lays that detail over the base
-layer. It controls where the micro-detail goes; the skin-tone albedo is not masked at all.
+A body (hands, face) material is made up of multiple layers and the second and higher
+levels are composited with a mask. **The `_mask` texture is not a skin-tone mask.** These
+materials (`BodySkin2Layer` shader) layers carrying only a **detail normal** —
+`faces\FaceDetails\Young_Cheek_detail_normal.dds`, tiled 50 × 50 on the body and 15 × 15
+on the hands — and `NakedBodyM_mask.dds` / `defaulthandsm_mask.dds` is slot 0 of
+`Blender1`, the blender that lays that detail over the base layer. It controls where the
+micro-detail goes; the skin-tone albedo is not masked at all.
 
-#### How the phenotype key is chosen
+#### How the phenotype maps are chosen and blended
 
 `FSTT` names an `AVMD` Complex Group — `ComplexGroup_FaceSkinTones` for humans. That
 record is a lookup table: each entry pairs an **`LNAM`**, a phenotype name such as
@@ -1197,19 +1258,40 @@ that same name:
 | **filename** | built from a format string compiled into `Starfield.exe` and `CreationKit.exe` |
 
 The format string is `%s\%s_sk%u_color.dds`, in C `printf` notation: `%s` inserts a string
-and `%u` an unsigned integer. Filled in, the first `%s` is the race's `FCTP` directory, the
-second is the phenotype name, and `%u` is the NPC's `STON` — so
-`actors\FSFCanine\faces\chargen\male_as_md1_sk3_color.dds`. Where the AVMD route resolves it
-wins; the normal, roughness and AO maps have **only** the filename route
-([Creation Kit §3](creation-kit.md#albedo-has-a-second-route-the-other-three-do-not)).
+and `%u` an unsigned integer. Filled in, the first `%s` is the race's `FCTP` directory,
+the second is the phenotype name, and `%u` is the NPC's `STON` — so
+`actors\FSFCanine\faces\chargen\male_as_md1_sk3_color.dds`. Where the AVMD route resolves
+it wins; the normal, roughness and AO maps have **only** the filename route ([Creation Kit
+§3](creation-kit.md#albedo-has-a-second-route-the-other-three-do-not)).
 
-Either way, **exactly one phenotype is picked**. The format string has a single slot for it,
-and the Complex Group lookup takes a single name — neither route can express a blend of
-phenotypes.
+Either way, a route resolves **one map for one phenotype**. A face is not made of one,
+though: the single `%s` is one *call*, not one phenotype. The engine resolves a map per
+source and composites them **region by region**, and both executables carry the machinery to
+do it, sitting in the string table beside the format string above:
 
-**Nothing on the NPC stores that name.** Checked across all **7,131** `NPC_` records in
-`Starfield.esm`: not one carries a `FaceSkinTones` key verbatim in any subrecord. The key
-is reached indirectly, which is why it is easy to miss:
+| string in `Starfield.exe` and `CreationKit.exe` | what it is |
+|---|---|
+| `%s\FCT_%s_mask.dds` | the mask for one face region — `%s` is the `FCTP` directory, then a region name |
+| `%s\FCT_null_mask.dds` | a hard-coded maskless variant; when it is used is unconfirmed |
+| `uMaxBlendSources:FCT` | ini setting capping how many sources one face may blend |
+| `fBlendIntensityThresholdPerRegion:FCT` | the per-region weight below which a source is dropped |
+| `bBlendValidation:FCT` | validation toggle |
+
+The masks exist and they line up exactly: `Actors\Human\Faces\Chargen` ships
+`FCT_Cheeks_mask.dds`, `_Chin_`, `_Ears_`, `_Eyes_`, `_Forehead_`, `_Jaw_`, `_Mouth_`,
+`_Neck_` and `_Nose_` — the nine `MPGN`/`FMRG` region names, one for one — plus
+`FCT_null_mask.dds`.
+
+None of the three settings appears in any shipped `.ini`, so their defaults are compiled in
+and unknown.
+
+This applies to `_normal`, `_rough` and `_ao` as much as to the albedo: they are keyed on the
+phenotype by the same kind of format string, so they are blended from the same sources. A
+custom race needs the full set for **every** phenotype it can blend, not just for its default.
+
+**Nothing on the NPC stores those names.** Checked across all **7,131** `NPC_` records in
+`Starfield.esm`: not one carries a `FaceSkinTones` key verbatim in any subrecord. They are
+reached indirectly, which is why they are easy to miss:
 
 ```
 NPC Face Morphs:   FMRI (row id) + FMRG (face group) + FMRS (weight 0...1)
@@ -1218,7 +1300,7 @@ FSTT Complex:      LNAM "male_as_md1" -> SimpleGroup_FaceSkinTones_male_as_md1
 STON:                                 -> entry[N]
 ```
 
-So the key is a property of the **face-morph blend**, not a stored field.
+So the keys are a property of the **face-morph blend**, not a stored field.
 
 ⚠ **The `FMRI` id space is per sex.** `HumanRace` uses id **1** for `male_as_md1` *and* for
 `female_eu_md2`, and id **9** for `male_af_md1` *and* `female_af_md1`. Resolve an NPC's `FMRI`
@@ -1235,48 +1317,61 @@ That blend is rarely a single phenotype:
 | 5–6 | 1,187 |
 | 7–9 | 636 |
 
-Median 5–6, with a median top-vs-runner-up weight margin of just **0.150** and **90 NPCs
-where the top two are an exact tie**. The engine must still reduce that to one key;
-*which* rule breaks the tie is not observable from plugin data.
+Median 5–6. And the mixing happens *inside* a region, not only between regions — counting the
+distinct phenotypes that contribute to the **same** `FMRG` region, across the same NPCs:
+
+| phenotypes in one region | region instances |
+|---|---|
+| 1 | 5,082 |
+| 2 | 1,533 |
+| 3 | 592 |
+| 4–5 | 240 |
+| 6–8 | 589 |
+
+**2,954 of 8,036 region instances — 37% — draw on more than one phenotype**, up to eight
+(`FC_Neon_GenericCustomerM01`'s Neck alone blends six), so `uMaxBlendSources` is at least 8.
+The weights are not normalised either: per region they sum to anywhere from 0.0 to 2.0,
+median 0.49.
 
 **`<sex>_default` is never authored.** Zero of the 2,991 NPCs with a resolvable blend
 include it — it is purely the fallback for an actor whose blend resolves to nothing,
 which is why an unbaked or preset actor bakes out as `male_default_sk0_color.dds`.
 
 **Four of the 22 keys are unreachable by blending.** `HumanRace` has **9 `FMRI` rows per
-sex**, and the diff is clean in one direction: every blendable phenotype has a texture group,
-but `male_default`, `female_default`, `male_eu_md1` and `female_eu_md1` have no `FMRI` row.
-The two defaults are the hard-coded fallback, so the genuinely dead keys are just the two
-`eu_md1` entries. **A Complex Group entry with no matching `FMRI` row in the race is dead
-weight** — easy to add to a custom race and never reach. (The reverse — a phenotype row with
-*no* entry — is worse, and the Creation Kit rejects it: see the validator rules above.)
+sex**, and the diff is clean in one direction: every blendable phenotype has a texture
+group, but `male_default`, `female_default`, `male_eu_md1` and `female_eu_md1` have no
+`FMRI` row. The two defaults are the hard-coded fallback, so the genuinely dead keys are
+just the two `eu_md1` entries. Instead `eu_md2` entries exist and are used, the only
+ethnicity/age combination to use an index other than 1. **A Complex Group entry with no
+matching `FMRI` row in the race is dead weight** — easy to add to a custom race and never
+reach. (The reverse — a phenotype row with *no* entry — is worse, and the Creation Kit
+rejects it: see the validator rules above.)
 
 **Phenotype and `STON` are independent axes.** Correlated in vanilla, but not linked:
-every one of the 18 phenotypes (9 per sex) appears with **4–9 distinct `STON` values**, and
-`female_af_md1` and `male_af_md1` each span all nine (321 and 88 `HumanRace` NPCs). Mean
-`STON` is 3.38 for `af` phenotypes, 1.57 for `eu` and 1.09 for `as`; `af` and `as` span the
-full 0–8 range and `eu` 0–7.
-Authors pick sensible pairings; the format enforces none, so a creator can put any face
-on any body tone.
+every one of the 18 phenotypes (9 per sex) appears with **4–9 distinct `STON` values**,
+and `female_af_md1` and `male_af_md1` each span all nine (321 and 88 `HumanRace` NPCs).
+Mean `STON` is 3.38 for `af` phenotypes, 1.57 for `eu` and 1.09 for `as`; `af` and `as`
+span the full 0–8 range and `eu` 0–7. Authors pick sensible pairings; the format enforces
+none, so a creator can put any face on any body tone.
 
 ### 4.6 Dermaesthetic is *not* tied to the skin tone
 
 A natural assumption, and wrong. The `Dermaesthetic` group's options are named for a
-phenotype **and** a tone (`Asian_Male_Ol1_Sk1` →
-`male_as_ol1_sk1_derm_color.dds`), which looks like it should track `STON`. It does
-not, and it cannot: the group only ships **four tone bands — `sk1`, `sk3`, `sk6`,
-`sk8`** — uniformly across all 21 phenotypes it covers, so five of the nine `STON`
-values have no matching texture at all.
+phenotype **and** a tone (`Asian_Male_Ol1_Sk1` → `male_as_ol1_sk1_derm_color.dds`), which
+looks like it should track `STON`. It does not, and it cannot: the group only ships **four
+tone bands — `sk1`, `sk3`, `sk6`, `sk8`** — uniformly across all 21 phenotypes it covers,
+so five of the nine `STON` values have no matching texture at all.
 
 Measured over 2,949 NPCs carrying both: **466 agree (15.8%), 2,483 do not.** Mean
-dermaesthetic band does rise with `STON` (2.79 at `STON` 0 → 6.51 at 5) but every
-`STON` value draws on all four bands. The phenotype matches one the NPC actually
-blends only **45.7%** of the time, and the **sex disagrees on 739 NPCs** — the
-retail `CF06_LvlSyndicate_Unaggressive_F01` is female, blends three female
-phenotypes, and wears `male_as_md2_sk6_derm_color.dds`.
+dermaesthetic band does rise with `STON` (2.79 at `STON` 0 → 6.51 at 5) but every `STON`
+value draws on all four bands. The phenotype matches one the NPC actually blends only
+**45.7%** of the time, and the **sex disagrees on 739 NPCs** — the retail
+`CF06_LvlSyndicate_Unaggressive_F01` is female, blends three female phenotypes, and wears
+`male_as_md2_sk6_derm_color.dds`.
 
-The layer is an independent overlay carrying subtle skin detail, picked by eye. It
-does not need to be authored as a phenotype × tone matrix.
+The layer is an independent overlay carrying subtle skin detail, picked by eye. It does
+not need to be authored as a phenotype × tone matrix. Note that the alpha on vanilla
+textures goes to 0 at the neck seam, so they'll blend with the body.
 
 **Nor is it required.** It is the most-used slot (3,633 entries across the official plugins), but
 of the 2,094 `HumanRace` NPCs with their own appearance data (not inherited from a template),
@@ -1354,21 +1449,20 @@ can do with it depends entirely on which slot you reach it through:
 | `Blemish_VeinsMany` — the same four textures | `Scars` (`Chargen_Scars_*`) | colour **and** detail — the scar slot applies both |
 | `Veins`, `Veins_2` — `veins_mask.dds` | `ComplexionMask1/2` ("Complexion Blemishes" in the UI), with dedicated `Vein_Red` and `Vein_BlueGreen` entries in the Modulation palette | colour, tinted per choice, but **no normal/rough/AO** |
 
-So the engine gives you colour *or* surface detail from these slots, not both — and
-the authors bought their way around it by duplicating the artwork into a slot with
-the other half. A custom race that needs both from one mark has the same options:
-duplicate it, or put it in `Scars`, which is the only creator-facing slot carrying
-all four channels.
+So the engine gives you colour *or* surface detail from these slots, not both — and the
+authors worked around it by duplicating the artwork into a slot with the other half. A
+custom race that needs both from one mark has the same options: duplicate it, or put it in
+`Scars`, which is the only creator-facing slot carrying all four channels.
 
-For a custom race the practical reading is which slots can carry **multi-coloured**
-marks at all:
+For a custom race the practical reading is which slots can carry **multi-coloured** marks
+at all:
 
 | creator slot | colour |
 |---|---|
 | `Dermaesthetic`, `Complexion1/2` | full-colour texture |
 | `Scars` | full-colour texture + normal/rough/ao |
 | `Cheeks`, `Lipstick`, `Eyeshadow`, `Eyeliner`, `TattooMask`, `MakeupFullPaint` | greyscale mask × **one** Modulation colour |
-| `ColorlessAccents1/2` | **none** — alpha-masked detail only |
+| `ColorlessAccents1/2` | **none** — alpha-masked normal/rough/ao detail only |
 
 `Scars` shows the other Complex-group idiom — one slot fanning out to four
 same-named Simple groups (`Scars_color/_normal/_rough/_ao`, 25 options each), so a
@@ -1378,8 +1472,9 @@ exactly one.
 ### 4.8 The stack is sex-agnostic
 
 Nothing in `PostBlendFaceCustomizationLayers` distinguishes male from female — no
-per-gender blocks (unlike the RACE chargen payload, which repeats per sex), and no
-sex marker in any string. 24 of the 26 slots have no sex-specific content at all.
+per-gender blocks (unlike the RACE chargen payload, which repeats per sex), and the only
+sex marker is embedded in the phenotype strings. 24 of the 26 slots have no sex-specific
+content at all.
 
 The two exceptions both encode sex in **option names inside a single shared group**,
 not in the structure:
@@ -1429,9 +1524,9 @@ expression of the body triangle.
 
 ### 4.10 The `Chargen_*` groups decide what the creator shows, and in what order
 
-A slot usually has two groups: the runtime one (`ComplexionMask1`) and a chargen-side
-twin (`CHARGEN_ComplexionMask1`). **The creator reads the chargen-side group, and its
-record order is the order the options appear in the UI.**
+A slot usually has two groups: the runtime one (`ComplexionMask1`) and a chargen-side twin
+(`CHARGEN_ComplexionMask1`). **The in-game character creator reads the chargen-side group,
+and its record order is the order the options appear in the UI.**
 
 Across the 20 slots that have both, 16 hold the same options in the same order —
 which is why the distinction stays invisible until it doesn't. The exceptions:
@@ -1442,31 +1537,34 @@ which is why the distinction stays invisible until it doesn't. The exceptions:
 | **subset** | `Eyeliner1`, `Eyeliner2` | the creator offers 6 of the runtime 9 — three options exist but cannot be chosen |
 | **absent** | `Accents1`, `Accents2` | no chargen-side group at all, so the creator cannot reach the slot (§4.7) |
 
-⚠️ The prefix is inconsistent in vanilla — `CHARGEN_Cheeks1` and
-`CHARGEN_ComplexionMask1` shout; `Chargen_Lipstick2` and `Chargen_Dermaesthetic` do
-not. Every lookup here is by name, so a custom group must match the spelling the slot
-already uses.
+⚠️ The prefix is inconsistent in vanilla — `CHARGEN_Cheeks1` and `CHARGEN_ComplexionMask1`
+in caps vs `Chargen_Lipstick2` and `Chargen_Dermaesthetic`. Every lookup here is by name,
+so a custom group must match the spelling the slot already uses.
 
 So the chargen-side group does three jobs: **which** options are offered, in **what
-order**, and — for dermaesthetic — **filtered by skin tone**, which is the next
-section.
+order**, and — for dermaesthetic — **filtered by skin tone**, which is the next section.
 
-### 4.11 What the creator offers = filter ∩ master list
+### 4.11 What in-game chargen offers
 
-Two different records decide what a slot shows in the character creator, and they
-fail in different ways:
+Two different records decide what a slot shows in the character creator:
 
-- **`Dermaesthetic`** (Simple) is the **master list** of option names. NPC tint
-  entries reference these names, and §4.1 shows the bake reads the stored `VNAM`
-  path — so **removing a vanilla entry here cannot break an existing NPC**, but it
-  does make that option un-bakeable for any NPC built afterwards.
-- **`Chargen_Dermaesthetic`** (Complex, `[000D4004]`) is the **chargen filter**: 9
-  entries, `chargen_DermaestheticSkinTone0`…`8`, one per skin-tone **index**, each a
-  Simple group naming 63 options. Tones 0-4 are byte-identical to one another; 5-8
-  differ.
+- **`Dermaesthetic`** (Simple) contains skin tone overlays. They are named after the
+  phenotype and skin tone options (`<ethnicity>_<sex>_<age><n>_Sk<m>`) but the skin tone
+  options are not complete (1, 3, 6, 8) and the alpha lightens the degree to which they
+  are applied. 
+- **`Chargen_Dermaesthetic`** (Complex, `[000D4004]`) is the **chargen filter**: 9 entries
+  index simple groups `chargen_DermaestheticSkinTone0`…`8`, one per skin-tone **index** --
+   BUT these simple groups are not simple maps to the skin tone. Instead, groups 0-4
+   select skin tones 1/3/6, whereas groups 5-8 select skin tones 3/6/8. Presumably the
+   dermaesthetic overlay only looks good if it's not too different in tone from the
+   underlying skin.
 
-The creator offers the intersection. **To restrict a slot to your own options, trim
-the filter, not the master list.**
+NPC tint entries reference these names, and §4.1 shows the bake reads the stored `VNAM`
+path — so **removing a vanilla entry here cannot break an existing NPC**, but it does
+make that option unavailable for any NPC built afterwards.
+
+The in-game character creator offers the intersection. **To restrict a slot to your own
+options, trim the filter, not the master list.**
 
 ⚠️ **The filter is keyed by tone index and shared by every race — there is no
 per-race variant.** Whatever you put there, a human character created in the same
@@ -1536,7 +1634,7 @@ run produces. For the same pixels, vanilla writes:
 | `dwFlags` | `0xA1007` (…`LINEARSIZE`) | `0x2100F` (…`PITCH`) |
 | size field | whole image (`w×h×bpp`) | one row's pitch |
 | `dwDepth` | 0 | 1 |
-| `dwCaps` | `0x401008` (`COMPLEX|TEXTURE|MIPMAP`) | `0x1000` (`TEXTURE`) |
+| `dwCaps` | `0x401008` (`COMPLEX/TEXTURE/MIPMAP`) | `0x1000` (`TEXTURE`) |
 | DX10 `alphaMode` | 0 (unknown) | 1 (straight) |
 | 8bpp pixel-format flags | `DDPF_RGB` (`0x40`) | `DDPF_LUMINANCE` (`0x20000`) |
 
@@ -1561,31 +1659,22 @@ transparent-white padding will fringe.
 **The biggest structural change from `[FO4]`/`[Skyrim]`: geometry is no longer
 stored inside the `.nif`.**
 
-- The NIF holds a **`BSGeometry`** block (replacing `BSTriShape` /
-  `BSDynamicTriShape`). `BSGeometry` references one or more external
-  **`.mesh`** files, one per LOD.
-- `.mesh` files live at `Data/geometries/<hex1>/<hex2>.mesh`. Vanilla names are
-  40 hex chars (split 20/20) that *look* like a digest, but the name is **not a
-  computed/enforced hash** (nifly/OS write arbitrary names; the game doesn't
-  verify), so human-readable replacement names work. See
-  [meshes.md](meshes.md) for the full `.mesh` byte layout.
-- Inside a `.mesh` (`BSGeometryMeshData` in nifly): 32-bit vertex count
-  (practical cap **65535** verts per the tooling), triangles, **UDEC3-packed**
-  normals & tangents, vertex colors, UV1/UV2, per-vertex **skin weights**
-  (`nWeightsPerVert`), **LODs**, **meshlets** (vertOffset/primOffset — the
-  mesh-shader clustering), and **cull data**. Positions are **normalized to
-  metric units** (nifly applies a `havokScale ≈ 69.969` to match old-game sizes).
-- **Skinning/bone data stays in the NIF**, not the `.mesh` (verified against a
-  real body NIF): the bone-name list is in a **`SkinAttach`** block (string names
-  — 38 for the vanilla body); per-bone bind transforms/bounding spheres are in
-  **`BSSkin::BoneData`**, with **`BSSkin::Instance`** as the skin instance. The
-  `.mesh` carries only per-vertex `{boneIndex, weight}` pairs indexing that name
-  list. Note the vanilla body uses **6 weights per vertex** (Starfield lifts the
-  old 4-bone cap).
+The NIF keeps the scene graph and the skinning; the vertices live in a separate
+`.mesh` file it points at. **[meshes.md](meshes.md) is the reference for all of
+it** — the `BSGeometry` block, the `geometries/` path scheme, the `.mesh` byte
+layout, and where bone names and bind transforms are stored. This page covers
+only what bites you on a *head part*.
 
 **Practical gotcha:** the community reports "internal geometry" (embedding mesh
 data in the NIF rather than an external `.mesh`) **causes issues with head
 parts** — head parts should reference external `.mesh` files.
+
+**Watch the mesh-path length.** The "creating a playable race" guide reports that
+the path stored in `BSGeometry → Meshes` must be **≤ 46 characters** or the shape
+renders invisible in game while looking correct in the Creation Kit — see
+[meshes.md](meshes.md#hash-path-scheme-geometries). *Reported, not measured here.*
+Head parts are where it would bite first, since a race-namespaced folder plus a
+part name eats the budget fast; keep them short regardless.
 
 ### Body layout
 The body is delivered by the race's `WNAM` Skin `ARMO` and its armor addons, cut
@@ -1593,8 +1682,7 @@ into biped slots (§7). Community body replacers (e.g. the SFF female body) show
 the division as separate meshes for **body, hands, feet, first-person body/hands,
 head**, each skinned to the shared skeleton, each with its own `.mesh`, morphs,
 UVs, and skin-tone textures (`sk6/sk7/sk8` texture variants seen in the wild).
-Head and body are **separate meshes joined at the neck** — the neck seam and
-matching skin-tone/tint at the seam is a classic failure point.
+Head and body are **separate meshes joined at the neck**.
 
 Tools: **NifSkope (fo76utils fork)** for Starfield NIFs; **Starfield Geometry
 Bridge** / **StarfieldMeshConverter** (Blender) for `.mesh` and `.morph` I/O.
@@ -1675,14 +1763,6 @@ graph editor** (hkbProject authoring), so extending the behavior graph is a hard
 blocker — most non-human mods **reuse `HumanRace`'s graph** and rely on BMODs +
 new geometry rather than new locomotion.
 
-### Digitigrade legs
-Digitigrade legs are the **hard** case: they change the leg bone chain and its
-proportions, which breaks every locomotion animation retargeted for plantigrade
-legs. Options are (i) keep the human leg skeleton and fake digitigrade with mesh
-weighting only (limited), or (ii) add real digitigrade bones and **retarget/redo
-locomotion** — blocked by the behavior-graph tooling gap. **Unverified** that any
-Starfield mod has shipped true digitigrade locomotion.
-
 ---
 
 ## 7. Biped slots (the 64-slot layout)
@@ -1712,8 +1792,7 @@ regular and spacesuit rendering.
 
 ### The skin `ARMO` chain (`WNAM` → `ARMO` → `ARMA`)
 
-A head part is named by the race directly; **the body is three hops away**, and every hop
-can drop it silently. The race's `WNAM` names a skin **`ARMO`**, whose repeated
+A head part is named by the race directly; **the body is three hops away**. The race's `WNAM` names a skin **`ARMO`**, whose repeated
 `INDX`+`MODL` pairs name **`ARMA`** armor addons — one per biped slot:
 
 | `ARMA` field | Meaning |
@@ -1780,95 +1859,144 @@ texture written under `Data/…` (loose, then archived).
   keyed by the race EDID — or `…\<NPC FormID>_<map>.dds` once the NPC has at least one tint layer.
   Full details, formats, and the CK/CKPE baking workflow are on the
   [Creation Kit & FaceGen page](creation-kit.md).
-- **The bake ignores the head part's material.** Its four maps come from the race's `FCTP` directory
-  by filename convention (§1, `FCTP`), with the albedo optionally redirected per skin tone through
-  the `FSTT` → `AVMD` chain (§4). Normal, roughness and AO have **no** AVMD route — they are
-  filename-convention only. Verified by pixel comparison; see
-  [Creation Kit §2–3](creation-kit.md#2-facegen-output-what-it-bakes-and-where-verified).
+- **The bake never *reads* the material — but the material still drives the face at render time.**
+  Keep the two apart, because the same `.dds` files are involved in both:
+    - **What the bake reads:** all four maps come from the race's `FCTP` directory by filename
+      convention (§1, `FCTP`) — albedo, normal, roughness **and** AO. Measured with the loose
+      `male_default.mat` deliberately pointed at unrelated textures, the baked `_rough` and `_ao`
+      came out byte-identical to `male_default_rough.dds` / `male_default_ao.dds` and `_Normal`
+      identical within BC5 quantisation. The material's texture paths are never consulted. The
+      albedo is optionally redirected per skin tone through the `FSTT` → `AVMD` chain (§4);
+      normal, roughness and AO have **no** AVMD route.
+    - **Why it looks like the material supplies them:** a head material's *base layer* points at
+      those very same `FCTP` files. The bake reaches them by filename, not by following the
+      material, so the two agree until you change one without the other.
+    - **What the material still contributes:** its **upper layers are not baked in** and composite
+      at render time instead — a vanilla head material carries five detail-normal layers (pore,
+      stubble, lips, cheek, skin detail), each masked to a face region. So the per-region normal
+      detail across the face *is* the material's doing; it simply never reaches the baked maps.
+      (That last step is inference, not measurement — see the note in Creation Kit §2.)
+
+  See [Creation Kit §2–3](creation-kit.md#2-facegen-output-what-it-bakes-and-where-verified).
 
 Implication for a furry race's NPCs: every NPC of the race must be baked in the
 CK with the race's head parts, morphs, and fur tints — a bulk, error-prone step.
-This is exactly the pain point that dedicated facegen tooling (writing the baked
+This is exactly the pain point that the furrifier tooling (writing the baked
 `.nif`/`.dds` directly instead of Ctrl+F4-ing in the CK) aims to eliminate.
 
 ---
 
-## 9. What the community has actually achieved
+## 9. Building a custom race
 
-- **Felid Race** (Starfield Nexus 17160): playable cat-people (tiger/jaguar/
-  leopard/cougar). Implemented by **customizing the human race** — new head-part
-  meshes + tint groups (stripe patterns occupy the "lipstick" tint slot),
-  vanilla-clothing compatible. Not a from-scratch race. Its tail is driven by
-  **Havok cloth physics** (not BMOD/animation) and is reported as "wonky" — the
-  reference point for the appendage-motion question in §6.
-- **CP's Menagerie** (7783): WIP "add fur" project; first release a wolf-like
-  mammal.
-- **SesamePaste "wolf race"** (author of StarfieldMeshConverter): early, buggy,
-  requires manual fixup — a proof of concept.
-- **SFF Body Replacer**: full female body replacer showing the body-mesh +
-  morph + extended-skeleton pipeline; depends on **SF Extended Skeleton** and
-  **CharGenMenu**.
-- **CharGenMenu**: in-game framework (SFSE) to expose custom sliders/morphs.
-- **StarUI-style / body-slider mods**: extend the creator's body sliders.
+**A *truly new* playable race — own RACE record, own skeleton, own behavior graph — is not
+a solved problem.** Every shipped "anthro/beast" race is a **skinned reworking of
+`HumanRace`**: new head parts, new tint groups, new body/head `.mesh` + `.morph`, BMOD-driven
+appendages, reusing the human skeleton and behavior graph. Plan for that shape of solution.
 
-**Consensus takeaway:** a *truly new* playable race (own RACE record, own
-skeleton, own behavior graph) is **not a solved problem**. Every shipped
-"anthro/beast" result is a **skinned reworking of `HumanRace`** — new head parts
-(using the Creature-* types), new tint groups, new body/head `.mesh` + `.morph`,
-BMOD-driven appendages, reusing the human skeleton and behavior graph.
+What follows is a realistic build order, easiest→hardest. Each step lists what it produces,
+so this doubles as the completeness checklist.
 
----
+1. **Clone `HumanRace`** (or override it) rather than authoring a new skeleton/behavior
+   graph — you inherit locomotion, facegen wiring and biped slots for free.
+   *Produces:* the `RACE` record, with `Skeleton Data` (`ANAM`/`NAM5`/`NAM6`/`DNAM`),
+   `WNAM` Skin `ARMO`, `GNAM` Body Part Data and the FaceGen clamps set.
+2. **Skeleton.** The human skeleton, or SF Extended Skeleton, **plus tail/ear bones** if
+   you want animated appendages.
+   *Produces:* `skeleton.nif`.
+3. **Body & head meshes.** Model in Blender; export with PyNifly or Starfield Geometry
+   Bridge, skinned to that skeleton. Starfield heads carry a much higher vert count than
+   older games, so there is room to work. Consider both the normal and the **SS
+   (spacesuit)** slots.
+   *Produces:* body/head/hands/feet `.mesh` files and their NIFs (`BSGeometry` +
+   `SkinAttach`). Keep mesh paths short (§5).
+4. **Morphs.** Author performance (expression) and chargen shape keys for the head, and
+   "Overweight" / "Strong" / "Thin" for the body.
+   *Produces:* `.morph` files, `MRPH` records, and optionally a bone-morph definition.
+5. **Head parts.** Create `HDPT` records for head, mouth/teeth, tongue, eyes — and the
+   **Creature Head / Tail / Wings / Arms / Legs** types for muzzle, ears and tail. Set
+   `RNAM Valid Races` to your race's `FLST`, point `MNAM` at the `MRPH`, and wire the
+   defaults into `RACE → Head Parts`.
+   *Produces:* the `HDPT` set and its `FLST`.
+6. **Fur / markings.** Build `AVMD` tint groups (stripes, spots, muzzle mask, belly) —
+   either overriding vanilla groups or extending them, since **slots resolve by name**
+   (§4.4, §4.11). Reference them from `RACE → Chargen and Skintones` and head parts'
+   `Color Mapping`. Layers stack, so patterns are additive overlays.
+   *Produces:* `AVMD`/`AVMS` groups, skin-tone subtypes, and the `TXST`/face textures
+   behind them.
+7. **Chargen visibility.** Append your head parts to `HeadPartsChargenOptionsMale
+   [FLST:0003D9AF]` / `…Female [0003D9B0]`. Eye Color needs **both** a left- and a
+   right-eye head part. This list is one of several things the engine finds by hardcoded
+   FormID rather than through your RACE record — see
+   [§1, What the RACE record does *not* reach](#records-the-engine-finds-directly) for
+   the consolidated set.
+8. **Creator sliders.** Expose custom sliders via **CharGenMenu** + JSON whose keys match
+   your `.morph` keys; define **Face Dials** and **Face Morph Phenotypes** in the RACE
+   record for presets.
+   *Produces:* the chargen wiring, plus `BMOD` Bone Modifiers (SpringBone for tail/ear
+   jiggle, LookAtChain for ear tracking) on `RACE → Bone Modifiers`, and `BPTD` Body Part
+   Data if you changed the anatomy's dismemberment regions.
+9. **FaceGen bake.** Bake every NPC of the race in the CK; check the neck seam's skin-tone
+   match and that eyes and teeth are not floating. Consider a direct facegen writer rather
+   than mass Ctrl+F4.
+10. **Player plugin.** Put the race in one plugin and the player overrides in a second, so
+    the race can be present for NPC mods without forcing you to play as it. See
+    "The player records" below.
+11. **Ship it.** Pack as `<Name> - Textures.ba2` plus `<Name> - Main.ba2`; **`" -
+    Meshes.ba2"` is no longer recognised by Starfield.** Players will also need SFSE,
+    CharGenMenu, and likely SF Extended Skeleton.
 
-## 10. Practical path — building a custom anthro race
+### The player records
 
-A realistic ordering, easiest→hardest, with blockers flagged:
+Setting `Player [NPC_:00000007]` to your race is not enough — the game swaps in **stand-in
+copies of "you"** during the main quest, in crew slots, and in the creator, and each is its
+own `NPC_` with its own race. Miss one and you turn human in that scene.
 
-1. **Start by cloning `HumanRace`** (or overriding it), not authoring a new
-   skeleton/behavior graph. You inherit locomotion, facegen wiring, and biped
-   slots for free.
-2. **Body & head meshes.** Model the anthro body/head in Blender; export each
-   part to `.mesh` via Starfield Geometry Bridge. Keep ≤65535 verts, UV-unwrapped,
-   manifold. Skin to the (human or extended) skeleton — bone list stored in the
-   NIF's SkinAttach.
-3. **Morphs.** Author a `Basis` + chargen shape keys (0–1) per mesh; export
-   `.morph`. Create `MRPH` records; point head parts' `MNAM` at them. Add
-   expression/viseme morphs too (or the face is static).
-4. **Head parts.** Create `HDPT` records using **Creature Head / Creature Tail /
-   Creature Wings** etc. Set `RNAM Valid Races` to your race's `FLST` so parts
-   appear only for your race. Wire default parts into `RACE → Head Parts`.
-5. **Fur / markings.** Build `AVMD` tint groups (stripes, spots, muzzle mask,
-   belly) and skin-tone AVMS subtypes; reference them from `RACE → Chargen and
-   Skintones` and head parts' `Color Mapping`. Layers stack, so fur patterns are
-   additive overlays — no hard limit like the old 4-layer tint system.
-6. **Creator sliders.** Expose custom sliders via **CharGenMenu** + JSON whose
-   keys match your `.morph` keys. Define **Face Dials** and **Face Morph
-   Phenotypes** in the RACE record for presets.
-7. **Tail / ears (animated).** Add bones to `skeleton.nif`; skin the tail/ear
-   `.mesh` to them; add **`BMOD` SpringBone / LookAtChain** modifiers to
-   `RACE → Bone Modifiers`. No behavior-graph work needed for physics-swing.
-8. **FaceGen bake.** Bake every NPC of the race in the CK; verify neck-seam
-   skin-tone match and no floating eyes/teeth. Consider a direct facegen writer
-   to avoid mass Ctrl+F4.
+The ExoRace guide says "there are 12"; that is one mod's count, not a fixed number.
+Measured across the shipped player plugins on disk — **Felid overrides exactly 12, Lupus
+14** — the full vanilla candidate set is **16**:
 
-### Finishing fixes & gotchas (verified, article 431)
+| FormID | Record | Felid | Lupus |
+|---|---|:-:|:-:|
+| `00000007` | `Player` | ✔ | ✔ |
+| `00017627` | `Crew_Elite_OtherPlayerFemale_NoAppearanceData` | | ✔ |
+| `00017628` | `Crew_Elite_OtherPlayerNonbinary_NoAppearanceData` | ✔ | ✔ |
+| `001A93A5` | `Crew_Elite_OtherPlayerMale_NoAppearanceData` | ✔ | ✔ |
+| `00045F82` | `MQ401h_OtherPlayer_NoAppearanceData` | ✔ | ✔ |
+| `001557FA` | `MQ302b_OtherYou_NoAppearanceData` | ✔ | ✔ |
+| `0017F7A8` | `MQ401c_OtherYou_Loner_NoAppearanceData` | ✔ | ✔ |
+| `0017F7A9` | `MQ401c_OtherYou_RI_NoAppearanceData` | ✔ | ✔ |
+| `0017F7AA` | `MQ401c_OtherYou_FC_NoAppearanceData` | ✔ | ✔ |
+| `0017F7AB` | `MQ401c_OtherYou_UC_NoAppearanceData` | ✔ | ✔ |
+| `0017F7AC` | `MQ401c_OtherYou_CF_NoAppearanceData` | ✔ | ✔ |
+| `0017F7AE` | `MQ401c_OtherYou_Constellation_NoAppearanceData` | ✔ | ✔ |
+| `0024EF81` | `MQ_Unity_NoAppearanceData` | | ✔ |
+| `002E7C8E` | `ChargenFemalePlayer` | ✔ | |
+| `0007DC47` | `ChargenPlayer_Swap` | | ✔ |
+| `00004858` | `ChargenFemalePlayer_Swap` | | |
+
+The six `MQ401c_OtherYou_*` are the faction endings — that block is complete, `0017F7AD`
+is not an `NPC_` at all. All 16 are `HumanRace` in vanilla. **`ChargenFemalePlayer_Swap` is
+overridden by neither shipped mod**, and the two disagree on the crew and chargen entries,
+so treat the list as "everything here, minus what you can show you don't need" rather than
+copying either mod.
+
+### Finishing fixes & gotchas
 
 Concrete FormIDs/steps that trip up first-time race authors:
 
-- **Verify a headpart:** make an NPC of the race, add it to `CharGenPresets [FLST:0003F551]`, then in-game `slm 14` and pick the last preset.
-- **Chargen visibility:** append head parts to `HeadPartsChargenOptionsMale [FLST:0003D9AF]` / `Female [FLST:0003D9B0]` (entry = HDPT FormID minus its first three load-order digits). Eye Color needs **both** a left- and right-eye head part.
 - **Spacesuit not showing:** add your race to `HumanRaceORChildRaceORHumanCorpseRace [CNDF:0003D8C1]`.
 - **Dialogue camera too close:** add your race to `DC_Race_Human [CPTH:000C1056]`.
 - **Invisible limbs in new-game chargen:** give `Clothes_GenWare_01 "Space Undersuit" [ARMO:00165722]` a skin ARMA / remodel it to your naked-skin model.
-- **Become the race:** set the **Player** record (`NPC_` FormID **7**) to your race; there are **12** player copies to change.
-- **Toggle-able:** split the player overrides into a separate `.esm` so disabling it keeps the race available for NPC mods but reverts the player.
-- Quirks: **females have no facial hair** (the `beard` slot / `fhclr` don't work on female); the **first** eyebrow in a list ignores its assigned texture (engine bug).
+- **Eyebrows fully transparent:** they also need `SimpleGroup_EyebrowOpacity [AVMD:0000EF9F]`
+  and `NAM3 - Mask` = `EyebrowColor` on the head part.
+- Quirks: the **first** eyebrow in a list ignores its assigned texture (engine bug).
 
-### Hard blockers (honest assessment)
+### Hard blockers
 - **Behavior graph.** No public Starfield behavior-graph editor → no new
-  locomotion → **digitigrade legs and novel gaits are effectively blocked**;
+  locomotion;
   reuse human legs.
 - **Format maturity.** `.mesh`/`.morph` are reverse-engineered, not documented
-  by Bethesda; tooling (SGB/StarfieldMeshConverter/nifly) is the source of truth
+  by Bethesda; tooling (SGB/StarfieldMeshConverter/PyNifly) is the source of truth
   and can lag engine updates.
 - **FaceGen scale.** Baking many NPCs is slow and fragile (dark-face bug).
 - **Creator UI.** Radically non-human morphology stresses a UI/morph system
@@ -1878,56 +2006,15 @@ Concrete FormIDs/steps that trip up first-time race authors:
 
 ---
 
-## What a custom anthro race requires — checklist
-
-- [ ] **RACE record** — clone of `HumanRace`; set `Skeleton Data` (ANAM/NAM5/
-      NAM6/DNAM), `WNAM` Skin ARMO, `GNAM` Body Part Data, FaceGen clamps.
-- [ ] **skeleton.nif** — human skeleton (or SF Extended Skeleton) **+ tail/ear
-      bones** if animated appendages.
-- [ ] **Body/head/hands/feet `.mesh` files** — anthro geometry, skinned; NIFs
-      with `BSGeometry` + `SkinAttach`; both normal and **SS (spacesuit)** slots
-      considered.
-- [ ] **`.morph` files + `MRPH` records** — chargen morphs (creator sliders),
-      expression/viseme morphs, optional bone-morph definition.
-- [ ] **`HDPT` records** using **Creature Head / Tail / Wings / Arms / Legs**
-      types — muzzle/snout, ears, tail; `RNAM Valid Races` = your race FLST;
-      `MNAM` → MRPH.
-- [ ] **`AVMD`/AVMS tint groups** — fur color, stripes/spots/markings, muzzle
-      mask; skin-tone subtypes; referenced by RACE Chargen and head-part Color
-      Mapping.
-- [ ] **`BMOD` Bone Modifiers** — SpringBone (tail/ear jiggle), LookAtChain
-      (ear tracking); attached to `RACE → Bone Modifiers`.
-- [ ] **Chargen wiring** — Face Dials + Face Morph Phenotypes in RACE; custom
-      sliders exposed via **CharGenMenu** + JSON config.
-- [ ] **Body Part Data (`BPTD`)** — dismemberment regions if changing anatomy.
-- [ ] **Skin/texture sets (`TXST`)** — fur diffuse/normal/specular; face custom
-      textures base path.
-- [ ] **FaceGen bake** for every NPC of the race (CK), or a direct facegen
-      writer.
-- [ ] **Dependencies for players** — SFSE, CharGenMenu, likely SF Extended
-      Skeleton.
-
----
-
 ## Open questions / uncertainties
 
-1. ~~Exact `morph.dat` binary layout~~ — **RESOLVED** (verified byte-exact against
-   vanilla + Outfit Studio `SFMorphFile` / StarfieldMeshConverter `MorphIO.cpp`;
-   corrected the color/normal encodings, see §3).
-7. ~~How a material's tint layers hook to a specific character~~ — **RESOLVED**:
-   they don't sit on the `RACE`; each `NPC_` lists its own **AVMD Tints**
-   (`MNAM` → `AVMD` group/option → texture/color), see §4.
-2. ~~Vanilla skeleton bone list~~ — **RESOLVED** (116 NiNodes extracted from
-   `skeleton.nif`, see §6).
-3. **Starfield facegen output paths** — workflow confirmed, literal
-   `facegendata/…` path not verified for Starfield.
-4. **BMOD limits** — how many SpringBone chains the engine handles gracefully,
+1. **BMOD limits** — how many SpringBone chains the engine handles gracefully,
    and whether ear LookAtChain works on first-person, is untested here.
-5. **Can a genuinely new RACE (non-`HumanRace`-parented) enter the creator?** No
+2. **Can a genuinely new RACE (non-`HumanRace`-parented) enter the creator?** No
    confirmed example; all anthro results are HumanRace variants.
-6. **Digitigrade locomotion** — no confirmed shipped example; behavior-graph gap
+3. **Digitigrade locomotion** — no confirmed shipped example; behavior-graph gap
    is the suspected blocker.
-8. **Does the player's live face use stored tint paths, like the NPC bake?** The bake is proven
+4. **Does the player's live face use stored tint paths, like the NPC bake?** The bake is proven
    to use each tint entry's stored `VNAM` (§4.1). Whether the player's creator-driven composite
    re-reads the `AVMD` groups, and whether layer order comes from the stack (§4.3), is untested.
 
@@ -1959,4 +2046,5 @@ Concrete FormIDs/steps that trip up first-time race authors:
 - NifSkope (fo76utils fork) for Starfield — https://www.nexusmods.com/starfield/mods/10748
 - Companion Library pages: `morphs-shapekeys.md`, `dismemberment.md` (TRI/BPTD ancestry).
 
-_Draft 2026-07-06 — not yet reviewed_
+
+*Reviewed: Bad Dog 9/20/26*
