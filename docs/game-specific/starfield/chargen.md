@@ -1615,7 +1615,8 @@ are `*_mask.dds` tinted by a Modulation palette.
 
 Face-customization layers are authored **uncompressed**. Census of all 448 vanilla
 files under `textures/actors/human/faces/chargen/postblenddetails/`, every one
-**1024×1024 with a single mip**:
+**1024×1024 with a single mip** (as are all 274 base maps in `faces/chargen/` itself; the
+size has to match across the set, below):
 
 | suffix | n | format | bytes |
 |---|---|---|---|
@@ -1643,6 +1644,19 @@ creator's dermaesthetic chooser rejecting layers that were the right format but
 carried `texconv`'s header; matching vanilla's fields is the cheap way to take the
 question off the table. `texconv` needs `-m 1` to stop building a mip chain, and
 **no `-dx10`** for the 8bpp masks, since vanilla writes those with a legacy header.
+
+**Every face texture must be the same size — any size (in game, 2026-10-18).** The creator
+re-composites the face each time a tint layer changes, from the race's `FCTP` base maps
+(`<phenotype>_sk<N>_color`, `_normal`, `_rough`, `_ao`, the `FCT_<region>_mask`s) and the chosen
+options. A custom race whose files were at mixed sizes (colour 4096, normal 1024, rough 2048,
+overlays 4096) looked right until the first dermaesthetic change, then rendered the face
+**black**, for both sexes. With every file at 1024 it worked; with every file at 2048 it worked
+too. So the rule is "one size", not "1024": vanilla's are all 1024 only because they all match.
+
+The consequence for a race that goes bigger than 1024: **every vanilla option the creator still
+offers it is 1024**: scars, accents, lipstick, the second complexion and so on. Picking any of
+them would black the face. So either keep the face set at 1024, or replace or empty every tint
+group the creator shows that race.
 
 **Layers composite by the texture's own alpha** — there is no per-slot blend mode
 doing it for you. A layer with opaque alpha lands flat on top and hides what is
@@ -1806,8 +1820,20 @@ A head part is named by the race directly; **the body is three hops away**. The 
 | record flags | `0x80` Is Skin, `0x100` Is Skin Hands, `0x400` No Model |
 
 Vanilla human skin is `Skin_Naked` → `AA_Naked_Body` + `AA_Naked_Hands`. The `ARMO`'s own
-`BO64` is `0x08` only and does **not** need to cover its addons' slots. The Is Skin flags
-are informational, not required — the frozen-corpse skin addons carry neither.
+`BO64` is `0x08` only and does **not** need to cover its addons' slots. The frozen-corpse
+skin addons carry neither Is Skin flag, so a skin addon doesn't need one.
+
+**But the flag decides the addon's colour (in game, 2026-10-14 and 10-18).** An addon flagged
+**Is Skin** is painted with the race's **body** tone texture (`BSTT`) by the actor's `STON`;
+one flagged **Is Skin Hands** gets the **hands** tone (`HSTT`). Either way the texture its own
+material names is overridden. Two ways this bites:
+
+- A tail flagged Is Skin Hands got the hands texture at body UVs: the wrong colour everywhere.
+  A tail is skin, so flag it Is Skin.
+- Crowd tails copied from a skin addon, each with its own blue material, came out red:
+  the copies kept the flag, so the engine coloured them from the tone ladder and ignored the
+  material. An addon that carries its own colour should have the flag cleared. (That clearing
+  the flag fixes it is the next in-game check.)
 
 ⚠ **An addon whose race list excludes the actor's race is skipped without a word** —
 that slot of the body simply does not render. This is the easiest way to end up with an

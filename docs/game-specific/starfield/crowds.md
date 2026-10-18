@@ -43,6 +43,12 @@ helpers), 2026-10-16:
 | Default outfit (`DOFT`) | `Outfit_Crowds_<district>_<sex>` |
 | Template flags (`ACBS`, u16 at offset 14) | Factions + Keywords (`0x1004`) on 95; **Traits** + Factions + Keywords (`0x1005`) on 24; other combinations on 19 |
 
+**Crowds have no skin tones.** `HumanCrowdRace` names no skin-tone groups at all (no
+`BSTT`, `HSTT` or `FSTT`), and 176 of 181 crowd actors set `STON` to 0. Every visible bit of
+skin is inside the one head mesh with its own baked texture, so head, neck and hands always
+match. Anything else that has to match the head, like a tail, has to come in the same tone by
+construction (§5).
+
 **Traits carries race.** The 24 that inherit Traits take them from
 `LCharCrowdVoices_Male` / `_Female`, whose 10 entries are all `HumanCrowdRace` NPCs. Copy
 one of those actors, set a new race, and the template quietly sets it back. Turn the Traits
@@ -138,13 +144,24 @@ What was built and tested for a fox crowd (October 2026), and what's still open.
   (words 2–3) and gets new first words for the objects it defines, which is how vanilla's crowd
   materials differ from each other. References into imported templates keep theirs.
   Variants made that way render distinct textures in game.
+- **A full skeleton on the crowd race.** The race's `ANAM`s pointed at copies of Extended
+  Skeleton's human skeletons (which add a tail chain), under the race's own path. Vanilla crowd
+  clothes render correctly on it, as §4's bind census predicts.
+- **No `WNAM` on the NPCs.** An NPC's own skin overrides its race's, and the vanilla crowd actors
+  carry one (the human crowd skin). Copies that keep it never wear the new race's skin; drop
+  the field and give an NPC a skin only when it should differ from its race.
+- **A tail renders on the crowd foxes.** It came from the race's skin: the player race's tail
+  addon (body slot 15, with its `BSClothExtraData`) with the crowd race added to its races.
 
 **Not yet tested:**
 
-- **Tails.** Tails need tail bones and a Havok cloth block (`BSClothExtraData`) to move.
-  The crowd skeleton has no tail bones; giving the crowd race a full human skeleton with a
-  tail chain should be safe for clothing (§4).
-- Whether crowd actors simulate cloth at all, and at what distance.
+- **A tail in each head's tone.** Since crowds have no skin tones (§2), a tail on the race skin
+  is one colour on every actor. Built: one tail addon per tone, each with its own material,
+  carried by the head armor as a second addon (the armor's `BO64` gains slot 15), so the
+  leveled list's pick brings the matching tail. The first try came out red because the copies
+  kept the source addon's **Is Skin** flag ([chargen](chargen.md)); the flag is cleared now and
+  awaits a look in game.
+- Whether crowd actors simulate the tail's cloth at the same distances as full NPCs.
 - The alternative of adding species addons to the vanilla head and hair armors, relying on
   armor race to pick the addon.
 

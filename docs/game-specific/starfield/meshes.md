@@ -368,6 +368,77 @@ Layout per StarfieldMeshConverter (`include/MorphIO.h`, `MorphIO.py`) — see th
 
 ---
 
+## 6. Cloth: `BSClothExtraData` is a Havok 2019 tagfile
+
+A cloth-simulated shape (hair, coat tails, signage, a race's tail) carries a
+`BSClothExtraData` block whose payload is a **Havok tagfile**: magic `TAG0`, SDK `20190200`.
+`[FO4]` used an older Havok *packfile* with its type information stripped. The Starfield file
+**carries its own type definitions**: every class, field name, offset and size. So a generic
+reader turns it into named objects without any class definitions supplied. Verified by
+decoding all 298 vanilla cloth blobs (2026-10-17).
+
+**Container.** Each section header is a big-endian `uint32` and a 4-character tag. The top two
+bits of the `uint32` say whether the section holds other sections (0) or data (1); the low 30
+bits give its size, including the 8-byte header.
+
+```
+TAG0
+  SDKV   "20190200"
+  DATA   the object bytes
+  TYPE
+    TPTR   runtime pointer table (zeros in a file)
+    TST1   type-name strings, NUL-separated
+    TNA1   the types: name + template parameters
+    FST1   field-name strings, NUL-separated
+    TBDY   each type's parent, format, size/alignment and fields
+    THSH   type hashes
+    TPAD   padding
+  INDX
+    ITEM   the item table: {u32 type+kind, u32 offset into DATA, u32 count}; item 0 is null
+    PTCH   where in DATA the references between items sit
+```
+
+**Reading the types:**
+
+- **Integers** in `TNA1`/`TBDY` are Havok's variable-length form, big-endian. Below `0x80` is one
+  byte; top bits `10` add a byte (14-bit value); `110` take three bytes, and so on.
+- **`TNA1`:** a count (including type 0), then per type a name index into `TST1` and its
+  template parameters. A parameter whose name starts with `t` holds a type; one starting with
+  `v` holds an integer.
+- **`TBDY`:** per type, its index, its parent, and an option mask saying what follows.
+  `0x01` format, `0x02` element type, `0x04` version, `0x08` size and alignment, `0x10` flags,
+  `0x20` fields, `0x40` interfaces, `0x80` attribute.
+- **A field** is name (an `FST1` index), flags, offset and type. When the flags have bit `0x80`
+  set, **one extra value comes before the offset**. In vanilla only `hkPackedVector3.values`
+  and `hclCollidable.userData` do this; its meaning is unknown.
+- **The format's low 5 bits** give the kind: 2 bool, 3 string, 4 int (bit `0x200` signed),
+  5 float, 6 pointer, 7 class, 8 array. An **array with bit `0x20` set is inline**, its length in
+  the bits above 8: `hkVector4` is `0x428` (four floats), `hkMatrix4` is `0x1028` (sixteen).
+- **In `DATA`,** a pointer, a string or an ordinary array is a `uint32` item index.
+
+**What a cloth holds.** A tail, as in a shipped race mod, is `hclClothData` →
+`hclSimClothData` "Simulation Cloth". It simulates a small strip of particles, not the mesh:
+here 24 particles, 4 of them pinned at the root (mass 0), and 22 triangles driving 9 tail bones.
+The tail mesh is skinned to those bones the normal way. The settings that shape the motion are
+all ordinary fields:
+
+| Field | In that tail | Effect |
+|---|---|---|
+| `simulationInfo.gravity` | (0, 0, −4.905), half of Earth's | how hard it hangs |
+| `simulationInfo.globalDampingPerSecond` | 0.8 | how fast a swing dies |
+| `ParticleData` mass / radius / friction | 5 / 0.02 / 0.2 | per particle |
+| standard links: `restLength`, `stiffnessA/B` | 30 links | hold neighbours apart |
+| stretch links: `restLength`, `stiffness` | 2, root to tip | cap the whole length |
+| `transferMotionData` | translation 0.6; rotation 0–0.6 over 30–90°/s | how much body motion it inherits |
+| simulate operator `Config` | 1 sub-step, 1 iteration | solver effort |
+| `perInstanceCollidables` | 5 capsules | body parts it can't pass through |
+
+A blob also carries a full copy of the skeleton it was authored against (an `hkaSkeleton` with
+the actor's bone names), the operators that skin the simulation mesh and drive the bones, and
+two `hclClothState`s.
+
+---
+
 ## Quick reference: encodings
 
 | Data | Encoding | Bytes |
