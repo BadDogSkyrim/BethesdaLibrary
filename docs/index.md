@@ -143,7 +143,7 @@ This library consolidates knowledge from:
 
 ## Contributing
 
-Found an error? Have additional information? Contributions welcome! See **[CONVENTIONS.md](CONVENTIONS.md)** for the page style and formatting conventions.
+Found an error? Have additional information? Contributions welcome! See **[CONVENTIONS.md](CONVENTIONS.md)** for page formatting conventions and **[WRITING-STYLE.md](WRITING-STYLE.md)** for writing style.
 
 ## Organization Principles
 

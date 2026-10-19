@@ -14,4 +14,4 @@ If you work with AI, download the library and give it to the bot as a resource. 
 
 **→ [Browse the full library](docs/index.md)** — file formats, game-specific notes (Starfield, Fallout 4), PyNifly, and the repository scripts. That page is the single index for everything here; the same content is also published as a searchable site via MkDocs (see [DEPLOYMENT.md](DEPLOYMENT.md)).
 
-Contributions welcome — see **[docs/CONVENTIONS.md](docs/CONVENTIONS.md)** for page conventions.
+Contributions welcome — see **[docs/CONVENTIONS.md](docs/CONVENTIONS.md)** for page conventions and **[docs/WRITING-STYLE.md](docs/WRITING-STYLE.md)** for writing style.

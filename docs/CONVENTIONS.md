@@ -35,4 +35,6 @@ Combine tags when a fact applies to a specific subset, e.g. `` `[SSE]` `[FO4]` `
 
 ## Other conventions
 
+For writing style (terminology, voice, steps, troubleshooting), see [Writing Style](WRITING-STYLE.md).
+
 (Additions go here as they come up — naming, code-block languages, link style, etc.)

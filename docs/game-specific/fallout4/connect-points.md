@@ -71,7 +71,7 @@ When the engine attaches a child NIF to a parent at runtime:
 2. **Bone resolution** — locate the parent NIF node named in that entry's Parent field (root NiNode if empty).
 3. **Transform composition** — the child is placed at:
    `parent_bone_world_transform × parent_connect_point_local_transform`
-4. **Child placement** — the child NIF's root is positioned at the resulting world transform; any local offset on the child's `BSConnectPoint::Children` entry is applied on top.
+4. **Child placement** — the child NIF's root is positioned at the resulting world transform. `BSConnectPoint::Children` entries carry no transform of their own, so the parent point alone sets the placement.
 
 Because the child rides on a parent bone, animations on the parent (recoil, equip, reload) carry through to attached mods automatically — no separate animation logic needed.
 
@@ -123,7 +123,7 @@ NifSkope (2.0.0 Pre-alpha 5+) renders connect points as colored arrows in the 3D
 
 ### Mod attaches in the wrong position
 - Parent point's Translation / Rotation incorrect
-- Child point's local offset stacking on top of the parent's
+- Child mesh not modeled relative to its own root — the child's root goes exactly on the parent point
 - Fix: load both NIFs in NifSkope, visualize the connect points, adjust until aligned
 
 ### Mod disappears when other mods are attached
