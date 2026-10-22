@@ -324,7 +324,8 @@ Vanilla human has **48 bone rows**. A bone may split across regions, and a bone 
 
 ### `…FacialBoneRegions<Sex>.txt` schema
 
-UTF-8 JSON with a BOM. Top level is `{"Constraints": null, "Regions": [...]}`.
+UTF-8 JSON, CRLF line endings, **no BOM** (all three vanilla `.txt` files start `{`; it's the
+`…Mapping.csv` that has a BOM). Top level is `{"Constraints": null, "Regions": [...]}`.
 
 ```json
 { "ID": 26, "Name": "Ears", "SculptRegion": true,
