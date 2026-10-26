@@ -615,7 +615,7 @@ dependency beyond half-float + DEC3N helpers.
 Starfield has **two independent systems** that both reshape a face, with very
 different costs. 
 
-| | Bone morphs | Vertex morphs |
+| | Facebones morphs | Vertex morphs |
 |---|---|---|
 | Enabled in | `<RaceEDID>FacialBoneRegions<Sex>.txt` (JSON) | `chargen/…/morph.dat` |
 | Wired by | file naming convention off the race EDID | `MRPH` `TCMP` + race `MPGN`/`MPGM` |
