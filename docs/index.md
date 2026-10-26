@@ -32,6 +32,7 @@ Where a game diverges from the shared formats above, it gets its own section fro
   - **[Meshes (NIF + .mesh)](game-specific/starfield/meshes.md)** - BSGeometry, external `.mesh` binary format, skinning
   - **[Materials & Textures](game-specific/starfield/materials.md)** - layered `.mat`/`.cdb`, shader models, DDS conventions ([worked example](game-specific/starfield/material-worked-example.md))
   - **[Chargen, Race & Skeleton](game-specific/starfield/chargen.md)** - RACE/HDPT/MRPH/BMOD, morphs, custom races
+  - **[Cloth](game-specific/starfield/cloth.md)** - `BSClothExtraData` Havok tagfile, particles, constraints, bone planes
   - **[Plugins & Archives](game-specific/starfield/plugins.md)** - component records, master tiers, BA2 v2/v3
   - **[Tools](game-specific/starfield/tools.md)** - the Starfield tooling directory, grouped by task
 - **[Fallout 4](game-specific/fallout4/fo4-overview.md)** - 64-bit Creation Engine: BGSM/BGEM materials, mesh segments, connect points, BA2 archives, ESL plugins:

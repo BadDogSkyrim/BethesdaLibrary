@@ -93,6 +93,7 @@ Two ecosystem facts worth knowing up front:
 | **NAF (Native Animation Framework)** / **SAF (Deputy NAF)** | Custom animation via glTF played on top of the game's animation system (override, not replace); SAF adds bone-name aliasing | Nexus 7360 / 16124. The working custom-animation path |
 | **Starfield Behavior Editor** (Monitor221hz) / **CALUMI Motion** | View/research vanilla `.agx` behavior graphs | GitHub `Monitor221hz/Starfield-Behavior-Editor`; Nexus 16181. **Alpha — view/research only; full `.agx` authoring does not yet exist** |
 | **Havok Content Tools 2014** (`hctStandaloneFilterManager`) | Bake Havok cloth (`BSClothExtraData`) for bone-deforming cloth (hair/tails) | Starfield keeps Havok for physics/cloth only, not animation |
+| **PyNifly** (Bad Dog), 30.1.0+ | View, edit and build Starfield cloth (`BSClothExtraData`) in Blender, including new cloth from a plain mesh | No Havok tools needed; tested in game on tails, hair and skirts. See [Cloth](cloth.md) |
 
 ## Reverse-engineering / development
 

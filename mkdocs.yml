@@ -92,6 +92,7 @@ nav:
       - "  ↳ .cdb binary format": game-specific/starfield/cdb-format.md
       - Chargen, Race & Skeleton: game-specific/starfield/chargen.md
       - Crowds: game-specific/starfield/crowds.md
+      - Cloth: game-specific/starfield/cloth.md
       - Creation Kit & FaceGen: game-specific/starfield/creation-kit.md
       - Plugins & Archives: game-specific/starfield/plugins.md
       - Tools: game-specific/starfield/tools.md

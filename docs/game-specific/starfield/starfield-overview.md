@@ -56,6 +56,9 @@ Assets packed in <Plugin> - Main.ba2 (meshes/geometries/materials) + Textures.ba
 - **[Crowds](crowds.md)** — how city crowds spawn and dress, the merged crowd head
   (eyes, arms, `_facebones` copy, `BoneTrn` eye positions), the crowd skeleton, and what a
   crowd of another species needs.
+- **[Cloth](cloth.md)** — `BSClothExtraData`: the Havok tagfile format, how a cloth
+  drives bones, its constraints and collision shapes, and what works in game (a floor is a
+  bone plane on `Root`; cloth bones can have any name).
 - **[Plugins & Archives](plugins.md)** — the component record system,
   master tiers and FormID ranges, the records a body/armor/race mod edits, and the
   BA2 v2/v3 archive format.
